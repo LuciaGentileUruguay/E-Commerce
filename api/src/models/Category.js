@@ -11,14 +11,6 @@ module.exports = (sequelize) => {
     },
     description: {
       type: DataTypes.TEXT
-    },
-    price: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      allowNull: false
     }
   });
 };
