@@ -1,15 +1,26 @@
 import React from 'react';
+
+// import logo from './logo.svg';
 import './App.css';
-import styles from './searchbar.css';
+import Products from './components/Products'
+import Landing from './components/Landing'
+import {Route} from 'react-router-dom'
+
 
 //Definicion de props
 
 function App(props) {
   return (
-    <div className="App">
-      <input className={styles.input} type="text" placeholder="Productos..." />
-      <button className = {styles.btnSearch} onClick={() => props.onSearch("Search...")}>Search...</button>
+
+    <div>
+      <Route 
+      exact path='/'
+      component={Landing} />
+            <Route 
+      exact path='/products'
+      component={Products} />
     </div>
+    
   );
 }
 
