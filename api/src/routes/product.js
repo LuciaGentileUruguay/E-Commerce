@@ -7,8 +7,7 @@ const Op = Sequelize.Op;
 server.get('/', (req, res, next) => {
 
 	if (req.query.search){
-		console.log(req.query.search)
-		var aux = req.query.search;
+		let aux = req.query.search;
 		Product.findAll({
 			where:{
 				name:{
@@ -16,8 +15,7 @@ server.get('/', (req, res, next) => {
 				} 
 			}
 		}).then (products => {
-			console.log(products);
-			if (!products){
+			if (!products.length){
 				res.status(404).send("No se encontro el producto");
 				return;
 			} else {
