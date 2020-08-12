@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Product } = require('../db.js');
+const { Sequelize } = require('sequelize/types');
+const Op = Sequelize.op;
 
  
 server.get('/', (req, res, next) => {
