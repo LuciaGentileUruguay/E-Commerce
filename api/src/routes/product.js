@@ -1,8 +1,7 @@
 const server = require('express').Router();
 const { Product } = require('../db.js');
 const { Sequelize } = require('sequelize');
-const Op = Sequelize.Op;
-
+const Op = Sequelize.Op; 
  
 server.get('/', (req, res, next) => {
 
@@ -33,6 +32,69 @@ server.get('/', (req, res, next) => {
 	}
 });
 
+//Ruta para crear Products
+server.post('/', (req,res,next) =>{
+	const {name, description, price, image, stock} = req.body;
+
+	//En caso de que no exista algun campo se devuelve error!
+	if (!name || !description || !price || !image || !stock){
+		res.status(400).send("Uno de los campos no ha sido completado");
+	} else {
+		//Se crea el Producto!
+		Product.create({
+			name,
+			description,
+			price,
+			image,
+			stock
+		}).then (function(product){
+			res.send(product);
+		})
+
+	}
+});
+
+//Ruta para actualizar un Producto por id
+server.put('/:id', (req,res,next)=>{
+	return Product.findByPk(req.params.id)
+	.then (function(product){
+		const {name, description, price, image, stock} = req.body;
+		product[name] = req.body.name;
+		product.description = description;
+		product.price = price;
+		product.image = image;
+		product.stock = stock;
+		product.save();
+		res.status(201).send("Se modifico el Producto");
+
+	})
+});
+
+server.delete('/:id', (req,res,next)=>{
+	 Product.findByPk(req.params.id)
+	 .then (function (product){
+		 if (!product){
+			 res.status(400).send("No se encontro el producto!!");
+			 return;
+		 } else {
+			product.destroy();
+			res.status(200).send("Fichero eliminado!");
+		 }
+	 })
+
+})
+
 module.exports = server;
 
+	// otra manera de hacer el delete!!
+	//  Product.destroy({
+	// 	 where:{
+	// 		 id: req.params.id
+	// 	 }
+	//  })
 
+
+	//manera para hacer el PUt
+	// Object.keys(product).map(prop => {
+	// 	product[prop]=req.body[prop]
+	// })
