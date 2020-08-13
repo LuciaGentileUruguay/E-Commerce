@@ -8,7 +8,7 @@ export default class Products extends React.Component{
         super();
         this.state = { productos:[] }
     }
-
+    //Trae los productos desde la base de datos
     componentDidMount (){
       axios.get('http://localhost:3001/products')
         .then(res => {
@@ -22,7 +22,13 @@ export default class Products extends React.Component{
     render () {
         return(
             <div class="catalog">
-                {this.state.productos.map(item => <Product />)}
+                {this.state.productos.map(item => <Product
+                 id={item.id}
+                 name={item.name}
+                 description={item.description}
+                 price={item.price}
+                 stock={item.stock}
+                 />)}
             </div>
         )
     }
