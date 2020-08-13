@@ -5,7 +5,7 @@ export default class extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        fields: [{id: '', name: '', description: '', stock: 0}]
+        products: [{id: '', nombre: '', descripcion: ""}]
       }
       this.setState = this.setState.bind(this);
   }
@@ -26,20 +26,16 @@ export default class extends React.Component {
 
           }}>
         <div className = "divForm">
-          <label> Product Name: </label>
-          <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
+          <label> Id: </label>
+          <input type="text" name="id" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
           </div>
         <div className = "divForm">
-          <label>Descripción:</label>
-          <input type="text" name="description" onChange={(e) => this.handleInputChange(e)} value={this.state.description} />
+          <label>Name:</label>
+          <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.description} />
         </div>
         <div className = "divForm">
-          <label>Precio:</label>
-          <input type="text" name="price" onChange={(e) => this.handleInputChange(e)} value={this.state.price} />
-        </div>
-        <div className = "divForm">
-          <label>Stock:</label>
-          <input type="text" name="stock" onChange={(e) => this.handleInputChange(e)} value={this.state.stock} />
+          <label>Description:</label>
+          <input type="text" name="description" onChange={(e) => this.handleInputChange(e)} value={this.state.price} />
         </div>
         <input id= "botonSubmit" type='submit' value="Submit"/>
       </form>
