@@ -22,3 +22,33 @@ describe('PRODUCT routes', () => {
     );
   });
 });
+
+describe('POST /sum', () => {
+  it('responds with 200', () => agent.post('/products').expect(200));
+  it('responds with something', () =>
+    agent.post('/products')
+      .send({name:"juan", description:"azul", price: 0.1, image:"doge", stock: 1})
+      .then((res) => {
+        const createdMessage = res.body;
+        return Product.findByPk(createdMessage.id)
+      })
+        .then(foundMessage => {
+          expect(foundMessage.name).to.be.equal('juan');
+        })
+  );
+});
+
+describe('Delete /products', () => {
+  it('responds with 200', () => agent.post('/products').expect(200));
+  it('responds with something', () =>
+    agent.post('/products')
+      .send({name:"juan", description:"azul", price: 0.1, image:"doge",stock:1})
+      .then(function(res){
+        agent.delete("/products/1")
+      })
+      .then(function(res) {
+        agent.get("/products/").then((res)=> expect(res.length).to.be.equal(0))
+    })
+    .catch(function(err){})
+  );
+});
