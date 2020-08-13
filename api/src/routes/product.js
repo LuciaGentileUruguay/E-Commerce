@@ -9,9 +9,16 @@ server.get('/', (req, res, next) => {
 		let aux = req.query.search;
 		Product.findAll({
 			where:{
-				name:{
-					[Op.like]: '%'+aux+'%'
-				} 
+				[Op.or]:[{
+					name:{
+							[Op.like]: '%'+aux+'%'
+						}
+					},
+					{
+				 	description:{
+				 		[Op.like]: '%'+aux+'%'
+				 	}
+				 }] 
 			}
 		}).then (products => {
 			if (!products.length){
@@ -59,7 +66,7 @@ server.put('/:id', (req,res,next)=>{
 	return Product.findByPk(req.params.id)
 	.then (function(product){
 		const {name, description, price, image, stock} = req.body;
-		product[name] = req.body.name;
+		product.name = name;
 		product.description = description;
 		product.price = price;
 		product.image = image;
