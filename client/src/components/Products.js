@@ -8,7 +8,7 @@ export default class Products extends React.Component{
         super();
         this.state = { productos:[] }
     }
-    //Trae los productos desde la base de datos
+    //Trae todos los productos desde la base de datos
     componentDidMount (){
       axios.get('http://localhost:3001/products')
         .then(res => {

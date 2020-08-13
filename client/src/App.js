@@ -17,15 +17,15 @@ function App(props) {
   const [products, setProducts] = useState([]);
 
   function onSearch(product) {
-      //Llamado a la API del clima
-      axios(`http://localhost:3001/products?search=${product}`)
-        .then(res => {
-          console.log(res.data);
-          setProducts({
-            productos: res.data
-          })
-        })
-    }
+    //Llamado al servidor
+    axios.get(`http://localhost:3001/products?search=${product}`)
+    .then(res => {
+      console.log(res.data);
+      setProducts({
+        productos: res.data
+      })
+    })
+  }
 
   return (
     <div>
