@@ -17,6 +17,7 @@ function App(props) {
       <Route exact path='/'component={Landing} />
       <Route exact path='/products' component={Products} />
       <Route exact path='/FormProduct'component={FormProduct} />
+    {/*      <Route exact='/SearchBar'component={SearchBar} /> */}
     </div>
 
   );
