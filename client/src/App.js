@@ -13,18 +13,23 @@ import axios from 'axios';
 class App extends React.Component{
   constructor(props){
       super(props);
-      console.log(props);
       this.state = { products:[] }
-
-      this.setState = this.setState.bind(this);
+      this.onSearch = (product) => {
+      axios.get(`http://localhost:3001/products?search=${product}`)
+      .then(res => {
+        this.setState({products: res.data})
+        console.log(this.state);
+        })
+      }
+      //this.onSearch = this.onSearch.bind(this);
   }
 
   componentDidMount () {
     axios.get('http://localhost:3001/products')
     .then(res => {
-      console.log(res.data);
-        this.state ={products: res.data}
+        this.setState({products: res.data})
       })
+    console.log(this.state);
   }
 
 /*
@@ -54,21 +59,13 @@ function App(props) {
 
   }*/
 
-  onSearch(product) {
-    //Llamado al servidor
-    axios.get(`http://localhost:3001/products?search=${product}`)
-    .then(res => {
-      console.log(res.data);
-      this.state ={products: res.data}
-    })
-  }
 
   render(){
   return (
     <div>
       <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
       <Route exact path='/'component={Landing} />
-      <Route exact path='/products' render={() => <Products products={this.products}/>} />
+      <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
       <Route exact path='/FormProduct'component={FormProduct} />
       <Route exact path='/FormCategories'component={FormCategories} />
     </div>

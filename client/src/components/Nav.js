@@ -11,7 +11,7 @@ function Nav({onSearch}) {
           Inicio
         </span>
       </Link>
-      <Link to='/products'>
+      <Link to='/products' onClick={()=>onSearch("") } >
         <span> Tienda </span>
       </Link>
         <SearchBar
