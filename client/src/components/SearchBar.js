@@ -17,9 +17,9 @@ export default function SearchBar({onSearch, product}) {
         value={products}
         onChange={e => setProducts(e.target.value)}
       />
-      <Link to=`{/products?search=${product}`>
+
       <input type="submit" value="Buscar" />
-      </Link>
+      
     </form>
   );
 };

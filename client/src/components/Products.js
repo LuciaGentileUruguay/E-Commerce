@@ -4,25 +4,16 @@ import './products.css';
 import axios from 'axios';
 
 export default class Products extends React.Component{
-    constructor(){
-        super();
-        this.state = { productos:[] }
-    }
-    //Trae todos los productos desde la base de datos
-    componentDidMount (){
-      axios.get('http://localhost:3001/products')
-        .then(res => {
-          console.log(res.data);
-          this.setState({
-            productos: res.data
-          })
-        })
+    constructor(props){
+        super(props);
+        console.log(props);
+        this.state = { products:[] }
     }
 
     render () {
         return(
             <div class="catalog">
-                {this.state.productos.map(item => <Product
+                {this.props.products && this.props.products.map(item => <Product
                  id={item.id}
                  name={item.name}
                  description={item.description}

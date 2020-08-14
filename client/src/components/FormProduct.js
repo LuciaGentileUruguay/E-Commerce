@@ -36,10 +36,7 @@ export default class extends React.Component {
       <form onSubmit={(e) => {e.preventDefault();
             alert('A product was submitted: ' + this.state.name);
           }}>
-        <div className = "divForm">
-          <label> Product Id: </label>
-          <input type="text" name="id" value={this.state.id} />
-          </div>
+        
           <div className = "divForm">
           <label> Product Name: </label>
           <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
