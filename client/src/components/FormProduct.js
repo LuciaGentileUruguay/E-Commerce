@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class extends React.Component {
 
@@ -14,6 +15,17 @@ export default class extends React.Component {
     this.setState({[e.target.name]: e.target.value});
   }
 
+  save(){
+    axios.post(`http://localhost:3001/`, this.state)
+      .then(res => {
+        console.log(res);
+        if(res.status === 200){
+          alert("PRODUCTO GUARDADO CORRECTAMENTE");
+        }
+
+      })
+  }
+
 /*  handleSubmit(e) {
     alert('A product was submitted: ' + this.state.value);
     e.preventDefault();
@@ -23,11 +35,15 @@ export default class extends React.Component {
     return (
       <form onSubmit={(e) => {e.preventDefault();
             alert('A product was submitted: ' + this.state.name);
-
           }}>
-        <div className = "divForm">
+        
+          <div className = "divForm">
           <label> Product Name: </label>
           <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
+          </div>
+          <div className = "divForm">
+            <label>Categoría:</label>
+            <input type="text" name="category" onChange={(e) => this.handleInputChange(e)} value={this.state.category} />
           </div>
         <div className = "divForm">
           <label>Descripción:</label>
@@ -41,7 +57,8 @@ export default class extends React.Component {
           <label>Stock:</label>
           <input type="text" name="stock" onChange={(e) => this.handleInputChange(e)} value={this.state.stock} />
         </div>
-        <input id= "botonSubmit" type='submit' value="Submit"/>
+        <input id= "botonBorrar" type='submit' value="Borrar"/>
+        <button onClick={this.save()} className="btn btn-sm btn-danger"> Guardar </button>
       </form>
     )
     }

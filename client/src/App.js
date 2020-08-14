@@ -1,28 +1,80 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import Products from './components/Products.js';
 import FormProduct from './components/FormProduct.js';
 import FormCategories from './components/FormCategories.js'
-//import SearchBar from './components/SearchBar.js';
+import Nav from './components/Nav.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
+import axios from 'axios';
 
 
-//Definicion de props
+class App extends React.Component{
+  constructor(props){
+      super(props);
+      console.log(props);
+      this.state = { products:[] }
 
+      this.setState = this.setState.bind(this);
+  }
+
+  componentDidMount () {
+    axios.get('http://localhost:3001/products')
+    .then(res => {
+      console.log(res.data);
+        this.state ={products: res.data}
+      })
+  }
+
+/*
 function App(props) {
 
+  const [products, setProducts] = useState([]);
+
+  useEffect( () => {
+    axios.get('http://localhost:3001/products')
+    .then(res => {
+      console.log(res.data);
+      setProducts({
+        products: res.data
+      })
+      return;
+    })
+  },[products]);
+
+/*  componentDidMount () {
+      axios.get('http://localhost:3001/products')
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          products: res.data
+        })
+      })
+
+  }*/
+
+  onSearch(product) {
+    //Llamado al servidor
+    axios.get(`http://localhost:3001/products?search=${product}`)
+    .then(res => {
+      console.log(res.data);
+      this.state ={products: res.data}
+    })
+  }
+
+  render(){
   return (
     <div>
+      <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
       <Route exact path='/'component={Landing} />
-      <Route exact path='/products' component={Products} />
+      <Route exact path='/products' render={() => <Products products={this.products}/>} />
       <Route exact path='/FormProduct'component={FormProduct} />
       <Route exact path='/FormCategories'component={FormCategories} />
-    {/*      <Route exact='/SearchBar'component={SearchBar} /> */}
     </div>
 
-  );
+  )
+}
 }
 
 export default App;
