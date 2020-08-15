@@ -6,7 +6,7 @@ export default class extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        products: [{name: '', description: '', price: 0, stock: 0}]
+        products: [{name: '', category: '', description: '', price: 0, stock: 0}]
       }
       this.setState = this.setState.bind(this);
   }
@@ -26,24 +26,19 @@ export default class extends React.Component {
       })
   }
 
-/*  handleSubmit(e) {
-    alert('A product was submitted: ' + this.state.value);
-    e.preventDefault();
-  }*/
-
   render () {
     return (
       <form onSubmit={(e) => {e.preventDefault();
             alert('A product was submitted: ' + this.state.name);
           }}>
-        
+
           <div className = "divForm">
-          <label> Product Name: </label>
+          <label> Nombre: </label>
           <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
           </div>
           <div className = "divForm">
             <label>Categoría:</label>
-            <input type="text" name="category" onChange={(e) => this.handleInputChange(e)} value={this.state.category} />
+            <select> <option> </option></select>
           </div>
         <div className = "divForm">
           <label>Descripción:</label>

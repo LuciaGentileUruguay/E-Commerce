@@ -1,48 +1,64 @@
 const server = require('express').Router();
-const { Product } = require('../db.js');
+const { Product, Category, category_products } = require('../db.js');
 const { Sequelize } = require('sequelize');
-const Op = Sequelize.Op; 
- 
-server.get("/:id", (req,res,next) =>{
-	Product.findByPk(req.params.id)
-	.then(product => {
-		res.status(200).json(product)
-	})
+const Op = Sequelize.Op;
+
+
+server.get("/category/:id", (req, res, next) => {
+	category_products.findAll({
+		where : {
+			categoryId : req.params.id }
+		})
+		.then(filas => {												//filas = [{productId, categoryId}, {productId, categoryId}, {productId, categoryId}]
+			var idProductos = filas.map( e => {    //idProductos = [1, 2, 4]
+				console.log(e.dataValues.productId);
+				return e.dataValues.productId;
+			});
+			var arrayProductos = idProductos.map(e => {
+				Product.findByPk(e)
+        .then(product => {
+          res.json(json)
+        })
+			});
+			console.log(arrayProductos);
+			res.send();
+		})
 })
 
 server.get('/', (req, res, next) => {
 	server.get("/:id", (req,res,next) =>{
-	Product.findByPk(req.params.id)
-	.then(product => {
-		res.status(200).json(product)
-	})
-})
-
+	   Product.findByPk(req.params.id)
+	    .then(product => {
+		      res.status(200).json(product)
+	     })
+     })
 	if (req.query.search){
 		let aux = req.query.search;
 		Product.findAll({
 			where:{
 				[Op.or]:[{
 					name:{
-							[Op.like]: '%'+aux+'%'
-						}
-					},
-					{
+						[Op.like]: '%'+aux+'%'
+					}
+				},
+				{
 				 	description:{
 				 		[Op.like]: '%'+aux+'%'
 				 	}
-				 }] 
+				}]
 			}
 		}).then (products => {
 			if (!products.length){
 				res.status(404).send("No se encontro el producto");
 				return;
-			} else {
+			}
+      else {
 				res.status(200).send(products);
 				return;
 			}
-		})		
-	} else {
+		})
+	}
+  else {
 	Product.findAll()
 		.then(products => {
 			res.status(200).send(products);

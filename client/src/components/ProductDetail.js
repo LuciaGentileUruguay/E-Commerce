@@ -5,10 +5,10 @@ import axios from 'axios';
 export default function ProductDetail(props){
     const[detail,setDetail] = useState([]);
     useEffect(()=>{
-             axios.get(`http://localhost:3001/products/${props.id}`)
-             .then((res)=>{
-                setDetail(() => res.data)
-             })
+        axios.get(`http://localhost:3001/products/${props.id}`)
+       .then((res)=>{
+        setDetail(() => res.data)
+        })
     },[])
 
     return (

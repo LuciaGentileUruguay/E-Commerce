@@ -1,17 +1,18 @@
 const server = require('express').Router();
-const { Category } = require('../db.js');
+const { Product, Category, category_products } = require('../db.js');
 const { Sequelize } = require('sequelize');
-const Op = Sequelize.Op; 
+const Op = Sequelize.Op;
+
+
 
 server.get('/', (req, res, next) => {
-
 	if (req.query.search){
 		let aux = req.query.search;
 		Category.findAll({
 			where:{
 				name:{
 					[Op.like]: '%'+aux+'%'
-				} 
+				}
 			}
 		}).then (category => {
 			if (!category.length){
@@ -21,7 +22,7 @@ server.get('/', (req, res, next) => {
 				res.status(200).send(category);
 				return;
 			}
-		})		
+		})
 	} else {
 	Category.findAll()
 		.then(category => {
