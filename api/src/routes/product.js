@@ -4,6 +4,12 @@ const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op; 
  
 server.get('/', (req, res, next) => {
+	server.get("/:id", (req,res,next) =>{
+	Product.findByPk(req.params.id)
+	.then(product => {
+		res.status(200).json(product)
+	})
+})
 
 	if (req.query.search){
 		let aux = req.query.search;
