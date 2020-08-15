@@ -24,6 +24,7 @@ class App extends React.Component{
       //this.onSearch = this.onSearch.bind(this);
   }
 
+
   componentDidMount () {
     axios.get('http://localhost:3001/products')
     .then(res => {
@@ -31,6 +32,24 @@ class App extends React.Component{
       })
   }
 
+
+  render(){
+  return (
+    <div>
+      <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
+      <Route exact path='/'component={Landing} />
+      <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
+      <Route exact path='/FormProduct'component={FormProduct} />
+      <Route exact path='/FormCategories'component={FormCategories} />
+      
+    {/*se agrego la ruta para mostrar los detalles del producto */}
+      <Route path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>
+    </div>
+  )
+}
+}
+
+export default App;
 /*
 function App(props) {
 
@@ -57,19 +76,3 @@ function App(props) {
       })
 
   }*/
-
-
-  render(){
-  return (
-    <div>
-      <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
-      <Route exact path='/'component={Landing} />
-      <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
-      <Route exact path='/FormProduct'component={FormProduct} />
-      <Route exact path='/FormCategories'component={FormCategories} />
-    </div>
-  )
-}
-}
-
-export default App;
