@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import Products from './components/Products.js';
 import FormProduct from './components/FormProduct.js';
 import FormCategories from './components/FormCategories.js'
+import ProductDetail from "./components/ProductDetail.js";
 import Nav from './components/Nav.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
@@ -18,7 +19,6 @@ class App extends React.Component{
       axios.get(`http://localhost:3001/products?search=${product}`)
       .then(res => {
         this.setState({products: res.data})
-        console.log(this.state);
         })
       }
       //this.onSearch = this.onSearch.bind(this);
@@ -29,7 +29,6 @@ class App extends React.Component{
     .then(res => {
         this.setState({products: res.data})
       })
-    console.log(this.state);
   }
 
 /*
@@ -69,7 +68,6 @@ function App(props) {
       <Route exact path='/FormProduct'component={FormProduct} />
       <Route exact path='/FormCategories'component={FormCategories} />
     </div>
-
   )
 }
 }

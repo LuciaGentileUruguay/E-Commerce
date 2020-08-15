@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from './SearchBar.js';
-import { Link } from 'react-router-dom';
+import { Link, Route} from 'react-router-dom';
 
 
 function Nav({onSearch}) {
@@ -14,9 +14,7 @@ function Nav({onSearch}) {
       <Link to='/products' onClick={()=>onSearch("") } >
         <span> Tienda </span>
       </Link>
-        <SearchBar
-          onSearch={onSearch}
-      />
+      <Route path='/products' render={() => <SearchBar onSearch={onSearch}/>}/>
     </nav>
   );
 };
