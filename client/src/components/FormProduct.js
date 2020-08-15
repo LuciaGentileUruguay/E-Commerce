@@ -6,10 +6,19 @@ export default class extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        products: [{name: '', description: '', price: 0, stock: 0}]
+        products: [{name: '', category: '', description: '', price: 0, stock: 0}],
+        categories : []
       }
       this.setState = this.setState.bind(this);
   }
+
+  componentDidMount () {
+    axios.get('http://localhost:3001/categories')
+    .then(res => {
+        this.setState({categories: res.data})
+      })
+  }
+
 
   handleInputChange (e) {
     this.setState({[e.target.name]: e.target.value});
@@ -26,39 +35,37 @@ export default class extends React.Component {
       })
   }
 
-/*  handleSubmit(e) {
-    alert('A product was submitted: ' + this.state.value);
-    e.preventDefault();
-  }*/
-
   render () {
     return (
-      <form onSubmit={(e) => {e.preventDefault();
-            alert('A product was submitted: ' + this.state.name);
-          }}>
-        
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        this.save() }}>
+
           <div className = "divForm">
-          <label> Product Name: </label>
-          <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
+          <label> Nombre: </label>
+          <input type="text" name="name" value={this.state.products.name} onChange={(e) => this.handleInputChange(e)} />
           </div>
           <div className = "divForm">
             <label>Categoría:</label>
-            <input type="text" name="category" onChange={(e) => this.handleInputChange(e)} value={this.state.category} />
+            <select onChange={(e) => this.handleInputChange(e)}>
+              {this.state.categories.map(item => {
+                return (<option value = {item.id} > {item.name} </option>)})}
+            </select>
           </div>
         <div className = "divForm">
           <label>Descripción:</label>
-          <input type="text" name="description" onChange={(e) => this.handleInputChange(e)} value={this.state.description} />
+          <input type="text" name="description" onChange={(e) => this.handleInputChange(e)} value={this.state.products.description} />
         </div>
         <div className = "divForm">
           <label>Precio:</label>
-          <input type="text" name="price" onChange={(e) => this.handleInputChange(e)} value={this.state.price} />
+          <input type="text" name="price" onChange={(e) => this.handleInputChange(e)} value={this.state.products.price} />
         </div>
         <div className = "divForm">
           <label>Stock:</label>
-          <input type="text" name="stock" onChange={(e) => this.handleInputChange(e)} value={this.state.stock} />
+          <input type="text" name="stock" onChange={(e) => this.handleInputChange(e)} value={this.state.products.stock} />
         </div>
         <input id= "botonBorrar" type='submit' value="Borrar"/>
-        <button onClick={this.save()} className="btn btn-sm btn-danger"> Guardar </button>
+        <button className="btn btn-sm btn-danger"> Guardar </button>
       </form>
     )
     }
