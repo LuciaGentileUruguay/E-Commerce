@@ -73,7 +73,7 @@ server.post('/', (req,res,next) =>{
 	const {name, description, price, image, stock} = req.body;
 
 	//En caso de que no exista algun campo se devuelve error!
-	if (!name || !description || !price || !image || !stock){
+	if (!name || !description || !price || !stock){
 		res.status(400).send("Uno de los campos no ha sido completado");
 	} else {
 		//Se crea el Producto!
