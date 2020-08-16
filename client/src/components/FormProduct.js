@@ -64,7 +64,7 @@ export default class extends React.Component {
         <div className = "divForm">
           <label>Categoría:</label>
             <select name="category" value={this.state.products.category} onChange={(e) => this.handleInputChange(e)}>
-              <option disabled>{this.props.categoryName}</option>
+              <option disabled selected>{this.props.categoryName}</option>
               {this.state.categories.map(item => {
                 return (<option value = {item.id} > {item.name} </option>)})}
             </select>

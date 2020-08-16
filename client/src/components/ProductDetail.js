@@ -19,9 +19,9 @@ export default function ProductDetail (props) {
       <div>
         <Route exact path='/FormProduct' render = { () =>
           <FormProduct name={detail.name} description={detail.description} price={detail.price} stock = {detail.stock} />} />
-        <div class="card">
+        <div className="card">
             <div>
-                <img class="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+                <img className="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
             </div>
             <div>
                 <h3>{detail.name}</h3>
