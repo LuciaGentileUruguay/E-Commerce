@@ -5,24 +5,16 @@ const Op = Sequelize.Op;
 
 
 server.get("/category/:id", (req, res, next) => {
-	category_products.findAll({
-		where : {
-			categoryId : req.params.id }
-		})
-		.then(filas => {												//filas = [{productId, categoryId}, {productId, categoryId}, {productId, categoryId}]
-			var idProductos = filas.map( e => {    //idProductos = [1, 2, 4]
-				console.log(e.dataValues.productId);
-				return e.dataValues.productId;
-			});
-			var arrayProductos = idProductos.map(e => {
-				Product.findByPk(e)
-        .then(product => {
-          res.json(json)
-        })
-			});
-			console.log(arrayProductos);
-			res.send();
-		})
+	Product.findAll({
+		include: [{
+    	model: Category,
+    	where: {id: req.params.id}
+   }]
+ })
+	.then(function(products){
+		console.log("Algo :"+ req.params.id);
+    res.send(products);
+  })
 })
 
 server.get('/', (req, res, next) => {
