@@ -46,37 +46,12 @@ class App extends React.Component{
         <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
         <Route exact path='/FormCategories'component={FormCategories} />
         <Route exact path='/FormProduct'component={FormProduct} />
+        
         {/*se agrego la ruta para mostrar los detalles del producto */}
-        <Route path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>
+        <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>
     </div>
     )
   }
 }
 
 export default App;
-/*
-function App(props) {
-
-  const [products, setProducts] = useState([]);
-
-  useEffect( () => {
-    axios.get('http://localhost:3001/products')
-    .then(res => {
-      console.log(res.data);
-      setProducts({
-        products: res.data
-      })
-      return;
-    })
-  },[products]);
-
-/*  componentDidMount () {
-      axios.get('http://localhost:3001/products')
-      .then(res => {
-        console.log(res.data);
-        this.setState({
-          products: res.data
-        })
-      })
-
-  }*/
