@@ -1,11 +1,13 @@
 import React,{useState,useEffect} from 'react';
 import './product.css';
-import "./FormProduct.js"
+import FormProduct from './FormProduct.js';
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
 
-export default function ProductDetail(props){
+export default function ProductDetail (props) {
+
     const[detail,setDetail] = useState([]);
+
     useEffect(()=>{
         axios.get(`http://localhost:3001/products/${props.id}`)
        .then((res)=>{
@@ -14,7 +16,9 @@ export default function ProductDetail(props){
     },[])
 
     return (
-        <Route exact path='/FormProduct'render={() => <FormProduct name={detail.name} description={detail.description} price={detail.price} stock = {detail.stock} >} />
+      <div>
+        <Route exact path='/FormProduct' render = { () =>
+          <FormProduct name={detail.name} description={detail.description} price={detail.price} stock = {detail.stock} />} />
         <div class="card">
             <div>
                 <img class="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
@@ -25,7 +29,7 @@ export default function ProductDetail(props){
                 <p>{detail.price}</p>
                 <p>{detail.stock}</p>
             </div>
-
         </div>
-    )
+      </div>
+    );
 }

@@ -1,0 +1,26 @@
+html {
+  font-size: 1.5em;
+  line-height: 1.4;
+  color: #734F2F;
+}
+
+body{
+  background-color: #C1D9D4;
+	height: 100%;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+h1{
+  position:absolute;
+}
+
+.foto {
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+}
