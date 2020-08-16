@@ -1,43 +1,47 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class extends React.Component {
 
   constructor(props) {
       super(props);
       this.state = {
-        products: [{id: '', nombre: '', descripcion: ""}]
+        categories: [{
+          name: props.name,
+          description: props.description
+        }]
       }
       this.setState = this.setState.bind(this);
   }
 
   handleInputChange (e) {
-    this.setState({[e.target.name]: e.target.value});
+    this.state.categories[0][e.target.name]= e.target.value;
   }
 
-/*  handleSubmit(e) {
-    alert('A product was submitted: ' + this.state.value);
-    e.preventDefault();
-  }*/
+  saveCat(){
+    axios.post(`http://localhost:3001/categories`, this.state.categories[0])
+      .then(res => {
+        if(res.status === 200){
+          alert("CATEGORIA GUARDADA CORRECTAMENTE");
+        }
+      })
+  }
 
   render () {
     return (
-      <form onSubmit={(e) => {e.preventDefault();
-            alert('A product was submitted: ' + this.state.name);
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        this.saveCat() }}>
 
-          }}>
         <div className = "divForm">
-          <label> Id: </label>
-          <input type="text" name="id" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
-          </div>
-        <div className = "divForm">
-          <label>Name:</label>
-          <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.description} />
+          <label>Nombre:</label>
+          <input type="text" name="name" onChange={(e) => this.handleInputChange(e)} value={this.state.name} />
         </div>
         <div className = "divForm">
-          <label>Description:</label>
-          <input type="text" name="description" onChange={(e) => this.handleInputChange(e)} value={this.state.price} />
+          <label>Descripción:</label>
+          <input type="text" name="description" onChange={(e) => this.handleInputChange(e)} value={this.state.description} />
         </div>
-        <input id= "botonSubmit" type='submit' value="Submit"/>
+        <button className="btn btn-sm btn-danger"> Guardar </button>
       </form>
     )
     }

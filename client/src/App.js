@@ -10,20 +10,22 @@ import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
 {/*
-  crear request que envie el id de los productoos y devuelva el categoryIde los mismos
+  crear request que envie el id de los productoos y devuelva el categoryId de los mismos
   crear request que envie id de la categoria y devuelva el nombre de la categorias
 */}
 
 class App extends React.Component{
   constructor(props){
-      super(props);
-      this.state = { products:[] }
-      this.onSearch = (product) => {
+    super(props);
+    this.state = {
+      products: []
+    }
+    this.onSearch = (product) => {
       axios.get(`http://localhost:3001/products?search=${product}`)
       .then(res => {
         this.setState({products: res.data})
-        })
-      }
+      })
+    }
       //this.onSearch = this.onSearch.bind(this);
   }
 
@@ -32,23 +34,23 @@ class App extends React.Component{
     axios.get('http://localhost:3001/products')
     .then(res => {
         this.setState({products: res.data})
-      })
+    })
   }
 
 
   render(){
-  return (
-    <div>
-      <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
-      <Route exact path='/'component={Landing} />
-      <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
-      <Route exact path='/FormCategories'component={FormCategories} />
-      
-    {/*se agrego la ruta para mostrar los detalles del producto */}
-      <Route path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>
+    return (
+      <div>
+        <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
+        <Route exact path='/'component={Landing} />
+        <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
+        <Route exact path='/FormCategories'component={FormCategories} />
+        <Route exact path='/FormProduct'component={FormProduct} />
+        {/*se agrego la ruta para mostrar los detalles del producto */}
+        <Route path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>
     </div>
-  )
-}
+    )
+  }
 }
 
 export default App;
