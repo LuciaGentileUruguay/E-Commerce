@@ -9,7 +9,10 @@ import Nav from './components/Nav.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
-
+{/*
+  crear request que envie el id de los productoos y devuelva el categoryIde los mismos
+  crear request que envie id de la categoria y devuelva el nombre de la categorias
+*/}
 
 class App extends React.Component{
   constructor(props){
@@ -39,7 +42,6 @@ class App extends React.Component{
       <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
       <Route exact path='/'component={Landing} />
       <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
-      <Route exact path='/FormProduct'component={FormProduct} />
       <Route exact path='/FormCategories'component={FormCategories} />
       
     {/*se agrego la ruta para mostrar los detalles del producto */}
