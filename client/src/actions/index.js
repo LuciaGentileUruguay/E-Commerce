@@ -8,6 +8,7 @@ export const SET_CATEGORY = 'SET_CATEGORY';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
+export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 
 export function addProduct(payload) { //agregamos un producto al carrito
   return { type: ADD_PRODUCT, payload };
@@ -38,7 +39,17 @@ export function getProducts() { //Listar productos
   return function(dispatch) {
     return axios.get("http://localhost:3001/products")
       .then(json => {
-        dispatch({ type: GET_PRODUCTS, payload: json }); //el payload seran todos los productos que me devuelve la BD
+        dispatch({ type: GET_PRODUCTS, payload: json.data }); //el payload seran todos los productos que me devuelve la BD
+      });
+  };
+}
+
+export function getProductsFromCategory(id) { //Listar productos de una categoría
+  return function(dispatch) {
+    return axios.get("http://localhost:3001/products/category/" + id)
+      .then(json => {
+        console.log(json.data);
+        dispatch({ type: GET_PRODUCTS_FROM_CATEGORY, payload: json.data }); //el payload seran todos los productos de una categoría
       });
   };
 }
@@ -46,9 +57,8 @@ export function getProducts() { //Listar productos
 export function getCategories() { //Listar categorías
   return function(dispatch) {
     return axios.get("http://localhost:3001/categories")
-      .then(response => response.json()) //la respuesta la pasamos a json
       .then(json => {
-        dispatch({ type: GET_CATEGORIES, payload: json }); //el payload seran todas las categorías que me devuelve la BD
+        dispatch({ type: GET_CATEGORIES, payload: json.data }); //el payload seran todas las categorías que me devuelve la BD
       });
   };
 }

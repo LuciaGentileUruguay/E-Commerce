@@ -1,21 +1,20 @@
 import React from 'react';
-import './product.css';
 import {Link} from "react-router-dom";
 
 
 //se importo Link de react-router-dom
-export default function Product(props){
+export default function CategoryCard (props) {
 
 // se agrego el link to correctament, mirar app para la ruta
     return (
-            <Link to={`/products/${props.id}`}>
+            <Link to={`/category/${props.id}`}>
             <div class="card">
                 <div>
-                    <img class="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+                    <img class="foto" src="https://previews.123rf.com/images/belchonock/belchonock1408/belchonock140804594/30944445-colecci%C3%B3n-de-fondos-saludables-de-alimentos-frescos.jpg" />
                 </div>
                 <div>
                     <h3>{props.name}</h3>
-                    <p>${props.price}</p>
+                    <h3>{props.description}</h3>
                 </div>
             </div>
             </Link>

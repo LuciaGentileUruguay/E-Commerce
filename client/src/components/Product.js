@@ -8,9 +8,8 @@ export default function Product(props){
 
 // se agrego el link to correctament, mirar app para la ruta
     return (
-            <div className="card">
-              <div className="card-body">
-                <Link to={`/products/${props.id}`}>
+            <Link to={`/products/${props.id}`}>
+            <div class="card">
                 <div>
                     <img class="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
                 </div>
@@ -18,9 +17,7 @@ export default function Product(props){
                     <h3>{props.name}</h3>
                     <p>${props.price}</p>
                 </div>
-                </Link>
-              </div>
             </div>
-
+            </Link>
     )
 }

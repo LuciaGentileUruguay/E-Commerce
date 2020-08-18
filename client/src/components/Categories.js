@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import './product.css';
 import {Link} from "react-router-dom";
 import { connect } from "react-redux";
-import {getProducts} from '../actions/index';
-import Product from './Product.js';
+import {getCategories} from '../actions/index';
+import CategoryCard from './CategoryCard.js';
 
-export class Products extends Component {
+export class Categories extends Component {
 
   componentDidMount(){
-    this.props.getProducts();
+    this.props.getCategories();
   }
 
 /*
@@ -25,12 +24,9 @@ export class Products extends Component {
   render() {
     return (
       <div class="catalog">
-          {this.props.products && this.props.products.map(item => <Product
-           id={item.id}
+          {this.props.categories && this.props.categories.map(item => <CategoryCard
+            id ={item.id}
            name={item.name}
-           description={item.description}
-           price={item.price}
-           stock={item.stock}
            />)}
       </div>
     );
@@ -40,14 +36,14 @@ export class Products extends Component {
 //Funciones que mapean al store
 function mapStateToProps(state) {
   return {
-    products: state.products
+    categories: state.categories
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getProducts: products => dispatch(getProducts())
+    getCategories: categories => dispatch(getCategories())
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

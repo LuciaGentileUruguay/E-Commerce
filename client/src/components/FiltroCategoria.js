@@ -1,34 +1,21 @@
 import React from "react";
 import {Link, Route} from 'react-router-dom';
 import Product from "./Product.js";
-import Category from "./Category.js";
+import CategoryCard from "./CategoryCard.js";
+import {getProductsFromCategory} from '../actions/index.js';
+import { connect } from "react-redux";
 
 
-export default class FiltroCategoria extends React.Component{
+class FiltroCategoria extends React.Component{
 
-    constructor(props){
-        super(props);
-        this.state = {
-          products:[],
-          categories : []
-        }
-        this.setState = this.setState.bind(this);
-    }
-
-    componentDidMount () {
-        axios.get('http://localhost:3001/categories')
-        .then(res => {
-            this.setState({categories: res.data})
-          })
-    }
-
-    handleInputChange (e) {
-        this.state.products[0][e.target.name]= e.target.value;
+    componentDidMount(){
+      const { match: { params: { id }}} = this.props;
+      this.props.getProductsFromCategory(id);
     }
 
     render () {
         return(
-            <div class="catalog">
+            <div class="Categories">
                 {this.props.products && this.props.products.map(item => <Product
                  id={item.id}
                  name={item.name}
@@ -42,34 +29,16 @@ export default class FiltroCategoria extends React.Component{
 
 }
 
+function mapStateToProps(state) {
+  return {
+    products: state.products
+  };
+}
 
-return (
-    <div className="container row">
-        <div>
-        <h1 className={title}>Categorias</h1>
-        <ul>
-            {categories.map((e) => (
-                <Link>
-                <li>
-                name={e.name}
-                onClick={(e) =>
-                filter(e.target.getAttribute("name"))
-                }>
-                {e.name}
-                </li>
-                </Link>
-            ))}
-        </ul>
-    </div>
-    <div className="row">
-       {array.map((e) => (
-           <ProductDetail
-           key={e}
-           name={e.name}
-           price={e.price}
-           />
-       ))}
-    </div>
-    </div>
-);
-       };
+function mapDispatchToProps(dispatch) {
+  return {
+    getProductsFromCategory: (id) => dispatch(getProductsFromCategory(id))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FiltroCategoria);

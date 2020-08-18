@@ -36,7 +36,8 @@ class ProductDetail extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProductDetail: (id) => dispatch(getProductDetail(id))
+    getProductDetail: (id) => dispatch(getProductDetail(id)),
+  //  addProduct: product => dispatch(addProduct(product)),
   }
 }
 
