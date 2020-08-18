@@ -38,7 +38,7 @@ export function getProducts() { //Listar productos
   return function(dispatch) {
     return axios.get("http://localhost:3001/products")
       .then(json => {
-        dispatch({ type: GET_PRODUCTS, payload: json }); //el payload seran todos los productos que me devuelve la BD
+        dispatch({ type: GET_PRODUCTS, payload: json.data }); //el payload seran todos los productos que me devuelve la BD
       });
   };
 }
@@ -48,7 +48,7 @@ export function getCategories() { //Listar categorías
     return axios.get("http://localhost:3001/categories")
       .then(response => response.json()) //la respuesta la pasamos a json
       .then(json => {
-        dispatch({ type: GET_CATEGORIES, payload: json }); //el payload seran todas las categorías que me devuelve la BD
+        dispatch({ type: GET_CATEGORIES, payload: json.data }); //el payload seran todas las categorías que me devuelve la BD
       });
   };
 }
