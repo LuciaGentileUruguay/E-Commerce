@@ -1,9 +1,57 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import { connect } from 'react-redux';
+import { getProductDetail } from '../actions/index';
 import './product.css';
-import FormProduct from './FormProduct.js';
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
 
+
+class ProductDetail extends React.Component {
+
+  componentDidMount(){
+    const { match: { params: { id }}} = this.props;
+    this.props.getProductDetail(id);
+    console.log(this.props);
+  }
+
+    render() {
+        return (
+          <div>
+            <div className="product-detail">
+                Detalle del producto
+                <div>
+                    <img className="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+                </div>
+                <div>
+                    <h3>{this.props.productDetail && this.props.productDetail.name}</h3>
+                    <p>{this.props.productDetail && this.props.productDetail.description}</p>
+                    <p>{this.props.productDetail && this.props.productDetail.price}</p>
+                    <p>{this.props.productDetail && this.props.productDetail.stock}</p>
+                </div>
+            </div>
+            </div>
+        )
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getProductDetail: (id) => dispatch(getProductDetail(id))
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    productDetail: state.productDetail
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
+
+
+
+/*
 export default function ProductDetail (props) {
 
     const[detail,setDetail] = useState([]);
@@ -33,3 +81,4 @@ export default function ProductDetail (props) {
       </div>
     );
 }
+*/

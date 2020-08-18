@@ -25,10 +25,13 @@ class App extends React.Component{
       .then(res => {
         this.setState({products: res.data})
       })
+      .catch(err => {
+        alert("No se encuentra el producto.");
+        this.setState({products: []})
+      })
     }
       //this.onSearch = this.onSearch.bind(this);
   }
-
 
   componentDidMount () {
     axios.get('http://localhost:3001/products')
@@ -46,9 +49,10 @@ class App extends React.Component{
         <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
         <Route exact path='/FormCategories'component={FormCategories} />
         <Route exact path='/FormProduct'component={FormProduct} />
-        
+
         {/*se agrego la ruta para mostrar los detalles del producto */}
-        <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>
+      {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
+        <Route exact path='/products/:id' component = {ProductDetail}/>
     </div>
     )
   }
