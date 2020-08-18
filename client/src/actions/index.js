@@ -57,6 +57,7 @@ export function getProductDetail(id) { //ver detalle de un producto
   return function(dispatch) {
     return axios.get("http://localhost:3001/products/" + id)
       .then(json => {
+        //console.log(json);
         dispatch({ type: GET_PRODUCT_DETAIL, payload: json }); //en este caso el payload deberia ser sólo un producto
       });
   };

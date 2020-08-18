@@ -13,17 +13,23 @@ server.get("/category/:id", (req, res, next) => {
  })
 	.then(function(products){
 		console.log("Algo :"+ req.params.id);
-    res.json(products);
+    res.status(200).json(products);
   })
 })
 
+server.get("/:id", (req,res,next) =>{
+	 Product.findByPk(req.params.id)
+		.then(product => {
+			if (!product){
+				 res.status(404).send("No se encuentra el producto");
+			 }
+			 else {
+				res.status(200).json(product);
+			 }
+		 })
+})
+
 server.get('/', (req, res, next) => {
-	server.get("/:id", (req,res,next) =>{
-	   Product.findByPk(req.params.id)
-	    .then(product => {
-		      res.status(200).json(product)
-	     })
-     })
 	if (req.query.search){
 		let aux = req.query.search;
 		Product.findAll({
@@ -102,7 +108,7 @@ server.delete('/:id', (req,res,next)=>{
 	 Product.findByPk(req.params.id)
 	 .then (function (product){
 		 if (!product){
-			 res.status(400).send("No se encontro el producto!!");
+			 res.status(400).send("No se encuentra el producto");
 			 return;
 		 } else {
 			product.destroy();

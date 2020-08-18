@@ -8,6 +8,6 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-const state = store.getState();
-console.log(state);
+//const state = store.getState();
+
 export default store;

@@ -25,6 +25,10 @@ class App extends React.Component{
       .then(res => {
         this.setState({products: res.data})
       })
+      .catch(err => {
+        alert("No se encuentra el producto.");
+        this.setState({products: []})
+      })
     }
       //this.onSearch = this.onSearch.bind(this);
   }

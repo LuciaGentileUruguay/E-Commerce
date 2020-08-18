@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getProductDetail } from '../actions/index';
 import './product.css';
-import store from '../store/store.js'
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
 
@@ -12,7 +11,6 @@ class ProductDetail extends React.Component {
   componentDidMount(){
     const { match: { params: { id }}} = this.props;
     this.props.getProductDetail(id);
-    console.log(this.props);
   }
 
     render() {
@@ -35,17 +33,19 @@ class ProductDetail extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-  return {
-    product: state.getProductDetail
-  };
-}
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = dispatch => {
   return {
     getProductDetail: (id) => dispatch(getProductDetail(id))
-  };
+  }
 }
+
+const mapStateToProps = state => {
+  return {
+    productDetail: state.getProductDetail
+  }
+}
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
 
