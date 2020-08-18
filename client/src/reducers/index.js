@@ -41,8 +41,9 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === GET_PRODUCT_DETAIL) {
-    console.log(action.payload);
+    //console.log(action.payload);
       return {
+        ...state,
         productDetail: action.payload //no nos interesa guardar datos anteriores en este caso. ...state creo que puede no estar
       };
   }

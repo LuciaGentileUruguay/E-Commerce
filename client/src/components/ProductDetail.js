@@ -11,6 +11,7 @@ class ProductDetail extends React.Component {
   componentDidMount(){
     const { match: { params: { id }}} = this.props;
     this.props.getProductDetail(id);
+    console.log(this.props);
   }
 
     render() {
@@ -22,10 +23,10 @@ class ProductDetail extends React.Component {
                     <img className="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
                 </div>
                 <div>
-                    <h3>{this.props.name}</h3>
-                    <p>{this.props.description}</p>
-                    <p>{this.props.price}</p>
-                    <p>{this.props.stock}</p>
+                    <h3>{this.props.productDetail && this.props.productDetail.name}</h3>
+                    <p>{this.props.productDetail && this.props.productDetail.description}</p>
+                    <p>{this.props.productDetail && this.props.productDetail.price}</p>
+                    <p>{this.props.productDetail && this.props.productDetail.stock}</p>
                 </div>
             </div>
             </div>
@@ -41,10 +42,9 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    productDetail: state.getProductDetail
+    productDetail: state.productDetail
   }
 }
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
