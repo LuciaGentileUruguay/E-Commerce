@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, ADD_CATEGORY, REMOVE_PRODUCT, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY, GET_PRODUCTS, GET_CATEGORIES, GET_PRODUCT_DETAIL } from '../actions';
+import { ADD_PRODUCT, ADD_CATEGORY, REMOVE_PRODUCT, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY, GET_PRODUCTS, GET_CATEGORIES, GET_PRODUCT_DETAIL, GET_PRODUCTS_FROM_CATEGORY } from '../actions';
 
 //Definimos el estado inicial
 const initialState = {
@@ -27,6 +27,13 @@ function rootReducer(state = initialState, action) {
 
 
   if (action.type === GET_PRODUCTS) { //traemos todos los productos para listarlos
+      return {
+        ...state,
+        products: action.payload
+      };
+  }
+
+  if (action.type === GET_PRODUCTS_FROM_CATEGORY) { //traemos todos los productos de una categoría
       return {
         ...state,
         products: action.payload

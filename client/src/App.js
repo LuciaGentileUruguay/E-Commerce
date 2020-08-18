@@ -5,6 +5,8 @@ import Products from './components/Products.js';
 import FormProduct from './components/FormProduct.js';
 import FormCategories from './components/FormCategories.js'
 import ProductDetail from "./components/ProductDetail.js";
+import Categories from './components/Categories.js';
+import FiltroCategoria from './components/FiltroCategoria.js';
 import Nav from './components/Nav.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
@@ -15,11 +17,9 @@ import axios from 'axios';
 */}
 
 class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      products: []
-    }
+  constructor(){
+    super();
+
     this.onSearch = (product) => {
       axios.get(`http://localhost:3001/products?search=${product}`)
       .then(res => {
@@ -32,13 +32,13 @@ class App extends React.Component{
     }
       //this.onSearch = this.onSearch.bind(this);
   }
-
+/*
   componentDidMount () {
     axios.get('http://localhost:3001/products')
     .then(res => {
         this.setState({products: res.data})
     })
-  }
+  }*/
 
 
   render(){
@@ -46,10 +46,11 @@ class App extends React.Component{
       <div>
         <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
         <Route exact path='/'component={Landing} />
-        <Route exact path='/products' render={() => <Products products={this.state.products}/>} />
+        <Route exact path='/products' component={Products} />
         <Route exact path='/FormCategories'component={FormCategories} />
         <Route exact path='/FormProduct'component={FormProduct} />
-
+        <Route exact path='/categories'component={Categories} />
+        <Route exact path='/category/:id' component = {FiltroCategoria}/>
         {/*se agrego la ruta para mostrar los detalles del producto */}
       {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
         <Route exact path='/products/:id' component = {ProductDetail}/>
