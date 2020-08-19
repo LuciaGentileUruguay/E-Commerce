@@ -1,7 +1,7 @@
 import axios from 'axios';
-export const ADD_PRODUCT = 'ADD_PRODUCT';
+export const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
-export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+export const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
 export const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const SET_CATEGORY = 'SET_CATEGORY';
@@ -10,12 +10,12 @@ export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 
-export function addProduct(payload) { //agregamos un producto al carrito
-  return { type: ADD_PRODUCT, payload };
+export function addProductToCart(payload) { //agregamos un producto al carrito
+  return { type: ADD_PRODUCT_TO_CART, payload };
 }
 
-export function removeProduct(payload) { //eliminamos un producto del carrito
-  return { type: REMOVE_PRODUCT, payload };
+export function removeProductFromCart(payload) { //eliminamos un producto del carrito
+  return { type: REMOVE_PRODUCT_FROM_CART, payload };
 }
 
 export function setProduct(payload) {  //modicamos un producto
