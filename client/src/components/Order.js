@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { removeProductFromOrder,getProducts } from "../actions/index";
+import { removeProductFromOrder,getProductsFromOrder } from "../actions/index";
 import { Link } from 'react-router-dom';
 
 export class Order extends Component {
   componentDidMount(){
-    // let usuario = false
-    // if (usuario){
-    //     this.props.getProductsFromOrderUser(usuario);
+    this.props.getProductsFromOrder(id, user, payload);
     // }else this.props.getProductsFromOrderGuest()
   }
   render() {
