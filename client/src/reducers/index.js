@@ -1,5 +1,5 @@
-import { ADD_PRODUCT_TO_CART, ADD_CATEGORY,
- REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY,
+import { ADD_PRODUCT_TO_ORDER, ADD_CATEGORY,
+ REMOVE_PRODUCT_FROM_ORDER, REMOVE_CATEGORY,
   SET_PRODUCT, SET_CATEGORY,
    GET_PRODUCTS, GET_PRODUCTS_FROM_CATEGORY,
    GET_CATEGORIES, GET_CAT_FROM_PRODUCT,
@@ -7,24 +7,24 @@ import { ADD_PRODUCT_TO_CART, ADD_CATEGORY,
 //Definimos el estado inicial
 const initialState = {
   products: [],
-  shoppingCart: [],
+  order: [44,55,43],
   categories: [],
   productDetail: {categoryId: []}
 };
 
 
 function rootReducer(state = initialState, action) {
-  if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
+  if (action.type === ADD_PRODUCT_TO_ORDER) { //Agregamos un producto al carrito
       return {
         ...state, //traigo todo el estado, tal cual
-        shoppingCart:[...state.shoppingCart, action.payload]
+        order:[...state.order, action.payload]
       }
   }
 
-  if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
+  if (action.type === REMOVE_PRODUCT_FROM_ORDER) { //quitamos un producto del carrito de compras
     return {
         ...state,
-        shoppingCart: state.shoppingCart.filter(item => item.id !== action.payload.id)
+        order: state.order.filter(item => item.id !== action.payload.id)
         //dejamos en el array todos los que son distintos de la que quiero eliminar
     };
   }
