@@ -68,10 +68,10 @@ server.get('/', (req, res, next) => {
 
 //Ruta para crear Products
 server.post('/', (req,res,next) =>{
-	const {name, description, price, image, stock} = req.body;
+	const {name, description, price, image, stock,categoryId} = req.body;
 
 	//En caso de que no exista algun campo se devuelve error!
-	if (!name || !description || !price || !stock){
+	if (!name || !description || !price || !stock || !categoryId.length){
 		res.status(400).send("Uno de los campos no ha sido completado");
 	} else {
 		//Se crea el Producto!
@@ -82,6 +82,7 @@ server.post('/', (req,res,next) =>{
 			image,
 			stock
 		}).then (function(product){
+			product.setCategories(categoryId)
 			res.json(product);
 		})
 
@@ -92,7 +93,7 @@ server.post('/', (req,res,next) =>{
 server.put('/:id', (req,res,next)=>{
 	return Product.findByPk(req.params.id)
 	.then (function(product){
-		const {name, description, price, image, stock} = req.body;
+		const {name, description, price, image, stock,categoryId} = req.body;
 		product.name = name;
 		product.description = description;
 		product.price = price;
