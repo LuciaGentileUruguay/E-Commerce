@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { removeProduct } from "../../actions/index";
+import { removeProductFromCart } from "../../actions/index";
 import { Link } from 'react-router-dom';
 
 
@@ -33,7 +33,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    removeProduct: shoppingCart => dispatch(removeProduct(shoppingCart))
+    removeProductFromCart: shoppingCart => dispatch(removeProductFromCart(shoppingCart))
   };
 }
 

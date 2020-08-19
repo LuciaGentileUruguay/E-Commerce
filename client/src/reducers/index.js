@@ -1,4 +1,9 @@
-import { ADD_PRODUCT, ADD_CATEGORY, REMOVE_PRODUCT, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY, GET_PRODUCTS, GET_PRODUCTS_FROM_CATEGORY,GET_CATEGORIES, GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL } from '../actions';
+import { ADD_PRODUCT_TO_CART, ADD_CATEGORY,
+ REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY,
+  SET_PRODUCT, SET_CATEGORY,
+   GET_PRODUCTS, GET_PRODUCTS_FROM_CATEGORY,
+   GET_CATEGORIES, GET_CAT_FROM_PRODUCT,
+    GET_PRODUCT_DETAIL } from '../actions';
 //Definimos el estado inicial
 const initialState = {
   products: [],
@@ -9,14 +14,14 @@ const initialState = {
 
 
 function rootReducer(state = initialState, action) {
-  if (action.type === ADD_PRODUCT) { //Agregamos un producto al carrito
+  if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
       return {
         ...state, //traigo todo el estado, tal cual
         shoppingCart:[...state.shoppingCart, action.payload]
       }
   }
 
-  if (action.type === REMOVE_PRODUCT) { //quitamos un producto del carrito de compras
+  if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
     return {
         ...state,
         shoppingCart: state.shoppingCart.filter(item => item.id !== action.payload.id)
