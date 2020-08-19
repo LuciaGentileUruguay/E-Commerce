@@ -3,7 +3,18 @@ const { Product, Category, category_products } = require('../db.js');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
-
+server.get("/product/:id", (req, res, next) => {
+	Category.findAll({
+		include: [{
+    	model: Product,
+    	where: {id: req.params.id}
+   }]
+ })
+	.then(function(products){
+		console.log("Algo :"+ req.params.id);
+    res.status(200).json(products);
+  })
+})
 
 server.get('/', (req, res, next) => {
 	if (req.query.search){

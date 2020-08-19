@@ -1,11 +1,10 @@
-import { ADD_PRODUCT, ADD_CATEGORY, REMOVE_PRODUCT, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY, GET_PRODUCTS, GET_CATEGORIES, GET_PRODUCT_DETAIL, GET_PRODUCTS_FROM_CATEGORY } from '../actions';
-
+import { ADD_PRODUCT, ADD_CATEGORY, REMOVE_PRODUCT, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY, GET_PRODUCTS, GET_PRODUCTS_FROM_CATEGORY,GET_CATEGORIES, GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL } from '../actions';
 //Definimos el estado inicial
 const initialState = {
   products: [],
   shoppingCart: [],
   categories: [],
-  productDetail: {}
+  productDetail: {categoryId: []}
 };
 
 

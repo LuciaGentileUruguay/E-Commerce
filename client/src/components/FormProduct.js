@@ -1,89 +1,138 @@
 import React from 'react';
 import axios from 'axios';
+import { addProduct,getCategories } from '../actions/index';		
+import { connect } from 'react-redux';		
+import {Link} from "react-router-dom";
 
-export default class extends React.Component {
+class FormProduct extends React.Component {
 
   constructor(props) {
       super(props);
       this.state = {
-        products: [{
-            name: props.name,
-            category: props.category,
-            description: props.description,
-            price: props.price,
-            stock: props.stock
-          }],
-
-        categories : [],
+        categoryId:[]
       }
-      this.setState = this.setState.bind(this);
   }
 
   componentDidMount () {
-      axios.get('http://localhost:3001/categories')
-      .then(res => {
-          this.setState({categories: res.data})
-        })
+    this.props.getCategories()
   }
 
   handleInputChange (e) {
 
-    this.state.products[0][e.target.name]= e.target.value;
+    this.props.productDetail[e.target.name] = e.target.value;
   }
 
+  handleInputChangeCategory(e){		
+    	    let array = this.props.productDetail.categoryId		
+    	    let flag = true		
+    	    array.forEach((id,i) => {		
+    	      if (id == e.target.value){		
+    	        array.splice(i,1)		
+    	        flag = false		
+    	        return		
+    	      }		
+    	    })		
+    	    if(flag){		
+    	      this.props.productDetail.categoryId.push(e.target.value)		
+    	    }				
+    	   }
+
   save(){
-    axios.post(`http://localhost:3001/products`, this.state.products[0])
+    axios.post(`http://localhost:3001/products`, this.props.productDetail)
       .then(res => {
         if(res.status === 200){
           alert("PRODUCTO GUARDADO CORRECTAMENTE");
+        }else {alert("hubo un error!!!")
         }
       })
-    axios.get('http://localhost:3001/products')
-      .then(res=> {
-        let productId =res.data[res.data.length-1].id
-        axios.post("http://localhost:3001/categoryProducts", {
-            productId: productId,
-            categoryId: this.state.products[0].category
-        })
+    }
+    modify(){
+      console.log(this.props.productDetail)
+      axios.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
+       this.props.productDetail)
         .then(res => {
-          alert("el id de la categoria ha sido guardada")
+          if(res.status === 200){
+            alert("PRODUCTO GUARDADO CORRECTAMENTE");
+          } else {alert("hubo un error!!!")
+          console.log(res);}
         })
-      })
-  }
+    }
+    delete(){
+      console.log(this.props.productDetail)
+      axios.delete(`http://localhost:3001/products/${this.props.productDetail.id}`,
+       this.props.productDetail)
+        .then(res => {
+          if(res.status === 200){
+            alert("PRODUCTO BORRADO CORRECTAMENTE");
+          } else {alert("hubo un error!!!")
+          console.log(res);}
+        })
+    } 
 
-  render () {
-    return (
+    render () {
 
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        this.save() }}>
-        <div className = "divForm">
-          <label> Nombre: </label>
-          <input type="text" name="name" placeholder={this.state.products.name} value={this.state.products.name} onChange={(e) => this.handleInputChange(e)} />
-        </div>
-        <div className = "divForm">
-          <label>Categoría:</label>
-            <select name="category" value={this.state.products.category} onChange={(e) => this.handleInputChange(e)}>
-              <option disabled selected>{this.props.categoryName}</option>
-              {this.state.categories.map(item => {
-                return (<option value = {item.id} > {item.name} </option>)})}
-            </select>
-        </div>
-        <div className = "divForm">
-          <label>Descripción:</label>
-          <input type="text" name="description" placeholder={this.state.products.description} onChange={(e) => this.handleInputChange(e)} value={this.state.products.description} />
-        </div>
-        <div className = "divForm">
-          <label>Precio:</label>
-          <input type="text" name="price" placeholder={this.state.products.price} onChange={(e) => this.handleInputChange(e)} value={this.state.products.price} />
-        </div>
-        <div className = "divForm">
-          <label>Stock:</label>
-          <input type="text" name="stock" placeholder={this.state.products.stock} onChange={(e) => this.handleInputChange(e)} value={this.state.products.stock} />
-        </div>
-        <input id= "botonBorrar" type='submit' value="Borrar"/>
-        <button className="btn btn-sm btn-danger"> Guardar </button>
-      </form>
-    )
+      return (
+          
+        <form >
+          <div className = "divForm">
+            <label> Nombre: </label>
+            <input type="text" name="name" 
+            placeholder={this.props.productDetail && this.props.productDetail.name} 
+            
+            onChange={(e) => this.handleInputChange(e)} />
+          </div>
+           <div className = "divForm">
+            <label>Categoría:</label>
+             
+                {this.props.categories && this.props.categories.map(item => {
+                  return (<div>
+                    <input type="checkbox" value = {item.id} onChange={(e) => this.handleInputChangeCategory(e)}/>
+                    <label> {item.name} </label>
+                    </div>)})}
+             
+          </div>
+          <Link to="/FormCategories">
+          <button>Editar Categorias</button>
+          </Link>
+          <div className = "divForm">
+            <label>Descripción:</label>
+            <input type="text" name="description" placeholder={ this.props.productDetail.description} onChange={(e) => this.handleInputChange(e)}  />
+          </div>
+          <div className = "divForm">
+            <label>Precio:</label>
+            <input type="text" name="price" placeholder={this.props.productDetail && this.props.productDetail.price} onChange={(e) => this.handleInputChange(e)}  />
+          </div>
+          <div className = "divForm">
+            <label>Stock:</label>
+            <input type="text" name="stock" placeholder={this.props.productDetail && this.props.productDetail.stock} onChange={(e) => this.handleInputChange(e)}  />
+          </div>
+          <input id= "botonBorrar" type='submit' value="Borrar" onClick={(e) => {
+          e.preventDefault();
+          this.delete() }}/>
+          <input id= "botonGuardar" type='submit' value="Guardar" onClick={(e) => {
+          e.preventDefault();
+          if (this.props.productDetail){
+            this.modify()
+          }
+          this.save() }}/>
+        </form>
+      )
+  
+    }
   }
-}
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      getCategories: () => dispatch(getCategories())
+    }
+  }
+  
+  const mapStateToProps = state => {
+    return {
+      productDetail: state.productDetail,
+      categories:state.categories
+    }
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(FormProduct);
+  
