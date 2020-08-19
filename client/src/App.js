@@ -8,6 +8,7 @@ import ProductDetail from "./components/ProductDetail.js";
 import Categories from './components/Categories.js';
 import FiltroCategoria from './components/FiltroCategoria.js';
 import Nav from './components/Nav.js';
+import Order from './components/Order.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
@@ -51,6 +52,7 @@ class App extends React.Component{
         <Route exact path='/FormProduct'component={FormProduct} />
         <Route exact path='/categories'component={Categories} />
         <Route exact path='/category/:id' component = {FiltroCategoria}/>
+        <Route exact path='/order' component = {Order}/>
         {/*se agrego la ruta para mostrar los detalles del producto */}
       {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
         <Route exact path='/products/:id' component = {ProductDetail}/>
