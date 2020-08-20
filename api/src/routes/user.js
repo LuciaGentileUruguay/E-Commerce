@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { User, order_line, Product, Order } = require('../db.js');
+const { User, Order_line, Product, Order } = require('../db.js');
 const { Sequelize } = require('sequelize');
 
 //crear un usuario
@@ -73,8 +73,8 @@ server.delete('/:id',(req,res,next)=>{
 })
 
 server.post('/:id/cart',(req,res,next) =>{
-  var order;
-  const productId = req.body;
+  var orderID;
+  const productId = req.body.productId;
   const userId = req.params.id;
   Order.findOrCreate({
     where:{
@@ -82,30 +82,34 @@ server.post('/:id/cart',(req,res,next) =>{
       estado: 'pending'
     }
   }) //findOrCreate devuelve un array
-   .then(orders => {
-     order = orders[0]; //Solo hay un carrito por usuario con estado pending
-     order_line.findOne({
+   .then(order => {
+     console.log(order[0].id);
+     orderID = order[0].id;
+     console.log(orderID);
+     Order_line.findOne({
        where: {
-         idOrder: order.idOrder,
-         idProduct: productId
+         orderId: order[0].id,
+         productId: productId
        }
      })
      .then(res => { //si existe el producto entonces aumento en uno la cantidad
+       console.log("RESSS: ", res);
        if(res !== null){
          res.update({
            cantidad: res.cantidad + 1
          },
          { where: {
-             idOrder: order.idOrder,
-             idProduct: productId
+             orderId: order.idOrder,
+             productId: productId
            }
          }
         )
        } else { //si no existe, creo una nueva fila en la tabla
-         order_line.add({
+         Order_line.create({
            cantidad: 1,
-           idProduct: productId,
-           idOrder: order.idOrder
+           productId: productId,
+           orderId: orderID,
+           price: 100
          })
        }
      })
