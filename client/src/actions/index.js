@@ -9,6 +9,7 @@ export const GET_PRODUCTS = 'GET_PRODUCTS';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
+export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
 
 export function addProductToOrder(payload) { //agregamos un producto al carrito
   return { type: ADD_PRODUCT_TO_ORDER, payload };
@@ -52,6 +53,20 @@ export function getProductsFromCategory(id) { //Listar productos de una categor�
         dispatch({ type: GET_PRODUCTS_FROM_CATEGORY, payload: json.data }); //el payload seran todos los productos de una categoría
       });
   };
+}
+
+export function getProductsFromOrder(id, user = false, payload) { //Listar productos de una orden
+  if(user){
+    return function(dispatch) {
+      return axios.get("http://localhost:3001/products/order/" + id)
+        .then(json => {
+          dispatch({ type: GET_PRODUCTS_FROM_ORDER, payload: json.data }); //el payload seran todos los productos de una orden
+        });
+    };
+  }
+  else {
+    return { type: GET_PRODUCTS_FROM_ORDER, payload };
+  }
 }
 
 export function getCategories() { //Listar categorías
