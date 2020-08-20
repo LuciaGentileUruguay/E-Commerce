@@ -4,10 +4,12 @@ import { ADD_PRODUCT_TO_ORDER, ADD_CATEGORY,
    GET_PRODUCTS, GET_PRODUCTS_FROM_CATEGORY,
    GET_CATEGORIES, GET_CAT_FROM_PRODUCT,
     GET_PRODUCT_DETAIL } from '../actions';
+
+
 //Definimos el estado inicial
 const initialState = {
   products: [],
-  order: [44,55,43],
+  order: [],
   categories: [],
   productDetail: {categoryId: []}
 };

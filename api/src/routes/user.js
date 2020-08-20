@@ -75,6 +75,7 @@ server.delete('/:id',(req,res,next)=>{
 server.post('/:id/cart',(req,res,next) =>{
   var orderID;
   const productId = req.body.productId;
+  const price = req.body.price;
   const userId = req.params.id;
   Order.findOrCreate({
     where:{
@@ -83,38 +84,43 @@ server.post('/:id/cart',(req,res,next) =>{
     }
   }) //findOrCreate devuelve un array
    .then(order => {
-     console.log(order[0].id);
      orderID = order[0].id;
-     console.log(orderID);
      Order_line.findOne({
        where: {
-         orderId: order[0].id,
+         orderId: orderID,
          productId: productId
        }
      })
-     .then(res => { //si existe el producto entonces aumento en uno la cantidad
-       console.log("RESSS: ", res);
-       if(res !== null){
+     .then(res => {
+       if(res !== null){ //si existe el producto entonces aumento en uno la cantidad
          res.update({
            cantidad: res.cantidad + 1
-         },
-         { where: {
-             orderId: order.idOrder,
-             productId: productId
-           }
-         }
-        )
-       } else { //si no existe, creo una nueva fila en la tabla
-         Order_line.create({
-           cantidad: 1,
-           productId: productId,
-           orderId: orderID,
-           price: 100
          })
        }
+       else { //si no existe, creo una nueva fila en la tabla
+         Order_line.create({
+         cantidad: 1,
+         productId: productId,
+         orderId: orderID,
+         price: price
+       })
+      }
      })
    })
+   res.send();
 })
 
+
+server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un usuario
+  const userId = req.params.id;
+  Order.findAll({
+    where:{
+      userId: userId
+    }
+  })
+  .then(res => {
+    res.send(res);
+  })
+})
 
 module.exports = server;
