@@ -52,7 +52,7 @@ server.put('/:id',(req,res,next)=>{
             res.status(200).send("Usuario modificado")
             return;
             }
-            
+
         })
     }
 })
@@ -73,29 +73,44 @@ server.delete('/:id',(req,res,next)=>{
 })
 
 server.post('/:id/cart',(req,res,next) =>{
-   const {productId,cantidad,price,orderId} = req.body;
-   Order.findOrCrete({
-       where:{
-           userId: req.params.id
+  var order;
+  const productId = req.body;
+  const userId = req.params.id;
+  Order.findOrCreate({
+    where:{
+      userId: userId,
+      estado: 'pending'
+    }
+  }) //findOrCreate devuelve un array
+   .then(orders => {
+     order = orders[0]; //Solo hay un carrito por usuario con estado pending
+     order_line.findOne({
+       where: {
+         idOrder: order.idOrder,
+         idProduct: productId
        }
+     })
+     .then(res => { //si existe el producto entonces aumento en uno la cantidad
+       if(res !== null){
+         res.update({
+           cantidad: res.cantidad + 1
+         },
+         { where: {
+             idOrder: order.idOrder,
+             idProduct: productId
+           }
+         }
+        )
+       } else { //si no existe, creo una nueva fila en la tabla
+         order_line.add({
+           cantidad: 1,
+           idProduct: productId,
+           idOrder: order.idOrder
+         })
+       }
+     })
    })
-   .then(order=>{//orderId--> Null o que tenga algo
-        if (order.estado ==="pending"){//productId--> 2
-            order_line.findOne(order.id)
-            .then(res=>{
-                res.update({
-                    cantidad: res.cantidad + 1,
-                    price
-                })
-            })
-        } else {
-             order_line.create()
-             .then(res=>{
-
-             })
-        }
-   })
-}) 
+})
 
 
 module.exports = server;
