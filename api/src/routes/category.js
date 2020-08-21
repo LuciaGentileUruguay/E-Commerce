@@ -46,6 +46,7 @@ server.get('/', (req, res, next) => {
 
 server.post('/', (req,res,next) =>{
 	const {name, description} = req.body;
+	console.log(req)
 
 	//En caso de que no exista algun campo se devuelve error!
 	if (!name){

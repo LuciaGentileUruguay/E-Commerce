@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail } from '../actions/index';
+import { getProductDetail, getProductsCategories } from '../actions/index';
 import './product.css';
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
@@ -8,18 +8,13 @@ import {Link,Route} from "react-router-dom";
 
 class ProductDetail extends React.Component {
   constructor(){		
-    	    super();		
-    	    this.state={categories:[]}		
+    	    super();			
     	  }
 
         componentDidMount(){
           const { match: { params: { id }}} = this.props;
           this.props.getProductDetail(id);
-          console.log(id)
-          axios.get("http://localhost:3001/categories/product/"+id)
-          .then(res =>{
-            this.setState({categories:res.data})
-            })
+          this.props.getProductsCategories(id)
           }
 
           render() {
@@ -32,13 +27,13 @@ class ProductDetail extends React.Component {
                     </div>
                     <div>
                         <h3>Nombre:{this.props.productDetail && this.props.productDetail.name}</h3>
-                        {this.state.categories.map(item=>{
+                        {this.props.productCategories.map(item=>{
                           return <p>Categoria:{item.name}</p>
                         })}
                         <p>{this.props.productDetail && this.props.productDetail.description}</p>
                         <p>{this.props.productDetail && this.props.productDetail.price}</p>
                         <p>{this.props.productDetail && this.props.productDetail.stock}</p>
-                        <Link to="/FormProduct">
+                        <Link to="/form_product">
                           <button>Editar</button>
                         </Link>
                     </div>
@@ -50,13 +45,15 @@ class ProductDetail extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProductDetail: (id) => dispatch(getProductDetail(id))
+    getProductDetail: (id) => dispatch(getProductDetail(id)),
+    getProductsCategories: (id) => dispatch(getProductsCategories(id))
   }
 }
 
 const mapStateToProps = state => {
   return {
-    productDetail: state.productDetail
+    productDetail: state.productDetail,
+    productCategories: state.productCategories
   }
 }
 

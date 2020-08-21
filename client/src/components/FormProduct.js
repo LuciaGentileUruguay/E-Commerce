@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { addProduct,getCategories } from '../actions/index';		
+import {getCategories } from '../actions/index';		
 import { connect } from 'react-redux';		
 import {Link} from "react-router-dom";
 
@@ -15,6 +15,14 @@ class FormProduct extends React.Component {
 
   componentDidMount () {
     this.props.getCategories()
+    if(this.props.productCategories){		
+      	      console.log(this.props.productCategories)		
+      	      this.props.productDetail["categoryId"]=[]		
+      	      this.props.productCategories.map(item=>{		
+      	        this.props.productDetail.categoryId.push(item.id.toString())		
+      	      })		
+      	      console.log(this.props.productDetail.categoryId)		
+      	    }
   }
 
   handleInputChange (e) {
@@ -34,7 +42,8 @@ class FormProduct extends React.Component {
     	    })		
     	    if(flag){		
     	      this.props.productDetail.categoryId.push(e.target.value)		
-    	    }				
+          }			
+          console.log(this.props.productDetail.categoryId)		
     	   }
 
   save(){
@@ -86,12 +95,14 @@ class FormProduct extends React.Component {
              
                 {this.props.categories && this.props.categories.map(item => {
                   return (<div>
-                    <input type="checkbox" value = {item.id} onChange={(e) => this.handleInputChangeCategory(e)}/>
+                    <input type="checkbox" 
+                    value = {item.id}		
+	                onChange={(e) => this.handleInputChangeCategory(e)}/>
                     <label> {item.name} </label>
                     </div>)})}
              
           </div>
-          <Link to="/FormCategories">
+          <Link to="/form_categories">
           <button>Editar Categorias</button>
           </Link>
           <div className = "divForm">
@@ -115,6 +126,12 @@ class FormProduct extends React.Component {
             this.modify()
           }
           this.save() }}/>
+          <Link to={"/products/"+this.props.productDetail.id}>		
+          <button>Volver a Producto</button>		
+	        </Link>		
+          <Link to="/products/">		
+          <button>Volver a Tienda</button>		
+	         </Link>
         </form>
       )
   
@@ -130,7 +147,8 @@ class FormProduct extends React.Component {
   const mapStateToProps = state => {
     return {
       productDetail: state.productDetail,
-      categories:state.categories
+      categories:state.categories,
+      productCategories:state.productCategories
     }
   }
   

@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { getCategories} from '../actions/index';		
+import {Link} from "react-router-dom";
 
 export class FormCategories extends React.Component {
 
@@ -8,6 +10,9 @@ export class FormCategories extends React.Component {
       super(props);
         this.state={category:{}}
   }
+  componentDidMount () {		
+    	    this.props.getCategories()		
+    	  }
 
   handleInputChange (e) {
     this.state.category[e.target.name]= e.target.value;
@@ -32,20 +37,27 @@ export class FormCategories extends React.Component {
     })
 
   }
+  deleteCat(){			
+    axios.delete("http://localhost:3001/categories/" + this.state.category.id)
+    .then(res => {
+      if(res.status === 200){
+        alert("CATEGORIA BORRADA CORRECTAMENTE");
+      }
+    })
+
+  }
 
 
 
 
   render () {
     return (
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        this.modifyCat() }}>
+      <form>
 
         <div className = "divForm">  
         <select       
         name="id" 		
-	        // value={this.props.categories} 		
+	  	
 	        onChange={(e) => this.handleInputChange(e) }>		
 	        <option disabled selected>Elija Categoria...</option>		
 	        {this.props.categories && this.props.categories.map(item => {		
@@ -63,25 +75,46 @@ export class FormCategories extends React.Component {
         </div>
 
         <div className = "divForm">
-          <label>Descripción:</label>
-          <input type="text" name="description" 
-          onChange={(e) => this.handleInputChange(e)} 
-          value={this.props.categories.description} />
-        </div>
-
+        <label>Nueva Descripción:</label>
+        <input name="description" type="text" 
+          onChange={(e) => this.handleInputChange(e) }>		
+			     </input>
         
-        <button className="btn btn-sm btn-danger"> Guardar </button>
+        </div>
+        <button onClick={(e) => {      
+            this.modifyCat() 
+            this.props.getCategories()
+       }}> Guardar </button>
+        <button onClick={(e) => {
+              this.deleteCat()
+              this.props.getCategories() }
+        }> Borrar </button>
+         <Link to="/new_category_form">
+         <button>Crear Nueva Categoria</button>
+         </Link>
+         <Link to="/form_product">
+         <button>Volver a Producto</button>
+         </Link>
+         <Link to="/products/">
+         <button>Volver a Tienda</button>
+         </Link>
       </form>
     )
     }
 
 }
 
-	const mapStateToProps = state => {		
-  	  return {		
-  	    		
-  	    categories:state.categories		
-  	  }		
-  	}		
-  			
- export default connect(mapStateToProps)(FormCategories);
+const mapStateToProps = state => {		
+  return {		
+    productDetail: state.productDetail,		
+    categories:state.categories		
+  }		
+}		
+const mapDispatchToProps = dispatch => {
+  return {
+    getCategories: () => dispatch(getCategories()),
+
+  }
+}
+    
+export default connect(mapStateToProps, mapDispatchToProps)(FormCategories);

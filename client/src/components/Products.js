@@ -1,26 +1,10 @@
 import React, { Component } from 'react';
 import './product.css';
-import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 import {getProducts} from '../actions/index';
 import Product from './Product.js';
 
 export class Products extends Component {
-
-  componentDidMount(){
-    this.props.getProducts();
-  }
-
-/*
-  handleChange(event) {
-    this.setState({ title: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.getMovies(this.state.title);
-  }
-*/
 
   render() {
     return (
@@ -44,10 +28,5 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    getProducts: products => dispatch(getProducts())
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Products);
+export default connect(mapStateToProps)(Products);

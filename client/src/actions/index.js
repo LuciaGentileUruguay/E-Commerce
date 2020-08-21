@@ -6,7 +6,9 @@ export const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const SET_CATEGORY = 'SET_CATEGORY';
 export const GET_PRODUCTS = 'GET_PRODUCTS';
+export const GET_PRODUCTS_BY_NAME = 'GET_PRODUCTS_BY_NAME';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
+export const GET_PRODUCT_CATEGORIES = 'GET_PRODUCT_CATEGORIES';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
@@ -41,6 +43,15 @@ export function getProducts() { //Listar productos
     return axios.get("http://localhost:3001/products")
       .then(json => {
         dispatch({ type: GET_PRODUCTS, payload: json.data }); //el payload seran todos los productos que me devuelve la BD
+      });
+  };
+}
+
+export function getProductsByName(product) { //Listar productos
+  return function(dispatch) {
+    return axios.get("http://localhost:3001/products?search="+product)
+      .then(json => {
+        dispatch({ type: GET_PRODUCTS_BY_NAME, payload: json.data }); //el payload seran todos los productos que me devuelve la BD
       });
   };
 }
@@ -87,6 +98,14 @@ export function getCategories() { //Listar categorías
     return axios.get("http://localhost:3001/categories")
       .then(json => {
         dispatch({ type: GET_CATEGORIES, payload: json.data }); //el payload seran todas las categorías que me devuelve la BD
+      });
+  };
+}
+export function getProductsCategories(id) { //Listar categorías
+  return function(dispatch) {
+    return axios.get("http://localhost:3001/categories/product/"+id)
+      .then(json => {
+        dispatch({ type: GET_PRODUCT_CATEGORIES, payload: json.data }); //el payload seran todas las categorías que me devuelve la BD
       });
   };
 }

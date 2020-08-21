@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import Products from './components/Products.js';
 import FormProduct from './components/FormProduct.js';
+import NewCategoryForm from './components/NewCategoryForm.js'
 import FormCategories from './components/FormCategories.js'
 import ProductDetail from "./components/ProductDetail.js";
 import Categories from './components/Categories.js';
@@ -12,34 +13,21 @@ import Order from './components/Order.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
 import axios from 'axios';
-{/*
-  crear request que envie el id de los productoos y devuelva el categoryId de los mismos
-  crear request que envie id de la categoria y devuelva el nombre de la categorias
-*/}
+import { getProducts,getProductsByName } from './actions/index';
+import { connect } from "react-redux";
 
 class App extends React.Component{
   constructor(){
     super();
 
     this.onSearch = (product) => {
-      axios.get(`http://localhost:3001/products?search=${product}`)
-      .then(res => {
-        this.setState({products: res.data})
-      })
-      .catch(err => {
-        alert("No se encuentra el producto.");
-        this.setState({products: []})
-      })
+      this.props.getProductsByName(product)
     }
-      //this.onSearch = this.onSearch.bind(this);
+
   }
-/*
-  componentDidMount () {
-    axios.get('http://localhost:3001/products')
-    .then(res => {
-        this.setState({products: res.data})
-    })
-  }*/
+  componentDidMount(){		
+    	    this.props.getProducts();		
+    	  }
 
 
   render(){
@@ -48,8 +36,9 @@ class App extends React.Component{
         <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
         <Route exact path='/'component={Landing} />
         <Route exact path='/products' component={Products} />
-        <Route exact path='/FormCategories'component={FormCategories} />
-        <Route exact path='/FormProduct'component={FormProduct} />
+        <Route exact path='/new_category_form'component={NewCategoryForm} /> 
+        <Route exact path='/form_categories'component={FormCategories} />
+        <Route exact path='/form_product'component={FormProduct} />
         <Route exact path='/categories'component={Categories} />
         <Route exact path='/category/:id' component = {FiltroCategoria}/>
         <Route exact path='/order/:id' component = {Order}/>
@@ -61,4 +50,18 @@ class App extends React.Component{
   }
 }
 
-export default App;
+	const mapDispatchToProps = dispatch => {		
+  	  return {		
+  	    getProductsByName: (product) => dispatch(getProductsByName(product)),		
+  	    getProducts: ()=> dispatch(getProducts())		
+  	  }		
+  	}		
+  		
+  	const mapStateToProps = state => {		
+  	  return {		
+  	    productDetail: state.products		
+  	  }		
+  	}		
+  			
+  			
+	export default connect(mapStateToProps, mapDispatchToProps)(App);
