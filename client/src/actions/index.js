@@ -1,7 +1,7 @@
 import axios from 'axios';
-export const ADD_PRODUCT_TO_ORDER = 'ADD_PRODUCT_TO_ORDER';
+export const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
-export const REMOVE_PRODUCT_FROM_ORDER = 'REMOVE_PRODUCT_FROM_ORDER';
+export const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
 export const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const SET_CATEGORY = 'SET_CATEGORY';
@@ -13,13 +13,13 @@ export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 
-export function addProductToOrder(payload) { //agregamos un producto al carrito
-  return { type: ADD_PRODUCT_TO_ORDER, payload };
+export function addProductToCart(payload) { //agregamos un producto al carrito
+  return { type: ADD_PRODUCT_TO_CART, payload };
 }
 
-export function removeProductFromOrder(payload) { //eliminamos un producto del carrito
-  return { type: REMOVE_PRODUCT_FROM_ORDER, payload };
-}
+/*export function removeProductFromCart(prodId) { //eliminamos un producto del carrito
+  return { type: REMOVE_PRODUCT_FROM_CART, payload };
+}*/
 
 export function setProduct(payload) {  //modicamos un producto
   return { type: SET_PRODUCT, payload };
@@ -38,6 +38,16 @@ export function setCategory(payload) { //modificamos una categorÃ­a
   return { type: SET_CATEGORY, payload };
 }
 */
+
+export function removeProductFromCart(id, prodId) { //eliminamos un producto del carrito de un usuario id
+  return function(dispatch) {
+    return axios.delete("http://localhost:3001/users/" + id +"/cart/" + prodId)
+      .then(json => {
+        dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: prodId });
+      });
+  };
+}
+
 export function getProducts() { //Listar productos
   return function(dispatch) {
     return axios.get("http://localhost:3001/products")
@@ -66,19 +76,6 @@ export function getProductsFromCategory(id) { //Listar productos de una categorÃ
   };
 }
 
-// export function getProductsFromOrder(productId, userId, payload) { //Listar productos de una orden
-//   if(userId){
-//     return function(dispatch) {
-//       return axios.get("http://localhost:3001//" + id)
-//         .then(json => {
-//           dispatch({ type: GET_PRODUCTS_FROM_ORDER, payload: json.data }); //el payload seran todos los productos de una orden
-//         });
-//     };
-//   }
-//   else {
-//     return { type: GET_PRODUCTS_FROM_ORDER, payload };
-//   }
-// }
 
 export function getProductsCart(userId){
   return function(dispacth){

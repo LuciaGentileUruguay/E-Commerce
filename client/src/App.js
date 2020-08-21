@@ -25,8 +25,8 @@ class App extends React.Component{
     }
 
   }
-  componentDidMount(){		
-    	    this.props.getProducts();		
+  componentDidMount(){
+    	    this.props.getProducts();
     	  }
 
 
@@ -36,12 +36,12 @@ class App extends React.Component{
         <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
         <Route exact path='/'component={Landing} />
         <Route exact path='/products' component={Products} />
-        <Route exact path='/new_category_form'component={NewCategoryForm} /> 
+        <Route exact path='/new_category_form'component={NewCategoryForm} />
         <Route exact path='/form_categories'component={FormCategories} />
         <Route exact path='/form_product'component={FormProduct} />
         <Route exact path='/categories'component={Categories} />
         <Route exact path='/category/:id' component = {FiltroCategoria}/>
-        <Route exact path='/order/:id' component = {Order}/>
+        <Route exact path='/cart/:id' component = {Order}/>
         {/*se agrego la ruta para mostrar los detalles del producto */}
       {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
         <Route exact path='/products/:id' component = {ProductDetail}/>
@@ -50,18 +50,18 @@ class App extends React.Component{
   }
 }
 
-	const mapDispatchToProps = dispatch => {		
-  	  return {		
-  	    getProductsByName: (product) => dispatch(getProductsByName(product)),		
-  	    getProducts: ()=> dispatch(getProducts())		
-  	  }		
-  	}		
-  		
-  	const mapStateToProps = state => {		
-  	  return {		
-  	    productDetail: state.products		
-  	  }		
-  	}		
-  			
-  			
+	const mapDispatchToProps = dispatch => {
+  	  return {
+  	    getProductsByName: (product) => dispatch(getProductsByName(product)),
+  	    getProducts: ()=> dispatch(getProducts())
+  	  }
+  	}
+
+  	const mapStateToProps = state => {
+  	  return {
+  	    productDetail: state.products
+  	  }
+  	}
+
+
 	export default connect(mapStateToProps, mapDispatchToProps)(App);

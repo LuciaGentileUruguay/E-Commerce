@@ -1,4 +1,4 @@
-import { ADD_PRODUCT_TO_ORDER, ADD_CATEGORY, REMOVE_PRODUCT_FROM_ORDER, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
+import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES, GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART } from '../actions';
 
 //Definimos el estado inicial
@@ -12,17 +12,17 @@ const initialState = {
 
 
 function rootReducer(state = initialState, action) {
-  if (action.type === ADD_PRODUCT_TO_ORDER) { //Agregamos un producto al carrito
+  if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
       return {
         ...state, //traigo todo el estado, tal cual
         order:[...state.order, action.payload]
       }
   }
 
-  if (action.type === REMOVE_PRODUCT_FROM_ORDER) { //quitamos un producto del carrito de compras
+  if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
     return {
         ...state,
-        order: state.order.filter(item => item.productId !== action.payload.id)
+        order: state.order.products.filter(item => item.id !== action.payload )
         //dejamos en el array todos los que son distintos de la que quiero eliminar
     };
   }
@@ -47,7 +47,7 @@ function rootReducer(state = initialState, action) {
         products: action.payload
       };
   }
-  
+
   if (action.type === GET_PRODUCT_CATEGORIES) { //traemos todas las categorías para listarlas
     return {
       ...state,

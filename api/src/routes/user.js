@@ -121,11 +121,53 @@ server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un us
   })
   .then(respuesta => {
     if (!respuesta){
-        res.status(404).send("Carrito de usuario inexistente")
+        res.status(404).send("Error. No hay carrito o no existe usuario")
     } else {
         res.status(200).send(respuesta);
     }
-  })    
+  })
 })
+
+server.delete('/:id/cart',(req,res,next) =>{ //vaciamos carrito
+  Order.findOne({
+    where:{
+      userId: req.params.id,
+      estado: "pending"
+    }
+  })
+  .then(idOrder => {
+    Order_line.findAll({
+      where: {
+        orderId: idOrder.id
+      }
+    })
+    .then(filas => {
+      filas.map(e => e.destroy());
+      res.send();
+    })
+  })
+})
+
+server.delete('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del carrito
+  Order.findOne({
+    where:{
+      userId: req.params.id,
+      estado: "pending"
+    }
+  })
+  .then(idOrder => {
+    Order_line.findOne({
+      where: {
+        orderId: idOrder.id,
+        productId: req.params.prodId
+      }
+    })
+    .then(fila => {
+      fila.destroy();
+      res.send();
+    })
+  })
+})
+
 
 module.exports = server;
