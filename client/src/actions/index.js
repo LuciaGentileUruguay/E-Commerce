@@ -1,4 +1,6 @@
 import axios from 'axios';
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
 export const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const REMOVE_PRODUCT_FROM_CART = 'REMOVE_PRODUCT_FROM_CART';
@@ -116,13 +118,13 @@ export function getProductDetail(id) { //ver detalle de un producto
   };
 }
 
-export const INCREMENT = 'INCREMENT';
-export const DECREMENT = 'DECREMENT';
 
-export const increment = () => ({
-  type: INCREMENT
+export const increment = (id, prodId) => ( 
+  function(dispatch){
+    axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
 });
 
 export const decrement = () => ({
-  type: DECREMENT
+  function(dispatch){
+    axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "DEC"})
 });
