@@ -91,10 +91,10 @@ server.post('/:id/cart',(req,res,next) =>{
          productId: productId
        }
      })
-     .then(res => {
-       if(res !== null){ //si existe el producto entonces aumento en uno la cantidad
-         res.update({
-           cantidad: res.cantidad + 1
+     .then(resp => {
+       if(resp !== null){ //si existe el producto entonces aumento en uno la cantidad
+         resp.update({
+           cantidad: resp.cantidad + 1
          })
        }
        else { //si no existe, creo una nueva fila en la tabla
@@ -110,17 +110,22 @@ server.post('/:id/cart',(req,res,next) =>{
    res.send();
 })
 
-
 server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un usuario
-  const userId = req.params.id;
-  Order.findAll({
+  Order.findOne({
     where:{
-      userId: userId
+      userId: req.params.id,
+      estado: "pending"
+    },include:{
+      model: Product
     }
   })
-  .then(res => {
-    res.send(res);
-  })
+  .then(respuesta => {
+    if (!respuesta){
+        res.status(404).send("Carrito de usuario inexistente")
+    } else {
+        res.status(200).send(respuesta);
+    }
+  })    
 })
 
 module.exports = server;

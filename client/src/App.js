@@ -52,7 +52,7 @@ class App extends React.Component{
         <Route exact path='/FormProduct'component={FormProduct} />
         <Route exact path='/categories'component={Categories} />
         <Route exact path='/category/:id' component = {FiltroCategoria}/>
-        <Route exact path='/order' component = {Order}/>
+        <Route exact path='/order/:id' component = {Order}/>
         {/*se agrego la ruta para mostrar los detalles del producto */}
       {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
         <Route exact path='/products/:id' component = {ProductDetail}/>

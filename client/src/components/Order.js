@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { removeProductFromOrder,getProductsFromOrder } from "../actions/index";
+import { removeProductFromOrder, getProductsCart } from "../actions/index";
 import { Link } from 'react-router-dom';
 
 export class Order extends Component {
   componentDidMount(){
-    this.props.getProductsFromOrder(id, user, payload);
-    // }else this.props.getProductsFromOrderGuest()
+    const { match: { params: { id }}} = this.props;
+    this.props.getProductsCart(id);
+    
   }
   render() {
     return (
       <div>
+        {console.log(this.props)}
         <h2>Carrito de compras</h2>
         <ul>
           {
             this.props.order && this.props.order.map((el,i) => (
               <div>
-                <h4>{el}</h4>
-               {/* <button onClick={() => this.props.removeProductFromOrder({})> X </button>*/}
+                <h4>{el.productId}</h4>
+               {/* <button onClick={() => this.props.removeProductFromOrder({})>  */}
               </div>
             ))
           }
@@ -26,19 +28,18 @@ export class Order extends Component {
     );
   }
 }
-
+//[{orderId, productId, cantidad, price},{orderId, productId, cantidad, price}]
 function mapStateToProps(state) {
   return {
     order: state.order,
-    products: state.products
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return {
-    removeProductFromOrder: order => dispatch(removeProductFromOrder(order)),
-    getProducts: products => dispatch(getProducts())
-  };
+   return {getProductsCart: id => dispatch(getProductsCart(id))}  //{
+  //   removeProductFromOrder: order => dispatch(removeProductFromOrder(order)),
+  //   getProducts: products => dispatch(getProducts())
+  // };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order);
