@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { removeProductFromCart, getProductsCart } from "../actions/index";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { removeProductFromCart, getProductsCart} from "../actions/index";
 import { Link } from 'react-router-dom';
 
 export class Order extends Component {
@@ -24,6 +24,9 @@ export class Order extends Component {
                 <h5>Cantidad {el.order_line.cantidad}</h5>
                 <h5>Total $ {el.order_line.price * el.order_line.cantidad}</h5>
                 <Link to = {'/cart/'+this.props.match.params.id}><button onClick={() => this.props.removeProductFromCart(this.props.match.params.id, el.id)}> X </button></Link>
+                <h1>Counter: {count}</h1>
+                <button onClick={() => dispatch(actions.increment())}>+</button>
+                <button onClick={() => dispatch(actions.decrement())}>-</button>  
               </div>
             ))
           }
@@ -32,6 +35,9 @@ export class Order extends Component {
     );
   }
 }
+  
+
+export default App;
 
 function mapStateToProps(state) {
   return {

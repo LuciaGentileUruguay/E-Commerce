@@ -115,3 +115,14 @@ export function getProductDetail(id) { //ver detalle de un producto
       });
   };
 }
+
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
+
+export const increment = () => ({
+  type: INCREMENT
+});
+
+export const decrement = () => ({
+  type: DECREMENT
+});
