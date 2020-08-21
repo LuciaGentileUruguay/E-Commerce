@@ -1,11 +1,12 @@
 import { ADD_PRODUCT_TO_ORDER, ADD_CATEGORY, REMOVE_PRODUCT_FROM_ORDER, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
-  GET_PRODUCTS, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES, GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART } from '../actions';
+  GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES, GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART } from '../actions';
 
 //Definimos el estado inicial
 const initialState = {
   products: [],
   order: [], //tenemos una lista de productos
   categories: [],
+  productCategories:[],
   productDetail: {categoryId: []}
 };
 
@@ -33,6 +34,12 @@ function rootReducer(state = initialState, action) {
         products: action.payload
       };
   }
+  if (action.type === GET_PRODUCTS_BY_NAME) { //traemos los productos por nombtr
+    return {
+      ...state,
+      products: action.payload
+    };
+}
 
   if (action.type === GET_PRODUCTS_FROM_CATEGORY) { //traemos todos los productos de una categoría
       return {
@@ -40,6 +47,13 @@ function rootReducer(state = initialState, action) {
         products: action.payload
       };
   }
+  
+  if (action.type === GET_PRODUCT_CATEGORIES) { //traemos todas las categorías para listarlas
+    return {
+      ...state,
+      productCategories: action.payload
+    };
+}
 
   if (action.type === GET_PRODUCTS_CART) { //traemos todos los productos de una orden
     //console.log(action.payload);
