@@ -111,28 +111,21 @@ server.post('/:id/cart',(req,res,next) =>{
 })
 
 server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un usuario
-  Order.findAll({
+  Order.findOne({
     where:{
       userId: req.params.id,
       estado: "pending"
+    },include:{
+      model: Product
     }
   })
   .then(respuesta => {
-    if (!respuesta.length){
-        res.status(404).send("Usuario inexistente")
+    if (!respuesta){
+        res.status(404).send("Carrito de usuario inexistente")
     } else {
-        Order_line.findAll({
-          where:{
-            orderId: respuesta[0].id
-          }
-        })
-        .then(respuesta=>{
-          console.log(respuesta);
-          res.status(200).send(respuesta);
-        })
-        
+        res.status(200).send(respuesta);
     }
-  })
+  })    
 })
 
 module.exports = server;

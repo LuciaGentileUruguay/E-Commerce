@@ -5,24 +5,25 @@ import { Link } from 'react-router-dom';
 
 export class Order extends Component {
   componentDidMount(){
-    this.props.getProductsCart(1);
+    const { match: { params: { id }}} = this.props;
+    this.props.getProductsCart(id);
     
   }
   render() {
     return (
       <div>
-        {/* {console.log(this.props)} */}
-        {/* <h2>Carrito de compras</h2>
+        {console.log(this.props)}
+        <h2>Carrito de compras</h2>
         <ul>
           {
             this.props.order && this.props.order.map((el,i) => (
               <div>
-                <h4>{el}</h4>
-               <button onClick={() => this.props.removeProductFromOrder({})> X </button>
+                <h4>{el.productId}</h4>
+               {/* <button onClick={() => this.props.removeProductFromOrder({})>  */}
               </div>
             ))
           }
-        </ul> */}
+        </ul>
       </div>
     );
   }
@@ -35,7 +36,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-   return {getProductsCart: order => dispatch(getProductsCart(1))}  //{
+   return {getProductsCart: id => dispatch(getProductsCart(id))}  //{
   //   removeProductFromOrder: order => dispatch(removeProductFromOrder(order)),
   //   getProducts: products => dispatch(getProducts())
   // };

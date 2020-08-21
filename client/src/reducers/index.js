@@ -42,7 +42,7 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === GET_PRODUCTS_CART) { //traemos todos los productos de una orden
-    console.log(action.payload);
+    //console.log(action.payload);
       return {
         ...state,
         order: action.payload
