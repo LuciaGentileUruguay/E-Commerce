@@ -15,6 +15,9 @@ import {Route} from 'react-router-dom';
 import axios from 'axios';
 import { getProducts,getProductsByName } from './actions/index';
 import { connect } from "react-redux";
+import UserData from './components/UserData';
+import BadMail from './components/BadMail';
+import Login from './components/LoginScreen';
 
 class App extends React.Component{
   constructor(){
@@ -42,6 +45,9 @@ class App extends React.Component{
         <Route exact path='/categories'component={Categories} />
         <Route exact path='/category/:id' component = {FiltroCategoria}/>
         <Route exact path='/cart/:id' component = {Order}/>
+        <Route exact path='/login' component = {Login}/>
+        <Route exact path='/login/userdata' component = {UserData}/>
+        <Route exact path='/login/badname' component = {BadMail}/>
         {/*se agrego la ruta para mostrar los detalles del producto */}
       {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
         <Route exact path='/products/:id' component = {ProductDetail}/>

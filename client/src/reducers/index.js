@@ -1,5 +1,6 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
-  GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES, GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART } from '../actions';
+  GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES, 
+  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER } from '../actions';
 
 //Definimos el estado inicial
 const initialState = {
@@ -8,7 +9,8 @@ const initialState = {
   order: [], //tenemos una lista de productos
   categories: [],
   productCategories:[],
-  productDetail: {categoryId: []}
+  productDetail: {categoryId: []},
+  newUser:{}
 };
 
 
@@ -79,6 +81,22 @@ function rootReducer(state = initialState, action) {
       };
   }
 
+  if (action.type === ADD_USER){
+    return {
+      ...state,
+      newUser: action.payload
+
+    }
+  }
+
+  if (action.type === SAVE_NEW_USER){
+    return{
+      ...state,
+      newUser: action.payload
+    }
+  }
+
+
   switch (action.type) {
       case 'INCREMENT':
             return {        
@@ -89,6 +107,7 @@ function rootReducer(state = initialState, action) {
               ...state,            
             };    
   };
+
   return state;
 }
 
