@@ -25,18 +25,23 @@
 }
 
 
-#closeIcon {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 8px;
-  margin-top: 8px;
+.button {
+  background-color: #734F2F;
+  border-radius: 5px;
+  border-style: none;
+  width: 90px;
+  height: 30px;
+  right: 10px;
+  top: 10px;
+  color: white;
+  cursor: pointer;
 }
 
 .text {
-  font-size: 15px;
+  font-size: 20px;
   display: flex;
   justify-content: center;
-  padding: 2px;
+  margin-top: 5px;
 }
 
 .p {
