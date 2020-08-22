@@ -122,9 +122,15 @@ export function getProductDetail(id) { //ver detalle de un producto
 export const increment = (id, prodId) => ( 
   function(dispatch){
     axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
+    .then(json => {
+        dispatch({ type: "INCREMENT"});
+      });
 });
 
-export const decrement = () => ({
+export const decrement = (id, prodId) => (
   function(dispatch){
     axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "DEC"})
+        .then(json => {
+        dispatch({ type: "DECREMENT"});
+      });
 });

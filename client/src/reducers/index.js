@@ -78,18 +78,16 @@ function rootReducer(state = initialState, action) {
       };
   }
 
-  // switch (action.type) {
-  //     case 'INCREMENT':
-  //           return {        
-  //             ...state,        
-  //             count: state.count + 1      
-  //           };    
-  //     case 'DECREMENT':
-  //           return {
-  //             ...state,        
-  //             count: state.count - 1      
-  //           };    
-  // };
+  switch (action.type) {
+      case 'INCREMENT':
+            return {        
+              ...state,           
+            };    
+      case 'DECREMENT':
+            return {
+              ...state,            
+            };    
+  };
   return state;
 }
 
