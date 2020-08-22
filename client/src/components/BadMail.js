@@ -10,7 +10,8 @@ export  class LoginScreen extends React.Component {
     super(props);
     this.state={
       email:"",
-      password:""          
+      password:"",
+      newPassword:""          
     }
   }
  
@@ -26,27 +27,39 @@ export  class LoginScreen extends React.Component {
 
     validateNew(e) {
      // e.preventDefault()
-      
-      console.log(this.state)
+     if (this.state.password === this.state.newPassword && /\S+@\S+\.\S+/.test(this.state.email)) {
+       //this.state.lowercase();
       this.props.addUser(this.state.email,this.state.password);
+    } else {
+      alert("Debe ingresar un mail valido y una contraseña.")
+      e.preventDefault();
+      this.setState({
+        email:"",
+        password:"",
+        newPassword:"" 
+      })
+      
+      return;
     }
+}
 
     render(){
       return(
       <div>
       <form>
         <label>Usuario:</label>
-        <input type="text" name="email" 
+        <input type="text" value={this.state.email} name="email" 
           placeholder="Email registrado"
           onChange={(e) => this.handleInputChange(e)} 
         >
         </input>
         <label>Contraseña:</label>
-        <input type="password" name="password" 
+        <input type="password" value={this.state.password} name="password" 
                 placeholder="Contraseña"
+                onChange={(e) => this.handleInputChange(e)} 
                ></input>
         <label>Nueva Contraseña:</label>
-        <input type="password" name="nuevoPassword" 
+        <input type="password"  value={this.state.newPassword}  name="newPassword" 
                 placeholder="Contraseña"
                 onChange={(e) => this.handleInputChange(e)} 
                 ></input>  
