@@ -223,4 +223,39 @@ server.put('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del car
 })
 
 
+server.get("/:id/orders",(req,res,next) =>{
+  //busca todas las ordenes de un usuario, incluyendo el carrito
+  Order.findAll({
+    where:{
+      userId: req.params.id
+    },
+    include:{
+      model:Product
+    }
+  })
+  .then(respuesta =>{
+    res.send(respuesta)
+    //por cada orden devuelta, buscamos sus productos relacionados
+  })
+})
+
+server.get("/:id/orders/:orderId",(req,res,next) =>{
+  //busca todas las ordenes de un usuario, incluyendo el carrito
+  Order.findOne({
+    where:{
+      userId: req.params.id,
+      id:req.params.orderId
+    },
+    include:{
+      model:Product
+    }
+  })
+  .then(respuesta =>{
+    res.send(respuesta)
+    //por cada orden devuelta, buscamos sus productos relacionados
+  })
+})
+
+
+
 module.exports = server;
