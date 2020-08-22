@@ -4,22 +4,35 @@ const { Sequelize } = require('sequelize');
 
 //crear un usuario
 server.post('/',(req,res,next)=>{
-    //en caso de que falte algun campo devolver un error
-    const {nombre, apellido, email, hashedPassword} = req.body;
-    if (!nombre || !apellido || !email || !hashedPassword){
-        return res.status(404).send("Falta algun campo");
-    } else {
-        //se crea el usuario
-        User.create({
-            nombre,
-            apellido,
-            email,
-            hashedPassword
-        })
-        .then(user=>{
-            return res.status(201).send("Usuario creado");
-        })
-    }
+  //en caso de que falte algun campo devolver un error
+  const {nombre, 
+    apellido,
+    calle,
+    numero,
+    departamento,
+    telefono1,
+    telefono2,
+     email, 
+     password} = req.body;
+  // if (!email || !password){
+  //     return res.status(404).send("Falta algun campo");
+  // } else {
+      //se crea el usuario
+      User.create({
+        nombre,
+        apellido,
+        calle,
+        numero,
+        departamento,
+        telefono1,
+        telefono2,
+         email, 
+         password
+      })
+      .then(user=>{
+          return res.status(201).send(user);
+      })
+  // }
 });
 
 //se trae todos los usuarios
@@ -30,32 +43,39 @@ server.get('/',(req,res,next)=>{
     })
 })
 
-//modifica un usuario
+//modificar un usuario
 server.put('/:id',(req,res,next)=>{
-    const {nombre, apellido, email, hashedPassword} = req.body;
-    //devuelve error en el caso que falte algun campo
-    if (!nombre || !apellido || !email || !hashedPassword){
-        return res.status(404).send("Falto un campo");
-    }else {
-    User.findByPk(req.params.id)
-        .then(user=>{
-            if (!user){
-                //sino encuentra el usuario devuelve un error
-                return res.status(404).send("No se encontro el usurio")
-            } else {
-            // =actualiza un usuario
-            user.nombre = nombre;
-            user.apellido = apellido;
-            user.email = email;
-            user.hashedPassword = hashedPassword;
-            user.save();
-            res.status(200).send("Usuario modificado")
-            return;
-            }
+  return User.findByPk(req.params.id)
+  .then (function(user){
+    const {nombre, 
+      apellido,
+      calle,
+      numero,
+      departamento,
+      localidad,
+      provincia,
+      telefono1,
+      telefono2,
+       email, 
+       password} = req.body;
+       console.log(req.body)
+       user.nombre = nombre;
+      user.apellido = apellido;
+      user.calle = calle;
+      user.numero = numero;
+      user.departamento = departamento;
+      user.localidad=localidad;
+      user.provincia=provincia;
+      user.telefono1 = telefono1;
+      user.telefono2 = telefono2
+      user.email = email;
+      user.password= password;
+      user.save();
+      res.status(201).send("Usuario modificado")
 
-        })
-    }
-})
+    })
+  })
+
 
 //borra un usuario
 server.delete('/:id',(req,res,next)=>{

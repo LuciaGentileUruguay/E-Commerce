@@ -12,6 +12,8 @@ export const GET_PRODUCT_CATEGORIES = 'GET_PRODUCT_CATEGORIES';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
+export const ADD_USER = 'ADD_USER';
+export const SAVE_NEW_USER ='SAVE_NEW_USER';
 
 
 /*export function removeProductFromCart(prodId) { //eliminamos un producto del carrito
@@ -120,4 +122,17 @@ export function getProductDetail(id) { //ver detalle de un producto
         dispatch({ type: GET_PRODUCT_DETAIL, payload: json.data }); //en este caso el payload deberia ser sólo un producto
       });
   };
+}
+
+export function addUser(email,password){
+  return {type: ADD_USER, payload: {email:email,password:password}}
+}
+
+export function saveNewUser(data){
+  return function(dispacth){
+    return axios.post("http://localhost:3001/users",data)
+      .then(resp=>{
+        dispacth({type: SAVE_NEW_USER, payload: resp.data})
+    })
+  }
 }

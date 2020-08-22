@@ -15,6 +15,11 @@ function Nav({onSearch}) {
       <Link to='/products' onClick={()=>onSearch("") } >
         <span id="navigation"> Tienda </span>
       </Link>
+      <Link to='/login'>
+        <span id="navigation">
+          Login
+        </span>
+      </Link>
       <Route exact path='/products' render={() => <SearchBar onSearch={onSearch}/>}/>
     </nav>
   );
