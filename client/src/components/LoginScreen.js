@@ -9,9 +9,9 @@ export  class LoginScreen extends React.Component {
           this.state={
               email:"",
               password:"",
-              register:false
+              //register:false
             }
-     this.setRegister=this.setRegister.bind(this)      
+     //this.setRegister=this.setRegister.bind(this)      
     }
   setEmail(e){
       this.setState({email:e.target.value})
@@ -19,15 +19,21 @@ export  class LoginScreen extends React.Component {
   setPassword(e){
     this.setState({password:e.target.value})
 }
-validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+
+
+
+validateForm(e) {
+  e.preventDefault();
+  if (this.state.password.length>0 && /\S+@\S+\.\S+/.test(this.state.email)) {
+    alert("ENTRO AL true")
+    return true;
+  } else {
+    alert("ENTRE AL false")
+    return false;
   }
-setRegister(){
-    this.setState({register:true})
+
 }
-validateNew() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
-  }
+
 
   render () {
     return ( 
@@ -43,7 +49,7 @@ validateNew() {
             placeholder="Contraseña"
             onChange={(e) => this.setPassword(e)} 
             autofocus></input>
-             <button disabled={!this.validateForm()} type="submit">
+             <button onClick={(e)=>this.validateForm(e)} type="submit">
                 Login
                 </button>
           </form>

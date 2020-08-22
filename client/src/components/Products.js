@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Products.css';
+import './Product.css';
 import { connect } from "react-redux";
 import {getProducts} from '../actions/index';
 import Product from './Product.js';

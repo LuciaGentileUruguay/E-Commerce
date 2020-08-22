@@ -2,24 +2,26 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {Link} from "react-router-dom";
-import {saveNewUser,getCategories} from "../actions/index"
+import {saveNewUser} from "../actions/index"
 
 export  class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
           this.state={
             
-            }
-        this.handleInputChange = this.handleInputChange.bind(this)    
+          }
+        //this.handleInputChange = this.handleInputChange.bind(this)    
      }
 
     componentDidMount(props){
-   console.log(this.props.newUser)
+   //console.log(this.props.newUser)
    let data = this.props.newUser
     this.props.saveNewUser(data)
-    this.setState({email:this.props.newUser.email,
-      password:this.props.newUser.password,
-    id:this.props.newUser.id})
+    this.setState({
+      email: this.props.newUser.email,
+      password: this.props.newUser.password,
+      id: this.props.newUser.id
+    })
 
 
     }
@@ -34,13 +36,13 @@ export  class LoginScreen extends React.Component {
   saveData(e){
     e.preventDefault()
     console.log(this.state)
-    axios.put(`http://localhost:3001/users/${this.state.id}`,
-    this.state )
+    axios.put(`http://localhost:3001/users/${this.state.id}`, this.state )
       .then(res => {
-        if(res.status === 200){
+        if(res.status === 201){
           alert("Datos Guardados Exitosamente");
-        } else {alert("hubo un error!!!")
-        console.log(res);}
+        } else {
+          alert("hubo un error!!!")
+          console.log(res);}
       })
       .catch(err => {return "error"})
   }
@@ -112,14 +114,12 @@ export  class LoginScreen extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     saveNewUser: (data) => dispatch(saveNewUser(data)),
-    getCategories: () => dispatch(getCategories())
   }
 }
 
 const mapStateToProps = state => {
   return {
     newUser: state.newUser,
-    categories: state.categories
   }
 }
 
