@@ -13,9 +13,6 @@ export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 
-export function addProductToCart(payload) { //agregamos un producto al carrito
-  return { type: ADD_PRODUCT_TO_CART, payload };
-}
 
 /*export function removeProductFromCart(prodId) { //eliminamos un producto del carrito
   return { type: REMOVE_PRODUCT_FROM_CART, payload };
@@ -38,6 +35,15 @@ export function setCategory(payload) { //modificamos una categoría
   return { type: SET_CATEGORY, payload };
 }
 */
+
+export function addProductToCart(id, prodId, payload) { //id = userId, payload = producto
+  return function(dispatch) {
+    return axios.post("http://localhost:3001/users/" + id +"/cart/", payload)
+      .then(json => {
+        dispatch({ type: ADD_PRODUCT_TO_CART, payload});
+      });
+  };
+}
 
 export function removeProductFromCart(id, prodId) { //eliminamos un producto del carrito de un usuario id
   return function(dispatch) {

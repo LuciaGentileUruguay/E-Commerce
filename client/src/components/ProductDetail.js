@@ -1,20 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { getProductDetail, getProductsCategories } from '../actions/index';
+import { getProductDetail, getProductsCategories, addProductToCart } from '../actions/index';
 import './product.css';
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
 
 
 class ProductDetail extends React.Component {
-  constructor(){		
-    	    super();			
+  constructor(){
+    	    super();
     	  }
 
         componentDidMount(){
-          const { match: { params: { id }}} = this.props;
+          const { match: { params: { id }}} = this.props; //id de producto
           this.props.getProductDetail(id);
-          this.props.getProductsCategories(id)
+          this.props.getProductsCategories(id);
+          console.log(this.props.user);
           }
 
           render() {
@@ -36,6 +37,10 @@ class ProductDetail extends React.Component {
                         <Link to="/form_product">
                           <button>Editar</button>
                         </Link>
+                        <Link to="/products">
+                        <button onClick={() => this.props.addProductToCart(this.props.user, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Agregar al Carrito </button>
+                        </Link>
+
                     </div>
                 </div>
                 </div>
@@ -46,14 +51,16 @@ class ProductDetail extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     getProductDetail: (id) => dispatch(getProductDetail(id)),
-    getProductsCategories: (id) => dispatch(getProductsCategories(id))
+    getProductsCategories: (id) => dispatch(getProductsCategories(id)),
+    addProductToCart: (id, prodId, payload) => dispatch(addProductToCart(id, prodId, payload))
   }
 }
 
 const mapStateToProps = state => {
   return {
     productDetail: state.productDetail,
-    productCategories: state.productCategories
+    productCategories: state.productCategories,
+    user: state.user
   }
 }
 

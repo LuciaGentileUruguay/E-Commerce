@@ -4,6 +4,7 @@ import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CAT
 //Definimos el estado inicial
 const initialState = {
   products: [],
+  user: 1,
   order: [], //tenemos una lista de productos
   categories: [],
   productCategories:[],
