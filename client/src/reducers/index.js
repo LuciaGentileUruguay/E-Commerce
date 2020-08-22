@@ -18,7 +18,7 @@ function rootReducer(state = initialState, action) {
   if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
       return {
         ...state, //traigo todo el estado, tal cual
-        order:[...state.order, action.payload]
+        order: action.payload
       }
   }
 
