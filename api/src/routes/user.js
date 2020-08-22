@@ -190,5 +190,37 @@ server.delete('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del 
   })
 })
 
+server.put('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del carrito
+  Order.findOne({
+    where:{
+      userId: req.params.id,
+      estado: "pending"
+    }
+  })
+  .then(idOrder => {
+    Order_line.findOne({
+      where: {
+        orderId: idOrder.id,
+        productId: req.params.prodId
+      }
+    })
+    .then(fila => {
+      if (req.body.accion === "INC"){
+        fila.cantidad += 1;
+        fila.save()
+      }else if(req.body.accion === "DEC"){
+        fila.cantidad -= 1;
+        fila.save()
+      } else if(req.body.accion === "DEL"){
+        fila.cantidad = 0;
+        fila.save()
+      } else {
+        res.status(400).send("No se Reconoce el Comando: "+req.body.accion)
+      }
+      res.status(201).send("Se modifico la cantidad del producte: "+req.body.accion)
+    })
+  })
+})
+
 
 module.exports = server;
