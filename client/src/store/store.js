@@ -10,6 +10,6 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk),
 ));
 
-//const state = store.getState();
+
 
 export default store;
