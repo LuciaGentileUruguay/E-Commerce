@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getProductDetail, getProductsCategories, addProductToCart } from '../actions/index';
-import './product.css';
+import './ProductDetail.css';
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
 
@@ -21,24 +21,24 @@ class ProductDetail extends React.Component {
           render() {
             return (
               <div>
-                <div className="product-detail">
-                    Detalle del producto
-                    <div>
+                <div className="divroot">
+                  <h2 className = "text"> Detalle del producto </h2>
+                    <div className="container">
                         <img className="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
                     </div>
-                    <div>
-                        <h3>Nombre:{this.props.productDetail && this.props.productDetail.name}</h3>
+                    <div className="container" >
+                        <h3 className = "text">Nombre: {this.props.productDetail && this.props.productDetail.name}</h3>
                         {this.props.productCategories.map(item=>{
-                          return <p>Categoria:{item.name}</p>
+                          return <p className = "p">Categoría: {item.name}</p>
                         })}
-                        <p>{this.props.productDetail && this.props.productDetail.description}</p>
-                        <p>{this.props.productDetail && this.props.productDetail.price}</p>
-                        <p>{this.props.productDetail && this.props.productDetail.stock}</p>
+                        <p className = "p">Descripción: {this.props.productDetail && this.props.productDetail.description}</p>
+                        <p className = "p">Precio: {this.props.productDetail && this.props.productDetail.price}</p>
+                        <p className = "p">Stock: {this.props.productDetail && this.props.productDetail.stock}</p>
                         <Link to="/form_product">
-                          <button>Editar</button>
+                          <button className= "button">Editar</button>
                         </Link>
                         <Link to="/products">
-                        <button onClick={() => this.props.addProductToCart(this.props.user, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Agregar al Carrito </button>
+                        <button className= "button" onClick={() => this.props.addProductToCart(this.props.user, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
                         </Link>
 
                     </div>
