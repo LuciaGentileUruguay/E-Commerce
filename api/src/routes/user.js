@@ -190,7 +190,8 @@ server.delete('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del 
   })
 })
 
-server.put('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del carrito
+
+server.put('/:id/cart/:prodId',(req,res,next) =>{ //Modificamos la cantidad de un producto del carrito
   Order.findOne({
     where:{
       userId: req.params.id,
@@ -205,22 +206,59 @@ server.put('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del car
       }
     })
     .then(fila => {
-      if (req.body.accion === "INC"){
+      if (typeof req.body.accion === "number"){
+        fila.cantidad = req.body.accion
+        fila.save()
+      }else if (req.body.accion === "INC"){
         fila.cantidad += 1;
         fila.save()
       }else if(req.body.accion === "DEC"){
-        fila.cantidad -= 1;
-        fila.save()
-      } else if(req.body.accion === "DEL"){
-        fila.cantidad = 0;
-        fila.save()
+        if (fila.cantidad > 1){
+          fila.cantidad -= 1
+          fila.save()
+        }
       } else {
         res.status(400).send("No se Reconoce el Comando: "+req.body.accion)
+        return
       }
-      res.status(201).send("Se modifico la cantidad del producte: "+req.body.accion)
+      res.status(201).send("Se modifico la cantidad del producto: "+req.body.accion)
     })
   })
 })
+
+server.get("/:id/orders",(req,res,next) =>{
+  //busca todas las ordenes de un usuario, incluyendo el carrito
+  Order.findAll({
+    where:{
+      userId: req.params.id
+    },
+    include:{
+      model:Product
+    }
+  })
+  .then(respuesta =>{
+    res.send(respuesta)
+    //por cada orden devuelta, buscamos sus productos relacionados
+  })
+})
+
+server.get("/:id/orders/:orderId",(req,res,next) =>{
+  //busca todas las ordenes de un usuario, incluyendo el carrito
+  Order.findOne({
+    where:{
+      userId: req.params.id,
+      id:req.params.orderId
+    },
+    include:{
+      model:Product
+    }
+  })
+  .then(respuesta =>{
+    res.send(respuesta)
+    //por cada orden devuelta, buscamos sus productos relacionados
+  })
+})
+
 
 
 module.exports = server;
