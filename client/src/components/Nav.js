@@ -3,8 +3,9 @@ import SearchBar from './SearchBar.js';
 import { Link, Route} from 'react-router-dom';
 import { connect } from "react-redux";
 import './nav.css';
+import { setAdmin } from '../actions/index';
 
-//function Nav({onSearch}) {
+
 export class Nav extends Component {
   constructor(props){
     super(props)
@@ -37,13 +38,13 @@ export class Nav extends Component {
             <span id="navigation">Categorias</span>
           </Link>
 
-          <Link to = "/form_product">
-            <span id="navigation">Nuevo Producto</span>
+          <Link to = "/admin" onClick={()=>this.props.setAdmin(true) }>
+            <span id="navigation">Opciones Admin</span>
           </Link>
+          <button onClick={()=>this.props.setAdmin(false) }>
+            User
+          </button>
 
-          <Link to = "/form_categories">
-            <span id="navigation">Nueva Categoria</span>
-          </Link>
 
           <Route exact path='/products' render={() => <SearchBar onSearch={this.props.onSearch}/>}/>
         </nav>
@@ -57,4 +58,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Nav);
+const mapDispatchToProps = dispatch => {
+  return {
+    setAdmin: (payload) => dispatch(setAdmin(payload)),
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Nav);

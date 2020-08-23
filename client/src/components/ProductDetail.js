@@ -7,15 +7,22 @@ import {Link,Route} from "react-router-dom";
 
 
 class ProductDetail extends React.Component {
-  constructor(){
-    	    super();
+  constructor(props){
+    	    super(props);
     	  }
 
+        botonEditar=()=>{
+          console.log(this.props.admin);
+          if(this.props.admin) {
+            return(<Link to="/form_product">
+                          <button className= "button">Editar</button>
+                        </Link>)}
+                                          
+        }
         componentDidMount(){
           const { match: { params: { id }}} = this.props; //id de producto
           this.props.getProductDetail(id);
           this.props.getProductsCategories(id);
-          console.log(this.props.user);
           }
 
           render() {
@@ -34,9 +41,9 @@ class ProductDetail extends React.Component {
                         <p className = "p">Descripción: {this.props.productDetail && this.props.productDetail.description}</p>
                         <p className = "p">Precio: {this.props.productDetail && this.props.productDetail.price}</p>
                         <p className = "p">Stock: {this.props.productDetail && this.props.productDetail.stock}</p>
-                        <Link to="/form_product">
-                          <button className= "button">Editar</button>
-                        </Link>
+                        <div>
+                            {this.botonEditar()}
+                        </div>
                         <Link to="/products">
                         <button className= "button" onClick={() => this.props.addProductToCart(this.props.user, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
                         </Link>
@@ -60,7 +67,8 @@ const mapStateToProps = state => {
   return {
     productDetail: state.productDetail,
     productCategories: state.productCategories,
-    user: state.user
+    user: state.user,
+    admin: state.admin
   }
 }
 
