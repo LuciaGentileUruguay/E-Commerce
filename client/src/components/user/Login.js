@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import "./stilo.css"
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.width="50%";
     this.state={
       email:"",
       password:"",
@@ -27,18 +29,23 @@ export default class Login extends React.Component {
 
   render () {
     return ( 
-      <div >
-        <form >
-          <label>Correo Electronico:</label>
-          <input type="text" name="email" placeholder="Email a registrar" onChange={(e) => this.handleInputChange(e)} autofocus></input>
-          <label>Contraseña:</label>
-          <input type="password" name="password" placeholder="Contraseña" onChange={(e) => this.handleInputChange(e)} autofocus></input>
-          <button onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button>
+      <div>
+       <form className="form">
+          <div class= "form-group">
+            <label for="exampleInputEmail1">Correo electronico</label>
+            <input type="email"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name ="email" onChange={(e) => this.handleInputChange(e)} placeholder="Enter email"></input>
+            <small id="emailHelp" class="form-text text-muted">Nosotros nunca compartiremos tu emial con alguien mas.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password"  class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" onChange={(e) => this.handleInputChange(e)}></input>
+          </div>
+          <button class="btn btn-outline-primary" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button> 
         </form>
-        <div>
+        <div className="divDeAbajo">
           <p>No poseee una cuenta?</p>
           <Link to="/login/newuser">
-            <button>Regístrarse</button>
+            <button class="btn btn-outline-secondary">Regístrarse</button>
           </Link>         
         </div>
       </div>
