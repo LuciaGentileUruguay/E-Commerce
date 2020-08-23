@@ -22,7 +22,7 @@ export class Order extends Component {
                 <h5>IMAGEN</h5>
                 <h5>Precio $ {el.order_line.price}</h5>
                 <h5>Total $ {el.order_line.price * el.order_line.cantidad}</h5>
-                <Link to = {'/cart/'+this.props.match.params.id}><button onClick={() => this.props.removeProductFromCart(this.props.match.params.id, el.id)}> X </button></Link>
+                <button onClick={() => this.props.removeProductFromCart(this.props.match.params.id, el.id)}> X </button>
                 <h5>Cantidad {el.order_line.cantidad}</h5>
                 <button onClick={() => this.props.increment(this.props.match.params.id, el.id)}>+</button>
                 <button onClick={() => this.props.decrement(this.props.match.params.id, el.id)}>-</button>  

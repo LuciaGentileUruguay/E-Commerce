@@ -25,7 +25,9 @@ function rootReducer(state = initialState, action) {
   if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
     return {
         ...state,
-        order: state.order.products.filter(item => item.id !== action.payload )
+        order:{ 
+          ...state.order,
+          products: state.order.products.filter(item => item.id !== action.payload )}
         //dejamos en el array todos los que son distintos de la que quiero eliminar
     };
   }
@@ -100,13 +102,42 @@ function rootReducer(state = initialState, action) {
   switch (action.type) {
       case 'INCREMENT':
             return {        
-              ...state,           
-            };    
+              ...state,
+              order:{...state.order,
+                      products:state.order.products.map(product =>  {
+                        if (product.id === action.payload){
+                          return {
+                            ...product,
+                            order_line:{
+                              ...product.order_line,
+                              cantidad:product.order_line.cantidad+1 
+                            } 
+                          }
+                      } else return product 
+                    })
+                    }
+                  };
       case 'DECREMENT':
             return {
-              ...state,            
+              ...state,  
+              order:{...state.order,
+                      products:state.order.products.map(product =>  {
+                        if (product.id === action.payload){
+                          let canti = product.order_line.cantidad
+                          if (canti > 1){
+                            return {
+                              ...product,
+                              order_line:{
+                                ...product.order_line,
+                                cantidad:canti-1 
+                              } 
+                            }
+                          }  else return product 
+                      } else return product 
+                    })
+                    }
+                  };          
             };    
-  };
 
   return state;
 }

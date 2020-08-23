@@ -145,7 +145,7 @@ export const increment = (id, prodId) => (
   function(dispatch){
     axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
     .then(json => {
-        dispatch({ type: "INCREMENT"});
+        dispatch({ type: "INCREMENT", payload:prodId});
       });
 });
 
@@ -153,7 +153,7 @@ export const decrement = (id, prodId) => (
   function(dispatch){
     axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "DEC"})
         .then(json => {
-        dispatch({ type: "DECREMENT"});
+        dispatch({ type: "DECREMENT", payload:prodId});
       });
 });
 
