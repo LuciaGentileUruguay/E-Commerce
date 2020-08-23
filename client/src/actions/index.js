@@ -16,11 +16,10 @@ export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 export const ADD_USER = 'ADD_USER';
 export const SAVE_NEW_USER ='SAVE_NEW_USER';
+
 export const SET_ADMIN = 'SET_ADMIN';
 
-/*export function removeProductFromCart(prodId) { //eliminamos un producto del carrito
-  return { type: REMOVE_PRODUCT_FROM_CART, payload };
-}*/
+export const GET_ORDERS ='GET_ORDERS';
 
 export function setProduct(payload) {  //modicamos un producto
   return { type: SET_PRODUCT, payload };
@@ -83,7 +82,6 @@ export function getProductsFromCategory(id) { //Listar productos de una categor�
   return function(dispatch) {
     return axios.get("http://localhost:3001/products/category/" + id)
       .then(json => {
-        console.log(json.data);
         dispatch({ type: GET_PRODUCTS_FROM_CATEGORY, payload: json.data }); //el payload seran todos los productos de una categoría
       });
   };
@@ -94,7 +92,6 @@ export function getProductsCart(userId){
   return function(dispacth){
     return axios.get("http://localhost:3001/users/"+userId+"/cart")
     .then(res=>{
-      //console.log(res);
       dispacth({type: GET_PRODUCTS_CART, payload: res.data})
     })
     .catch(err=>{
@@ -144,7 +141,7 @@ export function saveNewUser(data){
 }
 
 
-export const increment = (id, prodId) => ( 
+export const increment = (id, prodId) => (
   function(dispatch){
     axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
     .then(json => {
@@ -160,3 +157,11 @@ export const decrement = (id, prodId) => (
       });
 });
 
+export function getOrders() { //lista todas las órdenes de todos los usuarios
+  return function(dispatch) {
+    return axios.get("http://localhost:3001/orders")
+      .then(json => {
+        dispatch({ type: GET_ORDERS, payload: json.data }); //el payload seran todos las órdenes
+      });
+  };
+}
