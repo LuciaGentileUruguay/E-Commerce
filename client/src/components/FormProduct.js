@@ -49,7 +49,7 @@ class FormProduct extends React.Component {
   save(){
     axios.post(`http://localhost:3001/products`, this.props.productDetail)
       .then(res => {
-        if(res.status === 200){
+        if(res.status === 201){
           alert("PRODUCTO GUARDADO CORRECTAMENTE");
         }else {alert("hubo un error!!!")
         }
@@ -60,7 +60,7 @@ class FormProduct extends React.Component {
       axios.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
        this.props.productDetail)
         .then(res => {
-          if(res.status === 200){
+          if(res.status === 201){
             alert("PRODUCTO GUARDADO CORRECTAMENTE");
           } else {alert("hubo un error!!!")
           console.log(res);}
@@ -124,6 +124,7 @@ class FormProduct extends React.Component {
           e.preventDefault();
           if (this.props.productDetail){
             this.modify()
+            return;
           }
           this.save() }}/>
           <Link to={"/products/"+this.props.productDetail.id}>		
