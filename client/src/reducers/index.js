@@ -1,6 +1,6 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES, 
-  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER } from '../actions';
+  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,SET_ADMIN } from '../actions';
 
 //Definimos el estado inicial
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
   categories: [],
   productCategories:[],
   productDetail: {categoryId: []},
-  newUser:{}
+  newUser:{},
+  admin:false
 };
 
 
@@ -98,6 +99,12 @@ function rootReducer(state = initialState, action) {
     }
   }
 
+  if (action.type === SET_ADMIN){
+    return{
+      ...state,
+      admin: action.payload
+    }
+  }
 
   switch (action.type) {
       case 'INCREMENT':

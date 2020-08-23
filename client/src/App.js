@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import UpdateUser from './components/user/UpdateUser';
 import NewUser from './components/user/NewUser';
 import Login from './components/user/Login';
+import Admin from "./components/Admin";
 
 class App extends React.Component{
   constructor(){
@@ -35,6 +36,7 @@ class App extends React.Component{
     return (
       <div>
         <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
+        <Route path='/admin' render={() => <Admin onSearch={this.onSearch}/>}/>
         <Route exact path='/'component={Landing} />
         <Route exact path='/products' component={Products} />
         <Route exact path='/new_category_form'component={NewCategoryForm} />

@@ -16,7 +16,7 @@ export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 export const ADD_USER = 'ADD_USER';
 export const SAVE_NEW_USER ='SAVE_NEW_USER';
-
+export const SET_ADMIN = 'SET_ADMIN';
 
 /*export function removeProductFromCart(prodId) { //eliminamos un producto del carrito
   return { type: REMOVE_PRODUCT_FROM_CART, payload };
@@ -26,6 +26,9 @@ export function setProduct(payload) {  //modicamos un producto
   return { type: SET_PRODUCT, payload };
 }
 
+export function setAdmin(payload) {  //cambio a admin o usuario regular
+  return { type: SET_ADMIN, payload };
+}
 /*
 export function addCategory(payload) { //Agregamos una categoria a la lista de categorías
   return { type: ADD_CATEGORY, payload };
