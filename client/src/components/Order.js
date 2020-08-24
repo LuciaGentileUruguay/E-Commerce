@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { increment,decrement,removeProductFromCart, getProductsCart} from "../actions/index";
 import { Link } from 'react-router-dom';
 
+
+
 export class Order extends Component {
   componentDidMount(){
     const { match: { params: { id }}} = this.props; //id del user

@@ -34,7 +34,7 @@ export default class Login extends React.Component {
           <div class= "form-group">
             <label for="exampleInputEmail1">Correo electronico</label>
             <input type="email"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name ="email" onChange={(e) => this.handleInputChange(e)} placeholder="Enter email"></input>
-            <small id="emailHelp" class="form-text text-muted">Nosotros nunca compartiremos tu emial con alguien mas.</small>
+            <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu emial con alguien mas.</small>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Contraseña</label>
@@ -43,7 +43,7 @@ export default class Login extends React.Component {
           <button class="btn btn-outline-primary" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button> 
         </form>
         <div className="divDeAbajo">
-          <p>No poseee una cuenta?</p>
+          <p>¿No posee una cuenta?</p>
           <Link to="/login/newuser">
             <button class="btn btn-outline-secondary">Regístrarse</button>
           </Link>         
