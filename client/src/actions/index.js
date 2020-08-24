@@ -12,6 +12,7 @@ export const GET_PRODUCTS_BY_NAME = 'GET_PRODUCTS_BY_NAME';
 export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const GET_PRODUCT_CATEGORIES = 'GET_PRODUCT_CATEGORIES';
 export const GET_PRODUCT_DETAIL = 'GET_PRODUCT_DETAIL';
+export const CLEAN_PRODUCT_DETAIL = 'CLEAN_PRODUCT_DETAIL';
 export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 export const ADD_USER = 'ADD_USER';
@@ -124,6 +125,11 @@ export function getProductDetail(id) { //ver detalle de un producto
         dispatch({ type: GET_PRODUCT_DETAIL, payload: json.data }); //en este caso el payload deberia ser sólo un producto
       });
   };
+}
+
+export function cleanProductDetail() { // borra detalle de un producto del store
+  return { type: CLEAN_PRODUCT_DETAIL ,
+           payload:{} };
 }
 
 
