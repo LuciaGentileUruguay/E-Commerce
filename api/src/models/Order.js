@@ -6,7 +6,8 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('order', {
     estado: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: ['carrito', 'procesando', 'cancelada', 'completada'],
       allowNull: false
     }
 

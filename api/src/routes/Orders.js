@@ -33,7 +33,7 @@ server.get('/:id',(req,res,next)=>{
     })
     .then(order=>{
         if (!order){
-            res.status(404).send("Nose encontro una orden asosiada a ese usuario");
+            res.status(404).send("No se encontró una órden asociada para ese usuario");
             return;
         } else {
             res.status(200).send(order);
