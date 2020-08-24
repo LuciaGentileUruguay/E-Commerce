@@ -38,27 +38,26 @@ export  class UpdateUser extends React.Component {
   render () {
     return (
       <div >
-        <form>
-          <label>Nombre:</label>
-          <input type="text" name="nombre" placeholder="Ingrese nombre" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Apellido:</label>
-          <input type="text" name="apellido" placeholder="Ingrese apellido" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Direccion Calle:</label>
-          <input type="text" name="calle" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Númeral:</label>
-          <input type="text" name="numero" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Departamento:</label>
-          <input type="text" name="departamento" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Localidad:</label>
-          <input type="text" name="localidad" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Provincia:</label>
-          <input type="text" name="provincia" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Teléfonos</label>
-          <label>Celular/Whatsapp</label>
-          <input type="tel" name="telefono1" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>
-          <label>Trabajo</label>
-          <input type="tel" name="telefono2" placeholder="telefono.." onChange={(e) => this.handleInputChange(e)}></input>
-          <button onClick={(e) => this.saveData(e)} >Guardar</button>   
+        <form className="form3">
+          <label for="exampleInputEmail1">Nombre</label>
+          <input class="form-control" type="text" name="nombre" placeholder="Ingrese nombre" onChange={(e) => this.handleInputChange(e)}></input>
+          <label for="exampleInputEmail1">Apellido</label>
+          <input class="form-control" type="text" name="apellido" placeholder="Ingrese apellido" onChange={(e) => this.handleInputChange(e)}></input> 
+          <label for="exampleInputEmail1">Direccion</label>
+          <input class="form-control" type="text" name="calle" placeholder="Ingrese su direccion" onChange={(e) => this.handleInputChange(e)}></input>  
+          <label for="exampleInputEmail1">Numero</label>
+          <input class="form-control" type="text" name="numero" placeholder="Numero" onChange={(e) => this.handleInputChange(e)}></input> 
+          <label for="exampleInputEmail1">Departamento</label>
+          <input class="form-control" type="text" name="departamento" placeholder="Departamento" onChange={(e) => this.handleInputChange(e)}></input> 
+          <label for="exampleInputEmail1">Localidad</label>
+          <input class="form-control" type="text" placeholder="Localidad" onChange={(e) => this.handleInputChange(e)}></input> 
+          <label for="exampleInputEmail1">Provincia</label>
+          <input class="form-control" type="text" placeholder="Provincia" onChange={(e) => this.handleInputChange(e)}></input> 
+          <label for="exampleInputEmail1">Telefonos Celular/Whatsapp</label>
+          <input class="form-control" name="telefono1" placeholder="" onChange={(e) => this.handleInputChange(e)}></input> 
+          <label for="exampleInputEmail1">Otro telefono</label>
+          <input class="form-control" type="text" name="telefono2" placeholder="" onChange={(e) => this.handleInputChange(e)}></input>  
+          <button class="btn btn-outline-success" onClick={(e) => this.saveData(e)} >Guardar</button>   
         </form>
       </div>
     );

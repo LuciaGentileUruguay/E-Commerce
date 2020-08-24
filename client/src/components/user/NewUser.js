@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Link} from "react-router-dom";
 import { addUser } from '../../actions/index';
-
+import "./stilo.css"
 
 export  class NewUser extends React.Component {
   constructor(props) {
@@ -36,18 +36,25 @@ export  class NewUser extends React.Component {
   render(){
     return(
       <div>
-        <form>
-          <label>Usuario:</label>
-          <input type="text" value={this.state.email} name="email" placeholder="Email registrado" onChange={(e) => this.handleInputChange(e)}>
-          </input>
-          <label>Contraseña:</label>
-          <input type="password" value={this.state.password} name="password" placeholder="Contraseña" onChange={(e) => this.handleInputChange(e)}>
-          </input>
-          <label>Nueva Contraseña:</label>
-          <input type="password"  value={this.state.newPassword}  name="newPassword" placeholder="Contraseña" onChange={(e) => this.handleInputChange(e)}>
-          </input>  
+        <form className="form2">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Correo Electronico</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+             value={this.state.email} name="email" placeholder="Email registrado" onChange={(e) => this.handleInputChange(e)}></input>
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1"
+            value={this.state.password} name="password" placeholder="Contraseña" onChange={(e) => this.handleInputChange(e)}></input>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Confirmar Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1"
+            value={this.state.newPassword}  name="newPassword" placeholder="Confirmar Contraseña" onChange={(e) => this.handleInputChange(e)}></input>
+          </div>
           <Link to='/login/userdata'>
-            <button onClick={(e) => this.validateNew(e)} type="submit">Continuar</button>   
+            <button class="btn btn-outline-success" onClick={(e) => this.validateNew(e)} type="submit">Continuar</button>   
           </Link>
         </form>                         
       </div>
