@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getProductDetail, getProductsCategories, addProductToCart } from '../actions/index';
-import './productDetail.css';
+import './ProductDetail.css';
 import axios from 'axios';
 import {Link,Route} from "react-router-dom";
 

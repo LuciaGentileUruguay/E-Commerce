@@ -1,6 +1,6 @@
 .form{
  max-width: 70%;
- border: solid 4px rgb(31, 36, 116);
+ border: solid 4px 4f3222;
  border-radius: 8px;
  margin-top: 40px;
  margin-left: 15px;  
@@ -9,7 +9,7 @@
 
 .divDeAbajo{
  max-width: 70%;
- border: solid 4px rgb(31, 36, 116);
+ border: solid 4px #c1946a;
  border-radius: 8px;
  margin-top: 40px;
  margin-left: 15px;  
@@ -18,7 +18,7 @@
 
 .form2{
     max-width: 70%;
-    border: solid 4px rgb(31, 36, 116);
+    border: solid 4px #c1946a;
     border-radius: 8px;
     margin-top: 40px;
     margin-left: 15px;  
@@ -27,7 +27,7 @@
 
 .form3{
     max-width: 85%;
-    border: solid 4px rgb(31, 36, 116);
+    border: solid 4px #c1946a;
     border-radius: 8px;
     margin-top: 40px;
     margin-left: 15px;  
@@ -35,5 +35,5 @@
 }
 
 body{
-    background-color: rgb(181, 219, 245);
+    background-color: #e3eaa7;
 }

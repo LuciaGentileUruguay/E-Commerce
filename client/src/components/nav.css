@@ -2,18 +2,23 @@
 #navigation {
   padding: 3px 7px;
   text-decoration: none;
+  color: black;
+  
   
 }
 
 #navigation :hover {
-  background-color: rgba(242, 218, 196,0.8); /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color de background*/
+  background-color: #6c9647; /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color de background*/
 }
 
 
 #navigation a {
+  color: black; 
   cursor: pointer; /*el cursor se pone en pointer cada vez que nos paramos sobre alguna de las opciones del menú*/
 }
 
 #navigation a:hover {
+  color: black;
   text-decoration: none; /*por defecto al seleccionar algo del menú el bootstrap hace que se ponga un subrayado, con esto, al pararse sobre alguna opción, no hay cambios sobre las palabras del menú*/
 }
+
