@@ -5,14 +5,14 @@ const { Sequelize } = require('sequelize');
 //crear un usuario
 server.post('/',(req,res,next)=>{
   //en caso de que falte algun campo devolver un error
-  const {nombre, 
+  const {nombre,
     apellido,
     calle,
     numero,
     departamento,
     telefono1,
     telefono2,
-     email, 
+     email,
      password} = req.body;
   // if (!email || !password){
   //     return res.status(404).send("Falta algun campo");
@@ -26,7 +26,7 @@ server.post('/',(req,res,next)=>{
         departamento,
         telefono1,
         telefono2,
-         email, 
+         email,
          password
       })
       .then(user=>{
@@ -47,7 +47,7 @@ server.get('/',(req,res,next)=>{
 server.put('/:id',(req,res,next)=>{
   return User.findByPk(req.params.id)
   .then (function(user){
-    const {nombre, 
+    const {nombre,
       apellido,
       calle,
       numero,
@@ -56,7 +56,7 @@ server.put('/:id',(req,res,next)=>{
       provincia,
       telefono1,
       telefono2,
-       email, 
+       email,
        password} = req.body;
        console.log(req.body)
        user.nombre = nombre;
@@ -101,7 +101,7 @@ server.post('/:id/cart',(req,res,next) =>{
   Order.findOrCreate({
     where:{
       userId: userId,
-      estado: 'pending'
+      estado: 'carrito'
     }
   }) //findOrCreate devuelve un array
    .then(order => {
@@ -135,7 +135,7 @@ server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un us
   Order.findOne({
     where:{
       userId: req.params.id,
-      estado: "pending"
+      estado: "carrito"
     },include:{
       model: Product
     }
@@ -153,7 +153,7 @@ server.delete('/:id/cart',(req,res,next) =>{ //vaciamos carrito
   Order.findOne({
     where:{
       userId: req.params.id,
-      estado: "pending"
+      estado: "carrito"
     }
   })
   .then(idOrder => {
@@ -173,7 +173,7 @@ server.delete('/:id/cart/:prodId',(req,res,next) =>{ //quitamos un producto del 
   Order.findOne({
     where:{
       userId: req.params.id,
-      estado: "pending"
+      estado: "carrito"
     }
   })
   .then(idOrder => {
@@ -195,7 +195,7 @@ server.put('/:id/cart/:prodId',(req,res,next) =>{ //Modificamos la cantidad de u
   Order.findOne({
     where:{
       userId: req.params.id,
-      estado: "pending"
+      estado: "carrito"
     }
   })
   .then(idOrder => {
@@ -221,7 +221,7 @@ server.put('/:id/cart/:prodId',(req,res,next) =>{ //Modificamos la cantidad de u
         res.status(400).send("No se Reconoce el Comando: "+req.body.accion)
         return
       }
-      res.status(201).send("Se modifico la cantidad del producto: "+req.body.accion)
+      res.status(201).send("Se modificó la cantidad: "+req.body.accion)
     })
   })
 })
