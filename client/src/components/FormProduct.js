@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {getCategories } from '../actions/index';		
+import {getCategories,cleanProductDetail } from '../actions/index';		
 import { connect } from 'react-redux';		
 import {Link} from "react-router-dom";
 
@@ -16,13 +16,17 @@ class FormProduct extends React.Component {
   componentDidMount () {
     this.props.getCategories()
     if(this.props.productCategories){		
-      	      console.log(this.props.productCategories)		
-      	      this.props.productDetail["categoryId"]=[]		
-      	      this.props.productCategories.map(item=>{		
-      	        this.props.productDetail.categoryId.push(item.id.toString())		
-      	      })		
-      	      console.log(this.props.productDetail.categoryId)		
+      	      // console.log(this.props.productCategories)		
+      	      // this.props.productDetail["categoryId"]=[]		
+      	      // this.props.productCategories.map(item=>{		
+      	      //   this.props.productDetail.categoryId.push(item.id.toString())		
+      	      // })		
+      	      // console.log(this.props.productDetail.categoryId)		
       	    }
+  }
+
+  cleanStore(){
+    this.props.cleanProductDetail()
   }
 
   handleInputChange (e) {
@@ -119,6 +123,7 @@ class FormProduct extends React.Component {
           </div>
           <input id= "botonBorrar" type='submit' value="Borrar" onClick={(e) => {
           e.preventDefault();
+          this.cleanStore()
           this.delete() }}/>
           <input id= "botonGuardar" type='submit' value="Guardar" onClick={(e) => {
           e.preventDefault();
@@ -141,7 +146,8 @@ class FormProduct extends React.Component {
   
   const mapDispatchToProps = dispatch => {
     return {
-      getCategories: () => dispatch(getCategories())
+      getCategories: () => dispatch(getCategories()),
+      cleanProductDetail: () => dispatch(cleanProductDetail())
     }
   }
   

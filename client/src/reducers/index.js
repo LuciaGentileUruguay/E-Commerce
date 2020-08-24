@@ -1,6 +1,6 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES, 
-  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,SET_ADMIN,GET_ORDERS } from '../actions';
+  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,SET_ADMIN,GET_ORDERS } from '../actions';
 
 
 //Definimos el estado inicial
@@ -78,6 +78,14 @@ function rootReducer(state = initialState, action) {
   }
 
   if (action.type === GET_PRODUCT_DETAIL) {
+    //console.log(action.payload);
+      return {
+        ...state,
+        productDetail: action.payload //no nos interesa guardar datos anteriores en este caso. ...state creo que puede no estar
+      };
+  }
+
+  if (action.type === CLEAN_PRODUCT_DETAIL) {
     //console.log(action.payload);
       return {
         ...state,

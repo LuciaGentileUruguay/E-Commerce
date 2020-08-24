@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchBar from './SearchBar.js';
 import { Link, Route} from 'react-router-dom';
 import { connect } from "react-redux";
+import {cleanProductDetail } from '../actions/index';
 import './nav.css';
 
 
@@ -10,11 +11,16 @@ export class Admin extends Component {
     super(props)
     console.log(this.props);
   }
+
+  newProduct(){
+    this.props.cleanProductDetail()
+  }
+
   render(){
     return (
         <nav id="navigation">
           <Link to = "/form_product">
-            <span id="navigation">Nuevo Producto</span>
+            <span id="navigation" onClick={()=>this.newProduct()} >Nuevo Producto</span>
           </Link>
 
           <Link to = "/form_categories">
@@ -33,6 +39,11 @@ function mapStateToProps(state) {
   };
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    cleanProductDetail: () => dispatch(cleanProductDetail())
+   
+  }
+}
 
-
-export default connect(mapStateToProps)(Admin);
+export default connect(mapStateToProps,mapDispatchToProps)(Admin);
