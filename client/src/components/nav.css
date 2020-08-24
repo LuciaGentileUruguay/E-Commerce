@@ -2,23 +2,39 @@
 #navigation {
   padding: 3px 7px;
   text-decoration: none;
-  color: black;
-  
-  
+  color: #63321F;
+  font-family: 'Amatic SC', cursive;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 #navigation :hover {
-  background-color: #6c9647; /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color de background*/
+  background-color: #C1D9D4; /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color a verde*/
 }
 
 
 #navigation a {
-  color: black; 
+  color: #63321F;
   cursor: pointer; /*el cursor se pone en pointer cada vez que nos paramos sobre alguna de las opciones del menú*/
 }
 
 #navigation a:hover {
-  color: black;
+  color: #63321F;
   text-decoration: none; /*por defecto al seleccionar algo del menú el bootstrap hace que se ponga un subrayado, con esto, al pararse sobre alguna opción, no hay cambios sobre las palabras del menú*/
 }
 
+.shadowsIntoLight {
+	font-family: 'Shadows Into Light', cursive;
+}
+
+.fixed{
+  position: fixed;
+}
+
+.top{
+	top: 0.5em;
+}
+
+.right{
+	right: 3em;
+}

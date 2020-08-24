@@ -1,3 +1,15 @@
+
+a {
+  color: #63321F;
+  text-decoration: none;
+}
+
+a :hover {
+  text-decoration: none;
+  background-color: #C1D9D4;
+}
+
+
 .divroot {
   border-width: 2px;
   border-style: solid;
@@ -23,7 +35,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
 }
 
 
@@ -50,4 +62,3 @@
   justify-content: center;
   margin-top: 5px;
 }
-
