@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import {saveNewUser} from "../../actions/index"
+import swal from 'sweetalert';
 
 export  class UpdateUser extends React.Component {
   constructor(props) {
@@ -29,7 +30,10 @@ export  class UpdateUser extends React.Component {
     axios.put(`http://localhost:3001/users/${this.state.id}`, this.state )
     .then(res => {
       if(res.status === 201){
-        alert("Datos Guardados Exitosamente");
+        swal ({
+          title: "Usuario creado!",
+          icon: "success"})
+
       }  
     })
     .catch(err => {return "error"})

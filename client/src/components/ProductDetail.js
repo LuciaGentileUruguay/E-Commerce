@@ -45,7 +45,7 @@ class ProductDetail extends React.Component {
                             {this.botonEditar()}
                         </div>
                         <Link to="/products">
-                        <button className= "button" onClick={() => this.props.addProductToCart(this.props.user, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
+                        <button class="btn btn-outline-success" onClick={() => this.props.addProductToCart(this.props.user, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
                         </Link>
 
                     </div>
