@@ -9,7 +9,6 @@ class FormProduct extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        categoryId:[]
       }
   }
 
@@ -17,10 +16,10 @@ class FormProduct extends React.Component {
     this.props.getCategories()
     if(this.props.productCategories){		
       	      // console.log(this.props.productCategories)		
-      	      // this.props.productDetail["categoryId"]=[]		
-      	      // this.props.productCategories.map(item=>{		
-      	      //   this.props.productDetail.categoryId.push(item.id.toString())		
-      	      // })		
+      	      this.props.productDetail.categoryId=[]		
+      	      this.props.productCategories.map(item=>{		
+      	        this.props.productDetail.categoryId.push(item.id.toString())		
+      	      })		
       	      // console.log(this.props.productDetail.categoryId)		
       	    }
   }
@@ -47,20 +46,20 @@ class FormProduct extends React.Component {
     	    if(flag){		
     	      this.props.productDetail.categoryId.push(e.target.value)		
           }			
-          console.log(this.props.productDetail.categoryId)		
     	   }
 
   save(){
+    console.log("save")
     axios.post(`http://localhost:3001/products`, this.props.productDetail)
       .then(res => {
-        if(res.status === 201){
+        if(res.status === 200){
           alert("PRODUCTO GUARDADO CORRECTAMENTE");
         }else {alert("hubo un error!!!")
         }
       })
     }
     modify(){
-      console.log(this.props.productDetail)
+      console.log("modify")
       axios.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
        this.props.productDetail)
         .then(res => {
@@ -71,7 +70,6 @@ class FormProduct extends React.Component {
         })
     }
     delete(){
-      console.log(this.props.productDetail)
       axios.delete(`http://localhost:3001/products/${this.props.productDetail.id}`,
        this.props.productDetail)
         .then(res => {
@@ -97,12 +95,21 @@ class FormProduct extends React.Component {
            <div className = "divForm">
             <label>Categoría:</label>
              
-                {this.props.categories && this.props.categories.map(item => {
+                {this.props.categories && this.props.categories.map(category => {
+                  let checked = false
+                  this.props.productCategories.map(product_Category => {
+                    if (category.name === product_Category.name && this.props.productDetail.id){
+                      checked=true; 
+                      return 
+                    }
+                  })
                   return (<div>
                     <input type="checkbox" 
-                    value = {item.id}		
+                    value = {category.id}
+                    defaultChecked = {checked}		
+
 	                onChange={(e) => this.handleInputChangeCategory(e)}/>
-                    <label> {item.name} </label>
+                    <label> {category.name} </label>
                     </div>)})}
              
           </div>
@@ -127,7 +134,7 @@ class FormProduct extends React.Component {
           this.delete() }}/>
           <input id= "botonGuardar" type='submit' value="Guardar" onClick={(e) => {
           e.preventDefault();
-          if (this.props.productDetail){
+          if (this.props.productDetail.id){
             this.modify()
             return;
           }
