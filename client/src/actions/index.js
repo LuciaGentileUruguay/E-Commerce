@@ -17,9 +17,7 @@ export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 export const ADD_USER = 'ADD_USER';
 export const SAVE_NEW_USER ='SAVE_NEW_USER';
-
 export const SET_ADMIN = 'SET_ADMIN';
-
 export const GET_ORDERS ='GET_ORDERS';
 
 export function setProduct(payload) {  //modicamos un producto
@@ -29,19 +27,6 @@ export function setProduct(payload) {  //modicamos un producto
 export function setAdmin(payload) {  //cambio a admin o usuario regular
   return { type: SET_ADMIN, payload };
 }
-/*
-export function addCategory(payload) { //Agregamos una categoria a la lista de categorías
-  return { type: ADD_CATEGORY, payload };
-}
-
-export function removeCategory(payload) { //eliminamos una categoria
-  return { type: REMOVE_CATEGORY, payload };
-}
-
-export function setCategory(payload) { //modificamos una categoría
-  return { type: SET_CATEGORY, payload };
-}
-*/
 
 export function addProductToCart(id, prodId, payload) { //id = userId, payload = producto
   return function(dispatch) {
@@ -146,7 +131,6 @@ export function saveNewUser(data){
   }
 }
 
-
 export const increment = (id, prodId) => (
   function(dispatch){
     axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
@@ -163,7 +147,7 @@ export const decrement = (id, prodId) => (
       });
 });
 
-export function getOrders() { //lista todas las órdenes de todos los usuarios
+export function getOrders() { //lista todas las órdenes que no son carrito, de todos los usuarios
   return function(dispatch) {
     return axios.get("http://localhost:3001/orders")
       .then(json => {

@@ -1,9 +1,28 @@
 const server = require('express').Router();
-const { Product, Order, Order_line } = require('../db.js');
+const { Product, Order, Order_line, User } = require('../db.js');
 const { Sequelize } = require('sequelize');
 
 server.get('/',(req,res,next)=>{
-    Order.findAll()
+    Order.findAll({
+      where: {
+        estado: ['procesando', 'cancelada', 'completada']
+      },
+      include:[{model: Product}, {model: User}]
+    })
+    .then(orders=>{
+        res.status(200).send(orders);
+        return;
+    })
+});
+
+server.get('/:id/products',(req,res,next)=>{
+    Order.findOne({
+      where: {
+        estado: ['procesando', 'cancelada', 'completada'],
+        id: req.params.id
+      },
+      include:[{model: Product}]
+    })
     .then(orders=>{
         res.status(200).send(orders);
         return;
