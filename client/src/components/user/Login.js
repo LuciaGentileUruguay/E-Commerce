@@ -25,28 +25,28 @@ export default class Login extends React.Component {
       alert("ENTRE AL false")
       return false;
     }
-  }  
+  }
 
   render () {
-    return ( 
+    return (
       <div>
        <form className="form">
-          <div class= "form-group">
-            <label for="exampleInputEmail1">Correo electronico</label>
+          <div className= "form-group shadowsIntoLight">
+            <label for="exampleInputEmail1" >Correo electrónico</label>
             <input type="email"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name ="email" onChange={(e) => this.handleInputChange(e)} placeholder="Enter email"></input>
-            <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu emial con alguien mas.</small>
+            <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con alguien más.</small>
           </div>
-          <div class="form-group">
+          <div className="form-group shadowsIntoLight">
             <label for="exampleInputPassword1">Contraseña</label>
             <input type="password"  class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" onChange={(e) => this.handleInputChange(e)}></input>
           </div>
-          <button class="btn btn-outline-primary" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button> 
+          <button className="btn btn-outline-secondary shadowsIntoLight" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button>
         </form>
-        <div className="divDeAbajo">
-          <p>¿No posee una cuenta?</p>
+        <div className="divDeAbajo shadowsIntoLight">
+          <p>¿Usuario nuevo?</p>
           <Link to="/login/newuser">
-            <button class="btn btn-outline-secondary">Regístrarse</button>
-          </Link>         
+            <button className="btn btn-outline-secondary">Regístrese</button>
+          </Link>
         </div>
       </div>
     );

@@ -10,10 +10,10 @@ export  class NewUser extends React.Component {
     this.state={
       email:"",
       password:"",
-      newPassword:""          
+      newPassword:""
     }
   }
- 
+
   handleInputChange(e){
     this.setState({[e.target.name]:e.target.value})
   }
@@ -27,7 +27,7 @@ export  class NewUser extends React.Component {
       this.setState({
         email:"",
         password:"",
-        newPassword:"" 
+        newPassword:""
       })
       return;
     }
@@ -36,36 +36,36 @@ export  class NewUser extends React.Component {
   render(){
     return(
       <div>
-        <form className="form2">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Correo Electronico</label>
+        <form className="form2 shadowsIntoLight">
+          <div className="form-group">
+            <label for="exampleInputEmail1">Correo Electrónico</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
              value={this.state.email} name="email" placeholder="Email registrado" onChange={(e) => this.handleInputChange(e)}></input>
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con alguien más.</small>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label for="exampleInputPassword1">Contraseña</label>
             <input type="password" class="form-control" id="exampleInputPassword1"
             value={this.state.password} name="password" placeholder="Contraseña" onChange={(e) => this.handleInputChange(e)}></input>
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Confirmar Contraseña</label>
+          <div className="form-group">
+            <label for="exampleInputPassword1">Confirmar contraseña</label>
             <input type="password" class="form-control" id="exampleInputPassword1"
             value={this.state.newPassword}  name="newPassword" placeholder="Confirmar Contraseña" onChange={(e) => this.handleInputChange(e)}></input>
           </div>
           <Link to='/login/userdata'>
-            <button class="btn btn-outline-success" onClick={(e) => this.validateNew(e)} type="submit">Continuar</button>   
+            <button className="btn btn-outline-success" onClick={(e) => this.validateNew(e)} type="submit">Continuar</button>
           </Link>
-        </form>                         
+        </form>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {		
-  return {		
+const mapStateToProps = state => {
+  return {
     newUser: state.newUser
-  }		
+  }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -73,5 +73,5 @@ const mapDispatchToProps = dispatch => {
     addUser: (email,password)=>dispatch(addUser(email,password))
   }
 }
-    
+
 export default connect(mapStateToProps, mapDispatchToProps)(NewUser);
