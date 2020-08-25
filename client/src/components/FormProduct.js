@@ -46,20 +46,20 @@ class FormProduct extends React.Component {
     	    if(flag){		
     	      this.props.productDetail.categoryId.push(e.target.value)		
           }			
-          console.log(this.props.productDetail.categoryId)		
     	   }
 
   save(){
+    console.log("save")
     axios.post(`http://localhost:3001/products`, this.props.productDetail)
       .then(res => {
-        if(res.status === 201){
+        if(res.status === 200){
           alert("PRODUCTO GUARDADO CORRECTAMENTE");
         }else {alert("hubo un error!!!")
         }
       })
     }
     modify(){
-      console.log(this.props.productDetail)
+      console.log("modify")
       axios.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
        this.props.productDetail)
         .then(res => {
@@ -70,7 +70,6 @@ class FormProduct extends React.Component {
         })
     }
     delete(){
-      console.log(this.props.productDetail)
       axios.delete(`http://localhost:3001/products/${this.props.productDetail.id}`,
        this.props.productDetail)
         .then(res => {
@@ -135,7 +134,7 @@ class FormProduct extends React.Component {
           this.delete() }}/>
           <input id= "botonGuardar" type='submit' value="Guardar" onClick={(e) => {
           e.preventDefault();
-          if (this.props.productDetail){
+          if (this.props.productDetail.id){
             this.modify()
             return;
           }

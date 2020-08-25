@@ -91,17 +91,18 @@ server.post('/', (req,res,next) =>{
 
 //Ruta para actualizar un Producto por id
 server.put('/:id', (req,res,next)=>{
-	return Product.findByPk(req.params.id)
-	.then (function(product){
+	Product.findByPk(req.params.id)
+	.then (product => {
 		const {name, description, price, image, stock,categoryId} = req.body;
 		product.name = name;
 		product.description = description;
 		product.price = price;
 		product.image = image;
 		product.stock = stock;
+		product.setCategories(categoryId)
 		product.save();
+		
 		res.status(201).send("Se modifico el Producto");
-
 	})
 });
 
