@@ -98,7 +98,7 @@ class FormProduct extends React.Component {
                 {this.props.categories && this.props.categories.map(category => {
                   let checked = false
                   this.props.productCategories.map(product_Category => {
-                    if (category.name === product_Category.name){
+                    if (category.name === product_Category.name && this.props.productDetail.id){
                       checked=true; 
                       return 
                     }
