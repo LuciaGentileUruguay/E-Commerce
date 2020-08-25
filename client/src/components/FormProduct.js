@@ -9,7 +9,6 @@ class FormProduct extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-        categoryId:[]
       }
   }
 
@@ -17,10 +16,10 @@ class FormProduct extends React.Component {
     this.props.getCategories()
     if(this.props.productCategories){		
       	      // console.log(this.props.productCategories)		
-      	      // this.props.productDetail["categoryId"]=[]		
-      	      // this.props.productCategories.map(item=>{		
-      	      //   this.props.productDetail.categoryId.push(item.id.toString())		
-      	      // })		
+      	      this.props.productDetail.categoryId=[]		
+      	      this.props.productCategories.map(item=>{		
+      	        this.props.productDetail.categoryId.push(item.id.toString())		
+      	      })		
       	      // console.log(this.props.productDetail.categoryId)		
       	    }
   }
@@ -97,12 +96,21 @@ class FormProduct extends React.Component {
            <div className = "divForm">
             <label>Categoría:</label>
              
-                {this.props.categories && this.props.categories.map(item => {
+                {this.props.categories && this.props.categories.map(category => {
+                  let checked = false
+                  this.props.productCategories.map(product_Category => {
+                    if (category.name === product_Category.name){
+                      checked=true; 
+                      return 
+                    }
+                  })
                   return (<div>
                     <input type="checkbox" 
-                    value = {item.id}		
+                    value = {category.id}
+                    defaultChecked = {checked}		
+
 	                onChange={(e) => this.handleInputChangeCategory(e)}/>
-                    <label> {item.name} </label>
+                    <label> {category.name} </label>
                     </div>)})}
              
           </div>
