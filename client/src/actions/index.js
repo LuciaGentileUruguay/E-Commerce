@@ -19,6 +19,7 @@ export const ADD_USER = 'ADD_USER';
 export const SAVE_NEW_USER ='SAVE_NEW_USER';
 export const SET_ADMIN = 'SET_ADMIN';
 export const GET_ORDERS ='GET_ORDERS';
+export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
 
 export function setProduct(payload) {  //modicamos un producto
   return { type: SET_PRODUCT, payload };
@@ -152,6 +153,15 @@ export function getOrders() { //lista todas las órdenes que no son carrito, de 
     return axios.get("http://localhost:3001/orders")
       .then(json => {
         dispatch({ type: GET_ORDERS, payload: json.data }); //el payload seran todos las órdenes
+      });
+  };
+}
+
+export function getProductsFromOrder(id) { //lista todos los productos de una orden
+  return function(dispatch) {
+    return axios.get("http://localhost:3001/orders/"+ id +"/products/")
+      .then(json => {
+        dispatch({ type: GET_PRODUCTS_FROM_ORDER, payload: json.data }); //el payload seran todos los productos de la orden
       });
   };
 }

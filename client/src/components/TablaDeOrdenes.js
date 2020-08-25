@@ -1,8 +1,8 @@
-import React, { Component, Link } from 'react';
+import React, { Component} from 'react';
 import { connect } from "react-redux";
 import {getOrders} from '../actions/index';
 import Order from './Order.js';
-
+import { Link } from 'react-router-dom'
 export class TablaDeOrdenes extends Component {
 
   componentDidMount(){
@@ -33,7 +33,7 @@ export class TablaDeOrdenes extends Component {
               <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
               <Link to={`/orders/${el.id}/products`}>
                   <span> Detalle </span>
-                  </Link>
+              </Link>
 
             </div>
           ))}
