@@ -18,10 +18,9 @@ import { connect } from "react-redux";
 import UpdateUser from './components/user/UpdateUser';
 import NewUser from './components/user/NewUser';
 import Login from './components/user/Login';
-
 import Admin from "./components/Admin";
-
 import TablaDeOrdenes from './components/TablaDeOrdenes.js';
+import ProductsFromOrder from './components/ProductsFromOrder.js';
 
 
 class App extends React.Component{
@@ -44,6 +43,7 @@ class App extends React.Component{
         <Route exact path='/'component={Landing} />
         <Route exact path='/products' component={Products} />
         <Route exact path='/orders' component={TablaDeOrdenes} />
+        <Route exact path='/orders/:id/products' component={ProductsFromOrder} />
         <Route exact path='/new_category_form'component={NewCategoryForm} />
         <Route exact path='/form_categories'component={FormCategories} />
         <Route exact path='/form_product'component={FormProduct} />
@@ -53,8 +53,6 @@ class App extends React.Component{
         <Route exact path='/login' component = {Login}/>
         <Route exact path='/login/userdata' component = {UpdateUser}/>
         <Route exact path='/login/newuser' component = {NewUser}/>
-        {/*se agrego la ruta para mostrar los detalles del producto */}
-      {/*  <Route exact path='/products/:id' render={({match}) => <ProductDetail id={match.params.id}/>}/>*/}
         <Route exact path='/products/:id' component = {ProductDetail}/>
     </div>
     )
