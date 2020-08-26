@@ -12,12 +12,13 @@ import Nav from './components/Nav.js';
 import Order from './components/Order.js';
 import Landing from './components/Landing.js';
 import {Route} from 'react-router-dom';
-import axios from 'axios';
 import { getProducts,getProductsByName } from './actions/index';
 import { connect } from "react-redux";
 import UpdateUser from './components/user/UpdateUser';
 import NewUser from './components/user/NewUser';
+import UserDetail from './components/user/userDetail'
 import Login from './components/user/Login';
+import UserList from './components/user/userList'
 import Admin from "./components/Admin";
 import TablaDeOrdenes from './components/TablaDeOrdenes.js';
 import ProductsFromOrder from './components/ProductsFromOrder.js';
@@ -39,7 +40,7 @@ class App extends React.Component{
     return (
       <div>
         <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
-        <Route path='/admin' render={() => <Admin onSearch={this.onSearch}/>}/>
+        <Route exact path='/admin' render={() => <Admin onSearch={this.onSearch}/>}/>
         <Route exact path='/'component={Landing} />
         <Route exact path='/products' component={Products} />
         <Route exact path='/orders' component={TablaDeOrdenes} />
@@ -53,7 +54,9 @@ class App extends React.Component{
         <Route exact path='/login' component = {Login}/>
         <Route exact path='/login/userdata' component = {UpdateUser}/>
         <Route exact path='/login/newuser' component = {NewUser}/>
+        <Route exact path='/login/userlist' component={UserList}/>
         <Route exact path='/products/:id' component = {ProductDetail}/>
+        <Route exact path='/users/:id' component = {UserDetail}/>
     </div>
     )
   }

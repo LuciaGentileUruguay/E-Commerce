@@ -27,6 +27,10 @@ export class Admin extends Component {
             <span id="navigation">Nueva Categoria</span>
           </Link>
 
+          <Link to = "/login/userlist">
+            <span id="navigation">Usuarios</span>
+          </Link>
+
           <Route exact path='/' render={() => <SearchBar onSearch={this.props.onSearch}/>}/>
         </nav>
       )}

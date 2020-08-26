@@ -17,6 +17,8 @@ export const GET_PRODUCTS_FROM_CATEGORY = 'GET_PRODUCTS_FROM_CATEGORY';
 export const GET_PRODUCTS_CART = 'GET_PRODUCTS_CART';
 export const ADD_USER = 'ADD_USER';
 export const SAVE_NEW_USER ='SAVE_NEW_USER';
+export const GET_USER_DETAIL = 'GET_USER_DETAIL';
+export const SET_REDIRECT = 'SET_REDIRECT';
 export const SET_ADMIN = 'SET_ADMIN';
 export const GET_ORDERS ='GET_ORDERS';
 export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
@@ -119,8 +121,11 @@ export function cleanProductDetail() { // borra detalle de un producto del store
 }
 
 
-export function addUser(email,password){
-  return {type: ADD_USER, payload: {email:email,password:password}}
+export function addUser(email, password){
+  return {type: ADD_USER, payload: {email:email,
+                                    password:password
+                                    }
+  }
 }
 
 export function saveNewUser(data){
@@ -130,6 +135,19 @@ export function saveNewUser(data){
         dispatch({type: SAVE_NEW_USER, payload: resp.data})
     })
   }
+}
+
+export function getUserDetail(id) { //ver detalle de un producto
+  return function(dispatch) {
+    return axios.get("http://localhost:3001/users/id/" + id)
+      .then(json => {
+        dispatch({ type: GET_USER_DETAIL, payload: json.data }); //en este caso el payload deberia ser sólo un producto
+      });
+  };
+}
+
+export function setRedirect(state){
+  return{type: SET_REDIRECT, payload:state}
 }
 
 export const increment = (id, prodId) => (

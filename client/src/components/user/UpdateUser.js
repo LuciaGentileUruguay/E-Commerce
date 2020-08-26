@@ -1,43 +1,57 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import {saveNewUser} from "../../actions/index"
+import {addUser, saveNewUser} from "../../actions/index"
 import swal from 'sweetalert';
 
 export  class UpdateUser extends React.Component {
   constructor(props) {
     super(props);
-    this.state={};
+    this.state={
+      email:"",
+      password:"",
+      nombre:"",
+      apellido:"",
+      calle:"",
+      numero:"",
+      departamento:"",
+      localidad:"",
+      provincia:"",
+      telefono1:"",
+      telefono2:""
+    };
   }
 
-  componentDidMount(props){
-    let data = this.props.newUser 
-    this.props.saveNewUser(data) 
-    this.setState({
-      email: this.props.newUser.email,
-      password: this.props.newUser.password,
-      id: this.props.newUser.id
-    })
-  }
-    
   handleInputChange(e){
-      this.setState({[e.target.name]:e.target.value})
-      this.setState({id:this.props.newUser.id})
+    this.setState({[e.target.name]:e.target.value})
+}
+saveData(e){
+  e.preventDefault()
+  let data = {
+    email: this.props.newUser.email,
+    password: this.props.newUser.password,
+    nombre:this.state.nombre,
+    apellido:this.state.apellido,
+    calle:this.state.calle,
+    numero:this.state.numero,
+    departamento:this.state.departamento,
+    localidad:this.state.localidad,
+    provincia:this.state.provincia,
+    telefono1:this.state.telefono1,
+    telefono2:this.state.telefono2
   }
+  console.log(data)
+  axios.post(`http://localhost:3001/users`, data)
+  .then(res => {
+    if(res.status === 201){
+      swal ({
+        title: "Usuario creado!",
+        icon: "success"})
 
-  saveData(e){
-    e.preventDefault()
-    axios.put(`http://localhost:3001/users/${this.state.id}`, this.state )
-    .then(res => {
-      if(res.status === 201){
-        swal ({
-          title: "Usuario creado!",
-          icon: "success"})
-
-      }  
-    })
-    .catch(err => {return "error"})
-  }
+    }  
+  })
+  .catch(err => {return "error"})
+}
 
   render () {
     return (

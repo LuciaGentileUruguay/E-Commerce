@@ -10,6 +10,8 @@ server.post('/',(req,res,next)=>{
     calle,
     numero,
     departamento,
+    localidad,
+    provincia,
     telefono1,
     telefono2,
      email,
@@ -24,6 +26,8 @@ server.post('/',(req,res,next)=>{
         calle,
         numero,
         departamento,
+        localidad,
+        provincia,
         telefono1,
         telefono2,
          email,
@@ -42,6 +46,31 @@ server.get('/',(req,res,next)=>{
         res.status(200).send(user);
     })
 })
+
+//Bucar usuario por ID
+server.get('/id/:id',(req,res,next)=>{
+  User.findByPk(req.params.id)
+  .then(user=>{
+    if (!user){
+      res.status(404).send("No se encuentra el usuario");
+    }
+    else {
+     res.status(200).json(user);
+    }
+
+  })
+})
+
+//trae los usuarios por mail
+server.get('/:email',(req,res,next)=>{
+  let email = req.params.email
+  console.log(email)
+  User.findAll({
+    where:{email:email}
+  })
+  .then(user=>{if(user){res.status(200).send(user);
+  return}  
+  })})
 
 //modificar un usuario
 server.put('/:id',(req,res,next)=>{
