@@ -36,7 +36,7 @@ export  class NewUser extends React.Component {
   render(){
     return(
       <div>
-        <form className="form2 shadowsIntoLight">
+        <form className="form2">
           <div className="form-group">
             <label for="exampleInputEmail1">Correo Electrónico</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"

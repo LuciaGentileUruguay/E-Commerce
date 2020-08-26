@@ -31,18 +31,18 @@ export default class Login extends React.Component {
     return (
       <div>
        <form className="form">
-          <div className= "form-group shadowsIntoLight">
+          <div className= "form-group">
             <label for="exampleInputEmail1" >Correo electrónico</label>
             <input type="email"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name ="email" onChange={(e) => this.handleInputChange(e)} placeholder="Enter email"></input>
             <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con alguien más.</small>
           </div>
-          <div className="form-group shadowsIntoLight">
+          <div className="form-group">
             <label for="exampleInputPassword1">Contraseña</label>
             <input type="password"  class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" onChange={(e) => this.handleInputChange(e)}></input>
           </div>
-          <button className="btn btn-outline-secondary shadowsIntoLight" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button>
+          <button className="btn btn-outline-secondary" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button>
         </form>
-        <div className="divDeAbajo shadowsIntoLight">
+        <div className="divDeAbajo">
           <p>¿Usuario nuevo?</p>
           <Link to="/login/newuser">
             <button className="btn btn-outline-secondary">Regístrese</button>
