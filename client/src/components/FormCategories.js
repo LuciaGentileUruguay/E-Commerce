@@ -8,14 +8,17 @@ export class FormCategories extends React.Component {
 
   constructor(props) {
       super(props);
-        this.state={category:{}}
+        this.state={category:{}};
+
   }
   componentDidMount () {		
     	    this.props.getCategories()		
     	  }
 
   handleInputChange (e) {
-    this.state.category[e.target.name]= e.target.value;
+    this.state.category[e.target.name]=e.target.value
+    console.log(this.state.category)
+
   }
 
   saveCat(){
@@ -46,37 +49,40 @@ export class FormCategories extends React.Component {
     })
 
   }
-
-
-
-
-  render () {
+    
+   render () {
     return (
       <form>
-
         <div className = "divForm">  
-        <select       
-        name="id" 		
-	  	
-	        onChange={(e) => this.handleInputChange(e) }>		
-	        <option disabled selected>Elija Categoria...</option>		
-	        {this.props.categories && this.props.categories.map(item => {		
-	                return (		
-	                  <option value ={item.id}>{item.name}</option>		
-	                  )})}		
-	        </select>
-          </div>
-          
-          <div>
-            <label>Nuevo Nombre:</label>		
-	        <input name="name" type="text" 
-          onChange={(e) => this.handleInputChange(e) }>		
-			     </input>
+        <select name="id" onChange={(e) => this.handleInputChange(e) }>	
+          <option disabled selected>Elija Categoria...</option>		
+            {this.props.categories && this.props.categories.map((item,i)  => {	
+              return (
+                <option value ={item.id}>{item.name}</option>
+            )})}
+        </select>
+  </div>          
+  <div>
+    <label>Nuevo Nombre:</label>
+      {this.props.categories.map(category => {
+        console.log(category.id);
+        console.log(this.state.category.id)
+          if (category.id === this.state.category.id){                  
+          // console.log(category.id)
+          return (
+            <div>
+              <input type="text" 
+              placeholder={category.name}
+              onChange={(e) => this.handleInputChange(e)}/>
+            </div>)}})}
+{/*             		
+	        <input name="name" type="text" placeholder={this.props.categories[0] && this.props.categories[0].name} onChange={(e) => this.handleInputChange(e) }>		
+			     </input> */}
         </div>
 
         <div className = "divForm">
         <label>Nueva Descripción:</label>
-        <input name="description" type="text" 
+        <input name="description" type="text" placeholder={this.state.category.id}
           onChange={(e) => this.handleInputChange(e) }>		
 			     </input>
         
@@ -118,3 +124,4 @@ const mapDispatchToProps = dispatch => {
 }
     
 export default connect(mapStateToProps, mapDispatchToProps)(FormCategories);
+
