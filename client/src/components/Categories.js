@@ -10,16 +10,6 @@ export class Categories extends Component {
     this.props.getCategories();
   }
 
-/*
-  handleChange(event) {
-    this.setState({ title: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.getMovies(this.state.title);
-  }
-*/
 
   render() {
     return (
