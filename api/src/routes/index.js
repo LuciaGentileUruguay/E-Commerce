@@ -5,6 +5,7 @@ const categoryRouter = require('./category.js');
 const catProRouter = require("./CategoryProducts");
 const userRouter = require("./user");
 const ordersRouter = require("./Orders");
+//const loginRouter = require("./login.js");
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/categories', categoryRouter)
 router.use("/categoryProducts", catProRouter)
 router.use('/users',userRouter)
 router.use('/orders',ordersRouter)
+//router.use('/login',loginRouter)
 
 module.exports = router;

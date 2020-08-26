@@ -3,11 +3,60 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const passport = require('passport');
+var Strategy = require('passport-local').Strategy;
 
-require('./db.js');
+
+const db = require('./db.js');
+
+
+passport.use(new Strategy(
+  function(username, password, done){
+    db.User.findOne({
+      where: {
+        email: username
+      }
+    })
+    .then((user) => {
+      if(!user){
+        return done(null, false);
+      }
+      if(user.password !== password){
+        return done(null, false);
+      }
+      return done(null, user);
+    })
+    .catch(err => {
+      return done(err);
+    })
+  }));
+
+  passport.serializeUser(function(user, done){
+    done(null, user);
+  });
+
+  passport.deserializeUser(function(id, done){
+    db.User.findOne({
+      where: {
+        id
+      }
+    })
+    .then(user => {
+      done(null, user);
+    })
+    .catch(err => {
+      return done(err);
+    })
+  });
+
 
 const server = express();
 
+server.use(require('express-session')({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+}));
 
 server.name = 'API';
 
@@ -32,5 +81,35 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   console.error(err);
   res.status(status).send(message);
 });
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+server.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
+
+server.post('/login',
+  passport.authenticate('local', {failureRedirect: '/login'}),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+
+server.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
+  function isAuthenticated(req, res, next) {
+    if(req.isAuthenticated()){
+      next();
+    }
+    else{
+      res.redirect('/login');
+    }
+  }
 
 module.exports = server;
