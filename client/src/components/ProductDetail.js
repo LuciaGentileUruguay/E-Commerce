@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { getProductDetail, getProductsCategories, addProductToCart } from '../actions/index';
 import './ProductDetail.css';

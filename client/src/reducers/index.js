@@ -1,6 +1,7 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES,
-  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,SET_ADMIN,
+  GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,GET_USER_DETAIL,
+  SET_REDIRECT,SET_ADMIN,
   GET_ORDERS, GET_PRODUCTS_FROM_ORDER } from '../actions';
 
 
@@ -13,7 +14,9 @@ const initialState = {
   productCategories:[],
   productDetail: {categoryId: []},
   newUser:{},
-  admin:false
+  userDetails:{},
+  admin:false,
+  redirect:null
 };
 
 
@@ -107,6 +110,20 @@ function rootReducer(state = initialState, action) {
       ...state,
       newUser: action.payload
     }
+  }
+
+  if (action.type === GET_USER_DETAIL){
+    return{
+      ...state,
+      userDetails: action.payload
+    }
+  }
+
+  if (action.type === SET_REDIRECT){
+    return{
+      ...state,
+      redirect: action.payload
+         }
   }
 
 
