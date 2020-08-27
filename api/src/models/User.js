@@ -53,6 +53,14 @@ module.exports = (sequelize) => {
     type: DataTypes.STRING,
     allowNull: false,
     // is: /^[0-9a-f]{64}$/i
-  }
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    pwdReset: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    }
   });
 };
