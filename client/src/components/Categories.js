@@ -13,8 +13,7 @@ export class Categories extends Component {
 
   render() {
     return (
-      <div className="catalog">
-      
+      <div className="catalog row">
           {this.props.categories && this.props.categories.map(item => <CategoryCard
             id ={item.id}
            name={item.name}

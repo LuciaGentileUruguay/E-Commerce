@@ -1,5 +1,7 @@
 
 #navigation {
+  background-color: #e9f2ea;
+  width: 100%;
   padding: 3px 7px;
   text-decoration: none;
   color: #63321F;
@@ -29,12 +31,9 @@
 
 .fixed{
   position: fixed;
+  z-index: 1;
 }
 
-.top{
-	top: 0.5em;
-}
-
-.right{
-	right: 3em;
+.top {
+  top: 0;
 }
