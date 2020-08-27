@@ -29,6 +29,9 @@ class ProductsFromOrder extends React.Component {
                   <h5>Precio $ {el.order_line.price}</h5>
                   <h5>Cantidad {el.order_line.cantidad}</h5>
                   <h5>Total $ {el.order_line.price * el.order_line.cantidad}</h5>
+                  <Link to={`/products/${el.id}`}>
+                  <span class="btn btn-outline-success">Detalle del producto</span>
+                  </Link>
                 </div>
               ))
             }

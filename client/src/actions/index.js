@@ -137,11 +137,11 @@ export function saveNewUser(data){
   }
 }
 
-export function getUserDetail(id) { //ver detalle de un producto
+export function getUserDetail(id) { //ver detalle de un usuario
   return function(dispatch) {
     return axios.get("http://localhost:3001/users/id/" + id)
       .then(json => {
-        dispatch({ type: GET_USER_DETAIL, payload: json.data }); //en este caso el payload deberia ser sólo un producto
+        dispatch({ type: GET_USER_DETAIL, payload: json.data });
       });
   };
 }
