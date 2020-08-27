@@ -69,7 +69,7 @@ server.get('/:email',(req,res,next)=>{
     where:{email:email}
   })
   .then(user=>{if(user){res.status(200).send(user);
-  return}  
+  return}
   })})
 
 //modificar un usuario
@@ -272,7 +272,6 @@ server.get("/:id/orders",(req,res,next) =>{
 })
 
 server.get("/:id/orders/:orderId",(req,res,next) =>{
-  //busca todas las ordenes de un usuario, incluyendo el carrito
   Order.findOne({
     where:{
       userId: req.params.id,
@@ -284,7 +283,6 @@ server.get("/:id/orders/:orderId",(req,res,next) =>{
   })
   .then(respuesta =>{
     res.send(respuesta)
-    //por cada orden devuelta, buscamos sus productos relacionados
   })
 })
 
