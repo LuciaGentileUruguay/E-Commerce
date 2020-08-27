@@ -7,7 +7,7 @@ export default function Product(props){
 
 
     return (
-            <div class="card">
+            <div class="card col-3">
               <img className= "foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className="card-img-top" />
                 <div class="card-body">
                   <h5 class="card-title title">{props.name}</h5>

@@ -9,7 +9,7 @@ export class Products extends Component {
   render() {
     return (
 
-    <div className="catalog">
+    <div className="catalog row">
 
 
           {this.props.products && this.props.products.map(item =>
@@ -25,7 +25,7 @@ export class Products extends Component {
           }
 
 </div>
-  
+
     );
   }
 }
