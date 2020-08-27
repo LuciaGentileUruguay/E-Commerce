@@ -32,15 +32,11 @@ passport.use(new Strategy(
   }));
 
   passport.serializeUser(function(user, done){
-    done(null, user);
+    done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done){
-    db.User.findOne({
-      where: {
-        id
-      }
-    })
+    db.User.findByPk(id)
     .then(user => {
       done(null, user);
     })
@@ -72,16 +68,6 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use('/', routes);
-
-// Error catching endware.
-server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  const status = err.status || 500;
-  const message = err.message || err;
-  console.error(err);
-  res.status(status).send(message);
-});
-
 server.use(passport.initialize());
 server.use(passport.session());
 
@@ -91,10 +77,12 @@ server.use((req, res, next) => {
   next();
 });
 
+server.use('/', routes);
+
 server.post('/login',
   passport.authenticate('local', {failureRedirect: '/login'}),
   function(req, res) {
-    res.redirect('/');
+    res.send('OK');
   });
 
 
@@ -111,5 +99,13 @@ server.get('/logout', function(req, res){
       res.redirect('/login');
     }
   }
+
+  // Error catching endware.
+  server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+    const status = err.status || 500;
+    const message = err.message || err;
+    console.error(err);
+    res.status(status).send(message);
+  });
 
 module.exports = server;
