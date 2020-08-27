@@ -1,4 +1,10 @@
 .catalog{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 150px;
 
+}
+
+.col {
 
 }

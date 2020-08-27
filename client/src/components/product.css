@@ -19,9 +19,10 @@ a :hover {
 
 
 .card {
-  width: 12rem;
+  width: 100rem;
   padding: 20px;
-
+  margin: 10px;
+  min-width: 10rem;
 }
 
 
@@ -33,18 +34,23 @@ a :hover {
   justify-content: center;
 }
 
-.text {
-  color: black;
-  font-size: 15px;
+.title {
+  color: #63321F;
+  font-size: 20px;
   display: flex;
   justify-content: center;
   padding: 2px;
 }
 
-.p {
-  color: black;
-  font-size: 18px;
+.text {
+  color: #63321F;
+  font-size: 2px;
   display: flex;
   justify-content: center;
-  margin-top: 5px;
+}
+
+.botonDetalle{
+  width: auto;
+  display: flex;
+  justify-content: center;
 }

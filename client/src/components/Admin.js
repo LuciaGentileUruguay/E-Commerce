@@ -24,7 +24,7 @@ export class Admin extends Component {
           </Link>
 
           <Link to = "/form_categories">
-            <span id="navigation">Nueva Categoria</span>
+            <span id="navigation">Nueva Categoría</span>
           </Link>
 
           <Link to = "/login/userlist">
@@ -46,7 +46,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return {
     cleanProductDetail: () => dispatch(cleanProductDetail())
-   
+
   }
 }
 

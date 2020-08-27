@@ -9,10 +9,12 @@ export class Products extends Component {
   render() {
     return (
 
-        <div className="catalog">
+    <div className="catalog">
+
+        <div class="col-4">
           {this.props.products && this.props.products.map(item =>
             {
-              if (item.stock>0){
+              if (item.stock>0) {
                 return <Product
                 id={item.id}
                 name={item.name}
@@ -21,8 +23,9 @@ export class Products extends Component {
                 stock={item.stock}
                 />}})
           }
-        </div>
 
+</div>
+    </div>
     );
   }
 }
