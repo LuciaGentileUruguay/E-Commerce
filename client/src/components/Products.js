@@ -11,7 +11,7 @@ export class Products extends Component {
 
     <div className="catalog">
 
-        <div class="col-4">
+
           {this.props.products && this.props.products.map(item =>
             {
               if (item.stock>0) {
@@ -25,7 +25,7 @@ export class Products extends Component {
           }
 
 </div>
-    </div>
+  
     );
   }
 }
