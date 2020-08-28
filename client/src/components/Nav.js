@@ -40,12 +40,12 @@ export class Nav extends Component {
             </span>
           </Link>
 
-          <Link to = "/admin" onClick={()=>this.props.setAdmin(true) }>
+          {/*<Link to = "/admin" onClick={()=>this.props.setAdmin(true) }>
             <span id="navigation">Opciones Admin</span>
-          </Link>
-          <button onClick={()=>this.props.setAdmin(false) }>
+            </Link>
+            <button onClick={()=>this.props.setAdmin(false) }>
             User
-          </button>
+            </button>*/}
 
           <Link to = {"/cart/"+this.props.user}>
             <span id="navigation"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
