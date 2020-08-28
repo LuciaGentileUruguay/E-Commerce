@@ -1,3 +1,12 @@
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#margen {
+  margin-left: 5px;
+}
 
 #navigation {
   background-color: #e9f2ea;
@@ -10,20 +19,23 @@
   font-size: 1.2em;
 }
 
-#navigation :hover {
-  background-color: #C1D9D4; /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color a verde*/
-}
+/*#navigation :hover {
+  background-color: #C1D9D4; /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color a verde}*/
+
 
 
 #navigation a {
   color: #63321F;
-  cursor: pointer; /*el cursor se pone en pointer cada vez que nos paramos sobre alguna de las opciones del menú*/
+  cursor: pointer; /*el cursor se pone en pointer cada vez que nos paramos sobre alguna de las opciones del menú}*/
 }
 
-#navigation a:hover {
-  color: #63321F;
-  text-decoration: none; /*por defecto al seleccionar algo del menú el bootstrap hace que se ponga un subrayado, con esto, al pararse sobre alguna opción, no hay cambios sobre las palabras del menú*/
-}
+ #navigation a:hover {
+  color: #63321F;  /*por defecto al seleccionar algo del menú el bootstrap hace que se ponga un subrayado, con esto, al pararse sobre alguna opción, no hay cambios sobre las palabras del menú}*/
+ }
+
+ #navigation a:visited {
+  text-decoration: none;
+ }
 
 .shadowsIntoLight {
 	font-family: 'Shadows Into Light', cursive;

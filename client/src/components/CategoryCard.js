@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-
+//import './categoryCard.css;'
 
 //se importo Link de react-router-dom
 export default function CategoryCard (props) {
