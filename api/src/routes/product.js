@@ -12,7 +12,6 @@ server.get("/category/:id", (req, res, next) => {
    }]
  })
 	.then(function(products){
-		console.log("Algo :"+ req.params.id);
     res.status(200).json(products);
   })
 })
@@ -68,7 +67,7 @@ server.get('/', (req, res, next) => {
 
 //Ruta para crear Products
 server.post('/', (req,res,next) =>{
-	const {name, description, price, image, stock,categoryId} = req.body;
+	const {name, description, price, image, stock, categoryId} = req.body;
 
 	//En caso de que no exista algun campo se devuelve error!
 	if (!name || !price || !stock){
@@ -101,12 +100,13 @@ server.put('/:id', (req,res,next)=>{
 		product.stock = stock;
 		product.setCategories(categoryId)
 		product.save();
-		
+
 		res.status(201).send("Se modifico el Producto");
 	})
 });
 
-server.delete('/:id', (req,res,next)=>{
+//Ruta que borra un producto en particular
+server.delete('/:id', (req,res,next) => {
 	 Product.findByPk(req.params.id)
 	 .then (function (product){
 		 if (!product){
@@ -117,7 +117,94 @@ server.delete('/:id', (req,res,next)=>{
 			res.status(200).send("Fichero eliminado!");
 		 }
 	 })
+})
 
+//Ruta para crear/agregar review
+server.post('/:id/review', (req, res, next) => {
+	const {puntuacion, comentario, userId} = req.body;
+	Review.create({
+		puntuacion: puntuacion,
+		comentario : comentario,
+		userId: userId,
+		productId: req.params.id
+	})
+	.then (function(review){
+		res.json(review);
+	})
+})
+
+//Ruta para obtener todas las reviews
+server.get('/:id/review', (req, res, next) => {
+	Product.findByPk({
+		include: [{
+    	model: Review,
+    	where: {id: req.params.id}
+   }]
+ })
+ .then (function (reviews) {
+		if (!product){
+			res.status(400).send("No se encuentra el producto");
+			return;
+		}
+		else {
+		 res.status(200).send(reviews);
+		}
+	})
+})
+
+//Ruta para modificar una review de un producto
+server.put('/:id/review/:idReview', (req, res, next) => {
+	Product.findByPk({
+		include: [{
+    	model: Review,
+    	where: {id: req.params.id}
+   }]
+ })
+ .then (product => {
+		if (!product){
+			res.status(400).send("No se encuentra producto");
+			return;
+		}
+		else {
+			Review.findByPk(req.params.idReview)
+			.then (review => {
+				if(!review){
+					res.status(400).send("No se encuentran reviews para ese producto");
+				}
+				else{
+					const {puntuacion, comentario} = req.body;
+					review.puntuacion = puntuacion;
+					review.comentario = comentario;
+					review.save();
+					res.status(201).send("Se modifico la review");
+				}
+			})
+		}
+	})
+})
+
+//Ruta para eliminar una review de un producto
+server.delete('/:id/review/:idReview', (req, res, next) => {
+	Product.findByPk({
+		include: [{
+    	model: Review,
+    	where: {id: req.params.id}
+   }]
+ })
+ .then (function (reviews) {
+		if (!product){
+			res.status(400).send("No se encuentra el producto");
+			return;
+		}
+		else{
+			Review.findByPk(req.params.idReview)
+			.then (review => {
+				review.destroy();
+				res.status(201).send("La review fue eliminada");
+		 		res.status(200).send(reviews);
+			})
+		}
+	})
 })
 
 module.exports = server;
