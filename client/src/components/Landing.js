@@ -4,12 +4,11 @@ import './landing.css'
 export default function Landing () {
  return (
    <div>
-      <div>
-        <h1 className='amaticSC titleLanding texto-tierra bold'> Universo Verde </h1>
+        
   {/*     <img className="fotoLanding" src='http://www.hdfondos.eu/pictures/2016/0615/1/love-tree-love-romance-white-flowers-grass-sky-hearts-trees-green-fields-pics-766530.jpg' />*/}
-     </div>
-
-
+     
+<div> 
+  
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -18,24 +17,20 @@ export default function Landing () {
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="http://www.hdfondos.eu/pictures/2016/0615/1/love-tree-love-romance-white-flowers-grass-sky-hearts-trees-green-fields-pics-766530.jpg" class="d-block w-100" alt="https://www.hola.com/imagenes/estar-bien/20190131136351/beneficios-frutas-verduras-verdes-cs/0-640-447/comerverde-t.jpg"/>
+      <img src="https://estaticos.qdq.com/swdata/home_photos/399/399647927/51e2525523da4c24af93ebe32e312cc5.jpg"/>
       <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <h5></h5>
+        <p></p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://www.hola.com/imagenes/estar-bien/20190131136351/beneficios-frutas-verduras-verdes-cs/0-640-447/comerverde-t.jpg" class="d-block w-100" alt="..." />
+      <img src="https://www.ecestaticos.com/image/clipping/5e6a18e117f62958562d2e8354a18af0/las-verduras-de-hoja-verde-que-mejor-sientan-a-tu-cuerpo.jpg" alt="..." />
       <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="https://www.ecestaticos.com/image/clipping/5e6a18e117f62958562d2e8354a18af0/las-verduras-de-hoja-verde-que-mejor-sientan-a-tu-cuerpo.jpg" class="d-block w-100"/>
+      <img src="https://hidroponia.mx/wp-content/uploads/2014/10/forraje-verde-hidropc3b3nico.jpg" class="d-block w-100"/>
       <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
       </div>
     </div>
   </div>
@@ -47,6 +42,7 @@ export default function Landing () {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
+</div>
 </div>
 </div>
 )
