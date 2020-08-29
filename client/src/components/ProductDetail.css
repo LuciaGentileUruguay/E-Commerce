@@ -1,53 +1,55 @@
-.divroot {
-  border-width: 2px;
-  border-style: solid;
-  border-color: #777;
-  padding: 10px 10px;
-  margin: 20px;
-  max-width: 300px;
-  display: flex;
-  flex-direction: column;
 
+a {
+  color: #63321F;
+  text-decoration: none;
 }
 
-.foto{
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+
+.catalog{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 150px;
+}
+
+.fotoDetalle{
     border-radius: 15px;
-    width: 60%;
     padding: 5px;
-    display: flex;
-    justify-content: center;
+    display: block;
+    margin: auto;
+    width: 100%;
 }
 
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.card {
+  width: 100rem;
+  padding: 20px;
+  margin: 10px;
+  min-width: 10rem;
 }
 
 
-.button {
-  background-color: #734F2F;
-  border-radius: 5px;
-  border-style: none;
-  width: 90px;
-  height: 30px;
-  right: 10px;
-  top: 10px;
-  color: white;
-  cursor: pointer;
-}
-
-.text {
+.title {
   font-size: 20px;
   display: flex;
   justify-content: center;
-  margin-top: 5px;
+  padding: 2px;
 }
 
-.p {
+.texto-tierra {
+  color: #63321F;
+}
+
+.text {
   font-size: 18px;
   display: flex;
   justify-content: center;
-  margin-top: 5px;
+}
+
+.botonDetalle1{
+  width: auto;
+  display: block;
+  margin: auto;
 }

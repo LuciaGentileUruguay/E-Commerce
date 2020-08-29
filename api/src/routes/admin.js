@@ -38,7 +38,7 @@ server.put('/isAdmin/:id',(req,res,next)=>{
   })
 })
 
-//modificar un usuario para que sea Admin
+//modificar un usuario para que resetee la password
 server.put('/:id',(req,res,next)=>{
   return User.findByPk(req.params.id)
   .then (function(user){
