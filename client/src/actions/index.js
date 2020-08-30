@@ -22,6 +22,14 @@ export const SET_REDIRECT = 'SET_REDIRECT';
 export const SET_ADMIN = 'SET_ADMIN';
 export const GET_ORDERS ='GET_ORDERS';
 export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
+export const SET_USER_STATE = 'SET_USER_STATE';
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_PASSWORD = "SET_PASSWORD";
+export const RESET_PASSWORD = "RESET_PASSWORD";
+
+const instance = axios.create({
+  withCredentials: true
+})
 
 export function setProduct(payload) {  //modicamos un producto
   return { type: SET_PRODUCT, payload };
@@ -33,7 +41,7 @@ export function setAdmin(payload) {  //cambio a admin o usuario regular
 
 export function addProductToCart(id, prodId, payload) { //id = userId, payload = producto
   return function(dispatch) {
-    return axios.post("http://localhost:3001/users/" + id +"/cart/", payload)
+    return instance.post("http://localhost:3001/users/" + id +"/cart/", payload)
       .then(json => {
         dispatch({ type: ADD_PRODUCT_TO_CART, payload});
       });
@@ -42,7 +50,7 @@ export function addProductToCart(id, prodId, payload) { //id = userId, payload =
 
 export function removeProductFromCart(id, prodId) { //eliminamos un producto del carrito de un usuario id
   return function(dispatch) {
-    return axios.delete("http://localhost:3001/users/" + id +"/cart/" + prodId)
+    return instance.delete("http://localhost:3001/users/" + id +"/cart/" + prodId)
       .then(json => {
         dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: prodId });
       });
@@ -51,7 +59,7 @@ export function removeProductFromCart(id, prodId) { //eliminamos un producto del
 
 export function getProducts() { //Listar productos
   return function(dispatch) {
-    return axios.get("http://localhost:3001/products")
+    return instance.get("http://localhost:3001/products")
       .then(json => {
         dispatch({ type: GET_PRODUCTS, payload: json.data }); //el payload seran todos los productos que me devuelve la BD
       });
@@ -60,7 +68,7 @@ export function getProducts() { //Listar productos
 
 export function getProductsByName(product) { //Listar productos
   return function(dispatch) {
-    return axios.get("http://localhost:3001/products?search="+product)
+    return instance.get("http://localhost:3001/products?search="+product)
       .then(json => {
         dispatch({ type: GET_PRODUCTS_BY_NAME, payload: json.data }); //el payload seran todos los productos que me devuelve la BD
       });
@@ -69,37 +77,39 @@ export function getProductsByName(product) { //Listar productos
 
 export function getProductsFromCategory(id) { //Listar productos de una categoría
   return function(dispatch) {
-    return axios.get("http://localhost:3001/products/category/" + id)
+    return instance.get("http://localhost:3001/products/category/" + id)
       .then(json => {
         dispatch({ type: GET_PRODUCTS_FROM_CATEGORY, payload: json.data }); //el payload seran todos los productos de una categoría
       });
   };
 }
 
-
+//ESTA RUTA ESTA PROTEGIDA DESDE EL BACK!!!!!!
 export function getProductsCart(userId){
   return function(dispacth){
-    return axios.get("http://localhost:3001/users/"+userId+"/cart")
-    .then(res=>{
+    return instance.get("http://localhost:3001/users/"+userId+"/cart")
+    .then(res=>{   
+      console.log(res)
       dispacth({type: GET_PRODUCTS_CART, payload: res.data})
     })
     .catch(err=>{
-      alert(err);
+      alert(err)
     })
   }
 }
 
 export function getCategories() { //Listar categorías
   return function(dispatch) {
-    return axios.get("http://localhost:3001/categories")
+    return instance.get("http://localhost:3001/categories")
       .then(json => {
         dispatch({ type: GET_CATEGORIES, payload: json.data }); //el payload seran todas las categorías que me devuelve la BD
       });
   };
 }
+
 export function getProductsCategories(id) { //Listar categorías
   return function(dispatch) {
-    return axios.get("http://localhost:3001/categories/product/"+id)
+    return instance.get("http://localhost:3001/categories/product/"+id)
       .then(json => {
         dispatch({ type: GET_PRODUCT_CATEGORIES, payload: json.data }); //el payload seran todas las categorías que me devuelve la BD
       });
@@ -108,7 +118,7 @@ export function getProductsCategories(id) { //Listar categorías
 
 export function getProductDetail(id) { //ver detalle de un producto
   return function(dispatch) {
-    return axios.get("http://localhost:3001/products/" + id)
+    return instance.get("http://localhost:3001/products/" + id)
       .then(json => {
         dispatch({ type: GET_PRODUCT_DETAIL, payload: json.data }); //en este caso el payload deberia ser sólo un producto
       });
@@ -130,7 +140,7 @@ export function addUser(email, password){
 
 export function saveNewUser(data){
   return function(dispatch){
-    return axios.post("http://localhost:3001/users",data)
+    return instance.post("http://localhost:3001/users",data)
       .then(resp=>{
         dispatch({type: SAVE_NEW_USER, payload: resp.data})
     })
@@ -139,11 +149,16 @@ export function saveNewUser(data){
 
 export function getUserDetail(id) { //ver detalle de un usuario
   return function(dispatch) {
-    return axios.get("http://localhost:3001/users/id/" + id)
+    return instance.get("http://localhost:3001/users/id/" + id)
       .then(json => {
         dispatch({ type: GET_USER_DETAIL, payload: json.data });
       });
   };
+}
+
+
+export function setUserState(data){
+  return{type: SET_USER_STATE, payload:data}
 }
 
 export function setRedirect(state){
@@ -152,7 +167,7 @@ export function setRedirect(state){
 
 export const increment = (id, prodId) => (
   function(dispatch){
-    axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
+    instance.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
     .then(json => {
         dispatch({ type: "INCREMENT", payload:prodId});
       });
@@ -160,7 +175,7 @@ export const increment = (id, prodId) => (
 
 export const decrement = (id, prodId) => (
   function(dispatch){
-    axios.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "DEC"})
+    instance.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "DEC"})
         .then(json => {
         dispatch({ type: "DECREMENT", payload:prodId});
       });
@@ -168,7 +183,7 @@ export const decrement = (id, prodId) => (
 
 export function getOrders() { //lista todas las órdenes que no son carrito, de todos los usuarios
   return function(dispatch) {
-    return axios.get("http://localhost:3001/orders")
+    return instance.get("http://localhost:3001/orders")
       .then(json => {
         dispatch({ type: GET_ORDERS, payload: json.data }); //el payload seran todos las órdenes
       });
@@ -177,9 +192,40 @@ export function getOrders() { //lista todas las órdenes que no son carrito, de 
 
 export function getProductsFromOrder(id) { //lista todos los productos de una orden
   return function(dispatch) {
-    return axios.get("http://localhost:3001/orders/"+ id +"/products/")
+    return instance.get("http://localhost:3001/orders/"+ id +"/products/")
       .then(json => {
         dispatch({ type: GET_PRODUCTS_FROM_ORDER, payload: json.data }); //el payload seran todos los productos de la orden
       });
   };
 }
+
+export function setPassword(id,pwd) { //Cambia la password del usuario en caso de que se pida un reseteo
+  return function(dispatch) {
+    return instance.get("http://localhost:3001/users/id/"+id)   //Busca al Usuario con el id pedido
+      .then(user => {
+        let data = {...user.data, password:pwd}
+        return instance.put("http://localhost:3001/users/"+data.id,data) //Guarda la nueva contraseña en el usuario correspondiente
+        .then(answer => {
+          return instance.put("http://localhost:3001/admin/"+data.id,data)  // ya no se le pide al usuario que cambio de contraseña
+          .then(answer => {
+            dispatch({ type: SET_PASSWORD}); 
+          })
+
+        });
+      })
+  }
+}
+
+export function setPasswordReset(id){
+  return function(dispatch) {
+    console.log(id)
+    return instance.put("http://localhost:3001/admin/"+ id ) //Se le pida al usuario "id" que cambie su contraseña, (tambien si se vuelve a ejecutar, el pedido es negado)
+      .then(json => {
+        dispatch({ type: RESET_PASSWORD, payload:json});
+      });
+  };
+}
+
+  export function userLogout(){
+    return ({type: USER_LOGOUT})
+  }

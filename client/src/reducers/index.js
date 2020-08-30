@@ -1,14 +1,14 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES,
   GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,GET_USER_DETAIL,
-  SET_REDIRECT,SET_ADMIN,
-  GET_ORDERS, GET_PRODUCTS_FROM_ORDER } from '../actions';
+  SET_REDIRECT,SET_ADMIN,SET_USER_STATE, USER_LOGOUT,
+  GET_ORDERS, GET_PRODUCTS_FROM_ORDERSET_PASSWORD,RESET_PASSWORD } from '../actions';
 
 
 //Definimos el estado inicial
 const initialState = {
   products: [],
-  user: 1,
+  user: {},
   order: [], //tenemos una lista de productos
   categories: [],
   productCategories:[],
@@ -188,7 +188,30 @@ function rootReducer(state = initialState, action) {
                     }
                   };
             };
+  if (action.type === SET_USER_STATE){
+    return{
+      ...state,
+      user: action.payload
+          }
+  }
 
+  if (action.type === USER_LOGOUT){
+    return{
+      ...state,
+      user: {}
+    }
+  }
+  
+  if (action.type === SET_PASSWORD){
+    return{...state,
+      user:{...state.user,pwdReset:false}
+    }
+  }
+
+  if (action.type === RESET_PASSWORD){
+    return{...state}
+  }
+  
   return state;
 }
 
