@@ -24,6 +24,8 @@ export const GET_ORDERS ='GET_ORDERS';
 export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
 export const SET_USER_STATE = 'SET_USER_STATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_PASSWORD = "SET_PASSWORD";
+export const RESET_PASSWORD = "RESET_PASSWORD";
 
 const instance = axios.create({
   withCredentials: true
@@ -196,6 +198,34 @@ export function getProductsFromOrder(id) { //lista todos los productos de una or
       });
   };
 }
+
+export function setPassword(id,pwd) { //Cambia la password del usuario en caso de que se pida un reseteo
+  return function(dispatch) {
+    return instance.get("http://localhost:3001/users/id/"+id)   //Busca al Usuario con el id pedido
+      .then(user => {
+        let data = {...user.data, password:pwd}
+        return instance.put("http://localhost:3001/users/"+data.id,data) //Guarda la nueva contraseña en el usuario correspondiente
+        .then(answer => {
+          return instance.put("http://localhost:3001/admin/"+data.id,data)  // ya no se le pide al usuario que cambio de contraseña
+          .then(answer => {
+            dispatch({ type: SET_PASSWORD}); 
+          })
+
+        });
+      })
+  }
+}
+
+export function setPasswordReset(id){
+  return function(dispatch) {
+    console.log(id)
+    return instance.put("http://localhost:3001/admin/"+ id ) //Se le pida al usuario "id" que cambie su contraseña, (tambien si se vuelve a ejecutar, el pedido es negado)
+      .then(json => {
+        dispatch({ type: RESET_PASSWORD, payload:json});
+      });
+  };
+}
+
   export function userLogout(){
     return ({type: USER_LOGOUT})
   }
