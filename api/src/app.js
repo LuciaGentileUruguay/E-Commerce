@@ -5,26 +5,30 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const passport = require('passport');
 var Strategy = require('passport-local').Strategy;
-
+const bcrypt = require('bcrypt')
 
 const db = require('./db.js');
 
-
 passport.use(new Strategy(
   function(username, password, done){
-    db.User.findOne({
-      where: {
-        email: username
-      }
-    })
+    
+    //VERIFICA EL USER EN LA BASE DE DATOS
+    db.User.findOne({where:{email:username}})
     .then((user) => {
+
+      //SINO ENCUENTRA USUARIO VUELVE FALSE
       if(!user){
         return done(null, false);
       }
-      if(user.password !== password){
-        return done(null, false);
-      }
-      return done(null, user);
+
+      //COMPARA LA PASSWORD CON EL HASH DE BCRYPT
+      bcrypt.compare(password, user.password, function(err, res) {
+        if (res){
+          return done(null, user);
+        } else {
+          return done(null, false)
+        }
+      });
     })
     .catch(err => {
       return done(err);
@@ -44,7 +48,6 @@ passport.use(new Strategy(
       return done(err);
     })
   });
-
 
 const server = express();
 
@@ -77,30 +80,31 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use('/', routes);
+ server.use('/', routes);
+
 
 server.post('/login',
   passport.authenticate('local', {failureRedirect: '/login'}),
   function(req, res) {
-    res.send('OK');
+    var aux ={
+      user: req.user,
+      cookie: req.session
+    }
+    res.send(aux);
   });
 
+//ACA ESTO NO SERIA ASI... HAY QUE FIJARSE A DONDE LLEVAR EL USUARIO NO LOGUADO O QUEIEN NO ESTE AUTENTICADO PARA ESA RUTA!!!!
+server.get('/login',(req,res,next)=>{
+  res.status(404).send('Usuario no logueado')
+})
 
+//PARA DESLOGUIARSE!!! FIJARSE LA COOKIE COMO SE DESTRUYE...
 server.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
 
-  function isAuthenticated(req, res, next) {
-    if(req.isAuthenticated()){
-      next();
-    }
-    else{
-      res.redirect('/login');
-    }
-  }
-
-  // Error catching endware.
+   // Error catching endware.
   server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
     const status = err.status || 500;
     const message = err.message || err;

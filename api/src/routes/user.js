@@ -1,11 +1,14 @@
 const server = require('express').Router();
 const { User, Order_line, Product, Order } = require('../db.js');
 const { Sequelize } = require('sequelize');
+const  { bcrypt, hash } = require( 'bcrypt');
+const {isAuthenticated} =require('./helpers')
 
+//REVISAR LAS ESTA RUTA...
 //crear un usuario
-server.post('/',(req,res,next)=>{
+server.post('/',async(req,res,next)=>{
   //en caso de que falte algun campo devolver un error
-  const {nombre,
+  let {nombre,
     apellido,
     calle,
     numero,
@@ -14,12 +17,12 @@ server.post('/',(req,res,next)=>{
     provincia,
     telefono1,
     telefono2,
-     email,
-     password} = req.body;
-  // if (!email || !password){
-  //     return res.status(404).send("Falta algun campo");
-  // } else {
-      //se crea el usuario
+    email,
+    password} = req.body;
+     
+   
+  password = await hash(password,10);
+     //se crea el usuario
       User.create({
         nombre,
         apellido,
@@ -30,8 +33,8 @@ server.post('/',(req,res,next)=>{
         provincia,
         telefono1,
         telefono2,
-         email,
-         password
+        email,
+        password
       })
       .then(user=>{
           return res.status(201).send(user);
@@ -160,23 +163,27 @@ server.post('/:id/cart',(req,res,next) =>{
    res.send();
 })
 
-server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un usuario
-  Order.findOne({
-    where:{
-      userId: req.params.id,
-      estado: "carrito"
-    },include:{
-      model: Product
-    }
+server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve todas las órdenes de un usuario
+  console.log(req.params.id)
+  if (req.params.id){
+    Order.findOne({
+      where:{
+        userId: req.params.id,
+        estado: "carrito"
+      },include:{
+        model: Product
+      }
+    })  
+    .then(respuesta => {
+      if (!respuesta){
+          res.status(404).send("Error. No hay carrito o no existe usuario")
+      } else {
+          res.status(200).send(respuesta);
+      }
+    })
+  }
   })
-  .then(respuesta => {
-    if (!respuesta){
-        res.status(404).send("Error. No hay carrito o no existe usuario")
-    } else {
-        res.status(200).send(respuesta);
-    }
-  })
-})
+  
 
 server.delete('/:id/cart',(req,res,next) =>{ //vaciamos carrito
   Order.findOne({
