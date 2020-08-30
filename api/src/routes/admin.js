@@ -39,10 +39,11 @@ server.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next)=>{
 })
 
 //modificar un usuario para resetpassword
+//Ahora cada vez que se haga un request a esta ruta, el reseteo de la password se cambiara al estado contrario
 server.put('/:id',(req,res,next)=>{
   return User.findByPk(req.params.id)
   .then (function(user){
-    user.pwdReset = true;
+    user.pwdReset = !user.pwdReset;
     user.save();
     res.status(201).send("El usuario debe actualizar la password")
   })

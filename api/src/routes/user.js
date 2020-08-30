@@ -76,10 +76,11 @@ server.get('/:email',(req,res,next)=>{
   })})
 
 //modificar un usuario
-server.put('/:id',(req,res,next)=>{
+// ahora hashea la password nueva
+server.put('/:id',async(req,res,next)=>{
   return User.findByPk(req.params.id)
-  .then (function(user){
-    const {nombre,
+  .then (async function(user){
+    let {nombre,
       apellido,
       calle,
       numero,
@@ -88,10 +89,11 @@ server.put('/:id',(req,res,next)=>{
       provincia,
       telefono1,
       telefono2,
-       email,
-       password} = req.body;
-       console.log(req.body)
-       user.nombre = nombre;
+      email,
+      password} = req.body;
+      password = await hash(password,10);
+      console.log(req.body)
+      user.nombre = nombre;
       user.apellido = apellido;
       user.calle = calle;
       user.numero = numero;
@@ -105,7 +107,7 @@ server.put('/:id',(req,res,next)=>{
       user.save();
       res.status(201).send("Usuario modificado")
 
-    })
+    }).catch(err => res.status(400).send(err))
   })
 
 
