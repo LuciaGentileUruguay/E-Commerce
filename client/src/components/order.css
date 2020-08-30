@@ -1,9 +1,3 @@
-
-a {
-  color: #63321F;
-  text-decoration: none;
-}
-
 a:link, a:visited, a:active {
     text-decoration:none;
 }
@@ -24,6 +18,11 @@ a:link, a:visited, a:active {
   min-width: 10rem;
 }
 
+.catalogCarrito{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 130px;
+}
 
 .title {
   font-size: 20px;

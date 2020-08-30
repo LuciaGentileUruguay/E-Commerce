@@ -8,7 +8,7 @@ export default function Product(props){
 
     return (
             <div class="card col-3">
-              <img className= "foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" className="card-img-top" />
+              <img className= "card-img-top foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
                 <div class="card-body">
                   <h5 class="card-title title texto-tierra">{props.name}</h5>
                   <p class="card-text text texto-tierra">Precio $ {props.price}</p>
