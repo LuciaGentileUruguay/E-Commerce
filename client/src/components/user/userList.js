@@ -10,9 +10,16 @@ export default class Userlist extends Component {
     }
 
 componentDidMount(){
-  axios.get("http://localhost:3001/users")
-    .then(user =>{user.data.map(item =>{
-      this.state.userlist.push(item)})})
+  axios.get("http://localhost:3001/admin",{withCredentials:true})
+    .then(user =>{
+      let array=[];
+        user.data.map(item =>{
+      //this.state.userlist.push(item)})})
+          array.push(item)
+        })
+        this.setState({userlist:array})
+    })
+      return;
       //console.log(this.state.userlist)
 }
 
