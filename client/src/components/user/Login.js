@@ -30,12 +30,14 @@ export class Login extends React.Component {
       .then(res =>{
 
         //EN RES ESTA TODA LA INFO DEL USER LOGUEADO Y LA COOKIEE!!
+        //Se agrego el pwdResete(passwordReset) a los datos guardados de un usuario
         let UserData={
           id:res.data.user.id,
           nombre:res.data.user.nombre,
           apellido:res.data.user.apellido,
           email:res.data.user.email,
-          isAdmin:res.data.user.isAdmin
+          isAdmin:res.data.user.isAdmin,
+          pwdReset:res.data.user.pwdReset
         }
 
       //CON ESTA FUNCION GUARDAMOS EL ESTADO DE REDUX LOS DATOS DEL USARIO PARA SABER SI ES ADMIN Y MANTTENER EL CARRITO
