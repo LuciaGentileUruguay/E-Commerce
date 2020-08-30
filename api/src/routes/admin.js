@@ -1,11 +1,11 @@
 const server = require('express').Router();
 const { User } = require('../db.js');
-const passport = require('passport');
-
+//const passport = require('passport');
+const {isAuthenticated,isAdmin} =require('./helpers')
 //rutas para ver todos los usuarios, modificar un usuario, borrar un usuario
 
 //se trae todos los usuarios
-server.get('/',(req,res,next)=>{
+server.get('/',isAuthenticated,isAdmin,(req,res,next)=>{
     User.findAll()
     .then(user=>{
         res.status(200).send(user);
@@ -14,7 +14,7 @@ server.get('/',(req,res,next)=>{
 
 
 //Bucar usuario por ID
-server.get('/:id',(req,res,next)=>{
+server.get('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
   User.findByPk(req.params.id)
   .then(user=>{
     if (!user){
@@ -29,7 +29,7 @@ server.get('/:id',(req,res,next)=>{
 
 
 //modificar un usuario para que sea Admin
-server.put('/isAdmin/:id',(req,res,next)=>{
+server.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next)=>{
   return User.findByPk(req.params.id)
   .then (function(user){
     user.isAdmin = true;
@@ -38,11 +38,12 @@ server.put('/isAdmin/:id',(req,res,next)=>{
   })
 })
 
-//modificar un usuario para que resetee la password
+//modificar un usuario para resetpassword
+//Ahora cada vez que se haga un request a esta ruta, el reseteo de la password se cambiara al estado contrario
 server.put('/:id',(req,res,next)=>{
   return User.findByPk(req.params.id)
   .then (function(user){
-    user.pwdReset = true;
+    user.pwdReset = !user.pwdReset;
     user.save();
     res.status(201).send("El usuario debe actualizar la password")
   })
@@ -50,7 +51,7 @@ server.put('/:id',(req,res,next)=>{
 
 
 //borra un usuario
-server.delete('/:id',(req,res,next)=>{
+server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     User.findByPk(req.params.id)
     .then(user=>{
         if (!user){
@@ -81,3 +82,5 @@ server.get('/:id/cart',(req,res,next) =>{ //devuelve todas las órdenes de un us
     }
   })
 })
+
+module.exports = server;
