@@ -19,11 +19,13 @@ export const ADD_USER = 'ADD_USER';
 export const SAVE_NEW_USER ='SAVE_NEW_USER';
 export const GET_USER_DETAIL = 'GET_USER_DETAIL';
 export const SET_REDIRECT = 'SET_REDIRECT';
+export const SET_REDIRECT_OFF = 'SET_REDIRECT_OFF';
 export const SET_ADMIN = 'SET_ADMIN';
 export const GET_ORDERS ='GET_ORDERS';
 export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
 export const SET_USER_STATE = 'SET_USER_STATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_RATING = 'SET_RATING' 
 export const SET_PASSWORD = "SET_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
 
@@ -165,6 +167,10 @@ export function setRedirect(state){
   return{type: SET_REDIRECT, payload:state}
 }
 
+export function setRedirectOff(){
+  return{type: SET_REDIRECT_OFF}
+}
+
 export const increment = (id, prodId) => (
   function(dispatch){
     instance.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
@@ -229,3 +235,7 @@ export function setPasswordReset(id){
   export function userLogout(){
     return ({type: USER_LOGOUT})
   }
+
+  export function setRating(rating){
+    return{type: SET_RATING, payload:rating}
+  }  

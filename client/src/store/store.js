@@ -35,14 +35,14 @@ function loadFromLocalStorage(){
 }
 
 //ACA HACEMOS LA PERSISTENCIA DE DATOS... PARA REFRESCAR PAGINA Y HASTA CERRAR PESTAÑA MANTIENE EL STATE!!!!
-const persistedState = loadFromLocalStorage();
+// const persistedState = loadFromLocalStorage();
 
 
 const store = createStore(
   rootReducer,
   
   //AGREGAMOS LA PERSISTENCIA...
-  persistedState,
+  // persistedState,
   composeWithDevTools(applyMiddleware(thunk),
 ));
 
