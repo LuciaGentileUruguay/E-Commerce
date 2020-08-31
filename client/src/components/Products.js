@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './products.css';
 import { connect } from "react-redux";
-import {getProducts} from '../actions/index';
 import Product from './Product.js';
+
+ //se borro el getProducts no usado
 
 export class Products extends Component {
 
