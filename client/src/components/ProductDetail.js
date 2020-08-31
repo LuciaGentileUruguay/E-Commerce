@@ -71,6 +71,18 @@ class ProductDetail extends React.Component {
     })
   }
 
+
+    /*Calculo del promedio y su redondeo*/
+/*--------------------------------------------------------------------------*/
+  calculoPromedio (reviews) {
+    let average = 0;
+    let num = reviews.length
+    reviews.map( e => {
+      average += e.puntuacion
+    })
+    return Math.round(average/num);
+  }
+/*--------------------------------------------------------------------------*/
   render() {
     return (
       <div className="catalog row" style={{display:"flex", flexDirection:"row"}}>
@@ -102,6 +114,14 @@ class ProductDetail extends React.Component {
                 this.props.addProductToCart(this.props.user.id, this.props.match.params.id,
                   {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
               </Link>
+              {/*PROMEDIO DE LAS REVIEWS */}
+    {/*--------------------------------------------------------------------------*/}
+              <div>
+                <p>
+                  Promedio de {this.state.review.length && this.calculoPromedio(this.state.review)} Estrellas
+                </p>
+              </div>
+    {/*--------------------------------------------------------------------------*/}
             </div>
         </div>
 
@@ -126,8 +146,8 @@ class ProductDetail extends React.Component {
 
                    <FaStar size= {35}
                     color={ratingValue <=(this.state.hover || this.state.rating) ? "#ffc107":"#e4e5e9" }
-                    onMouseEnter={()=>this.setState({hoover:ratingValue})}
-                    onMouseLeave ={()=> this.setState({hoover:null})}
+                    onMouseEnter={()=>this.setState({hover:ratingValue})}
+                    onMouseLeave ={()=> this.setState({hover:null})}
                     style={{cursor:"pointer",
                         transition:"color 200ms"}} />
                    </label>
