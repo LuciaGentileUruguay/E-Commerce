@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom";
 import { connect } from "react-redux";
 import {getCategories} from '../actions/index';
 import CategoryCard from './CategoryCard.js';
 
+//se borro import de Link
 export class Categories extends Component {
 
   componentDidMount(){
