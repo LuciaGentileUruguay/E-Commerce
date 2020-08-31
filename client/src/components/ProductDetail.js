@@ -28,38 +28,37 @@ class ProductDetail extends React.Component {
           <button type="button" class="btn btn-outline-secondary">Editar</button>
         </Link>
       )
-    }                                  
+    }
   }
 
   handleChange(e){
     this.setState({[e.target.name]:e.target.value})
-    console.log(this.state.comentario)     
+    console.log(this.state.comentario)
   }
 
  //----------------REVIEWS-----------------------------------------------
   nuevoReview(e){
-    e.preventDefault()
-    let status = true
-    this.props.setRedirect(status)
+    e.preventDefault();
+    let status = true;
+    this.props.setRedirect(status);
   }
 
   postReview(e){
-    e.preventDefault()
-
-    let data ={
+    e.preventDefault();
+    let data = {
       puntuacion:this.state.rating,
       comentario:this.state.comentario,
-      userId:this.props.user.id,
+      userId:this.props.user.id
     }
-    
+
     Axios.post('http://localhost:3001/products/'+this.props.productDetail.id+'/review', data)
     .then(res=>{
       alert("Reseña Guardada Correctamente")
     })
     this.props.setRedirectOff()
-    
+
   }
- //-------------------------------------------------------------------------------------------------------- 
+ //--------------------------------------------------------------------------------------------------------
 
    //FUNCION PARA TRAER EL DETALLE DEL PRODUCTO Y SI TIENE CATEGORIAS ASOCIADAS
   componentDidMount(){
@@ -99,41 +98,43 @@ class ProductDetail extends React.Component {
 
               {/* AGREGA EL PRODUCTO AL CARRITO */}
               <Link to="/products">
-              <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.addProductToCart(this.props.user.id, this.props.match.params.id, {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
+              <button class="btn btn-outline-success botonDetalle1" onClick={() =>
+                this.props.addProductToCart(this.props.user.id, this.props.match.params.id,
+                  {price: this.props.productDetail && this.props.productDetail.price, productId: this.props.match.params.id})}> Comprar </button>
               </Link>
             </div>
         </div>
+
+        {/* REVIEW DE PRODUCTO */}
         <div className="catalog row" >
-          
           <div className="card col-4">
             {this.props.user.id? <div>
                 <button onClick={(e)=>this.nuevoReview(e)}>Crear Nueva Review</button>
               </div>:null}
-        
+
             {!this.props.redirect ? null:<div>
             {[...Array(5)].map((star, i)=>{
             const ratingValue = i+1
             return (
                   <label>
-                   <input type="radio" 
-                   name="rating" 
-                   style={{display:"none", width:"30px", height:"30px"}} 
+                   <input type="radio"
+                   name="rating"
+                   style={{display:"none", width:"30px", height:"30px"}}
                    value={ratingValue}
                    onClick={()=>this.setState({rating:ratingValue})}
                     />
 
                    <FaStar size= {35}
                     color={ratingValue <=(this.state.hover || this.state.rating) ? "#ffc107":"#e4e5e9" }
-                    onMouseEnter={()=>this.setState({hoover:ratingValue})} 
+                    onMouseEnter={()=>this.setState({hoover:ratingValue})}
                     onMouseLeave ={()=> this.setState({hoover:null})}
                     style={{cursor:"pointer",
                         transition:"color 200ms"}} />
                    </label>
                     )
                    })}
-                 <p>Valoración:{this.state.rating}/5</p>   
+              {/*   <p>Valoración:{this.state.rating}/5</p>  */}
                </div>}
-
 
                    {!this.props.redirect ? null:  <div className = "divForm"
                    style={{display:"flex",
