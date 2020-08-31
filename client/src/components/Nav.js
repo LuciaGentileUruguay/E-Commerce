@@ -3,7 +3,7 @@ import SearchBar from './SearchBar.js';
 import { Link, Route} from 'react-router-dom';
 import { connect } from "react-redux";
 import './nav.css';
-import { userLogout } from '../actions/index';
+import { userLogout, setRedirectOff } from '../actions/index';
 import axios from 'axios';
 
 //arreglo menores, se cambiaron los class por className y los fill-rule por fillRule de las tags, debido a los errores de la consola
@@ -17,6 +17,7 @@ export class Nav extends Component {
   //FUNCION PARA CERRAR SESION
   logout (e){
     e.preventDefault(e)
+    this.props.setRedirectOff()
     this.props.userLogout()
     axios.get('http://localhost:3001/logout')
     .then(res=>{
@@ -84,7 +85,8 @@ export class Nav extends Component {
   
   const mapDispatchToProps = dispatch => {
     return {
-      userLogout:() => dispatch(userLogout())
+      userLogout:() => dispatch(userLogout()),
+      setRedirectOff:() =>dispatch(setRedirectOff())
     }
   }
   

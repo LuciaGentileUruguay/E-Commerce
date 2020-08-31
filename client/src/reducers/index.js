@@ -1,7 +1,7 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES,
   GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,GET_USER_DETAIL,
-  SET_REDIRECT,SET_ADMIN,SET_USER_STATE, USER_LOGOUT, 
+  SET_REDIRECT,SET_REDIRECT_OFF, SET_ADMIN,SET_USER_STATE, USER_LOGOUT, SET_RATING, 
   GET_ORDERS, GET_PRODUCTS_FROM_ORDER,SET_PASSWORD,RESET_PASSWORD } from '../actions';
 
 
@@ -16,7 +16,8 @@ const initialState = {
   newUser:{},
   userDetails:{},
   admin:false,
-  redirect:null
+  redirect:null,
+  rating:0
 };
 
 
@@ -126,6 +127,13 @@ function rootReducer(state = initialState, action) {
          }
   }
 
+  if (action.type === SET_REDIRECT_OFF){
+    return{
+      ...state,
+      redirect:null
+         }
+  }
+
 
   if (action.type === SET_ADMIN){
     return{
@@ -199,6 +207,13 @@ function rootReducer(state = initialState, action) {
     return{
       ...state,
       user: {}
+    }
+  }
+
+  if (action.type === SET_RATING){
+    return{
+      ...state,
+      rating: action.payload
     }
   }
   

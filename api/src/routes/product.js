@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Product, Category, category_products } = require('../db.js');
+const { Product, Category, category_products,Review, User } = require('../db.js');
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -122,27 +122,48 @@ server.delete('/:id', (req,res,next) => {
 //Ruta para crear/agregar review
 server.post('/:id/review', (req, res, next) => {
 	const {puntuacion, comentario, userId} = req.body;
+	let productId = req.params.id
 	Review.create({
 		puntuacion: puntuacion,
 		comentario : comentario,
 		userId: userId,
-		productId: req.params.id
+		productId: productId
 	})
 	.then (function(review){
 		res.json(review);
 	})
 })
 
+//Ruta para obtener las 5 primeras reviews
+server.get('/:id/review_5', (req, res, next) => {
+	let productId = req.params.id
+
+	Review.findAll({
+		limit:5,
+		where:{productId:productId},
+		include:[{model:User}]
+})
+ .then (function (reviews) {
+		if (!reviews){
+			res.status(400).send("No se encuentra el producto");
+			return;
+		}
+		else {
+		 res.status(200).send(reviews);
+		}
+	})
+})
+
 //Ruta para obtener todas las reviews
 server.get('/:id/review', (req, res, next) => {
-	Product.findByPk({
-		include: [{
-    	model: Review,
-    	where: {id: req.params.id}
-   }]
- })
+	let productId = req.params.id
+
+	Review.findAll({
+		where:{productId:productId},
+		include:[{model:User}]
+})
  .then (function (reviews) {
-		if (!product){
+		if (!reviews){
 			res.status(400).send("No se encuentra el producto");
 			return;
 		}

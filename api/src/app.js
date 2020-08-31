@@ -100,8 +100,18 @@ server.get('/login',(req,res,next)=>{
 
 //PARA DESLOGUIARSE!!! FIJARSE LA COOKIE COMO SE DESTRUYE...
 server.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
+  req.logOut();
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        next(err)
+      } else {
+        res.clearCookie('connect.sid')
+        res.redirect('/')
+      }
+    })
+  }
+  
 });
 
    // Error catching endware.
