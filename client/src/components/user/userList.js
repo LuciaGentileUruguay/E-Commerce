@@ -15,9 +15,9 @@ componentDidMount(){
       let array=[];
         user.data.map(item =>{
       //this.state.userlist.push(item)})})
-          array.push(item)
+          if(item.activo) array.push(item);
         })
-        this.setState({userlist:array})
+        this.setState({userlist:array});
     })
       return;
       //console.log(this.state.userlist)
@@ -26,7 +26,7 @@ componentDidMount(){
 
   render() {
     return (
-      <div class="catalog">
+      <div class="catalog row">
         {this.state.userlist && this.state.userlist.map(item =>
           { console.log(item)
               return < UserCard

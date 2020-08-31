@@ -61,6 +61,12 @@ module.exports = (sequelize) => {
     pwdReset: {
       type: DataTypes.BOOLEAN,
       allowNull: true
+    },
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
     }
+
   });
 };

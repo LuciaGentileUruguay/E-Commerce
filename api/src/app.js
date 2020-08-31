@@ -11,16 +11,20 @@ const db = require('./db.js');
 
 passport.use(new Strategy(
   function(username, password, done){
-    
-    //VERIFICA EL USER EN LA BASE DE DATOS
-    db.User.findOne({where:{email:username}})
-    .then((user) => {
 
+    //VERIFICA EL USER EN LA BASE DE DATOS
+    db.User.findOne({
+      where:{
+        email: username,
+        activo: true
+      }
+    })
+    .then((user) => {
+      console.log(user);
       //SINO ENCUENTRA USUARIO VUELVE FALSE
       if(!user){
         return done(null, false);
       }
-
       //COMPARA LA PASSWORD CON EL HASH DE BCRYPT
       bcrypt.compare(password, user.password, function(err, res) {
         if (res){
@@ -111,7 +115,7 @@ server.get('/logout', function(req, res){
       }
     })
   }
-  
+
 });
 
    // Error catching endware.
