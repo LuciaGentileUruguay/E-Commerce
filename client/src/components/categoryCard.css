@@ -9,3 +9,18 @@
   font-family: 'Shadows Into Light', cursive;
   text-align: center;
 }
+
+.category {
+  display: flex;
+  justify-content: space-around;
+  margin-top: auto;
+
+}
+
+.fotoDetalle2{
+  border-radius: 15px;
+  padding: 5px;
+  display: block;
+  margin: auto;
+  width: 100%;
+}
