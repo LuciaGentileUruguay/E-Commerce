@@ -30,7 +30,7 @@ server.get('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
 
 //modificar un usuario para que sea Admin
 server.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next)=>{
-  return User.findByPk(req.params.id)
+   User.findByPk(req.params.id)
   .then (function(user){
     user.isAdmin = true;
     user.save();

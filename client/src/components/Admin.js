@@ -39,10 +39,10 @@ export class Admin extends Component {
     //RENDERIZADO CONDICIONAL VACIO-->
     if (this.state.irA === ""){
       return (
-        <div>
-        <button  type="button" class="btn btn-outline-success" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-        <button  type="button" class="btn btn-outline-success" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoria</button>
-        <button  type="button" class="btn btn-outline-success" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
+        <div class="btn-group" role="group" aria-label="Basic example">
+        <button  type="button" class="btn btn-secondary" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
+        <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoria</button>
+        <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
          </div>
       )
     }
@@ -51,8 +51,10 @@ export class Admin extends Component {
     if (this.state.irA === "Producto"){
       return(
         <div>
-          <button  type="button" class="btn btn-outline-success" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoria</button>
-          <button  type="button" class="btn btn-outline-success" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoria</button>
+            <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
+        </div>
           <FormProduct/>
         </div>
           
@@ -63,8 +65,10 @@ export class Admin extends Component {
     if (this.state.irA === "Categoria"){
       return(
         <div>
-          <button type="button" class="btn btn-outline-success" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-          <button type="button" class="btn btn-outline-success" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
+            <button type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
+          </div>
           <NewCategoryForm/>
         </div> 
       )
@@ -74,10 +78,12 @@ export class Admin extends Component {
     if (this.state.irA === "Lista"){
       return(
         <div>
-          <button type="button" class="btn btn-outline-success" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-          <button type="button" class="btn btn-outline-success" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva Categoria</button>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
+            <button type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva Categoria</button>
+          </div>
           <Userlist/>
-        </div> 
+        </div>
       )
     }
     
