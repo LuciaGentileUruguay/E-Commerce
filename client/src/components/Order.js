@@ -18,7 +18,7 @@ export class Order extends Component {
       //USAR WILLDELETE SINO NO RECONOCE ESE TIPO DE SWEET ALERT
     }).then(willDelete =>{
       if(willDelete){
-        this.props.removeProductFromCart(this.props.match.params.id, this.props.order.products[indice].id)
+        this.props.removeProductFromCart(this.props.user.id, this.props.order.products[indice].id)
         swal({text: "El articulo se elimino correctamente eliminado", icon: "success"})
         return;
       }
@@ -71,8 +71,8 @@ export class Order extends Component {
               <h5 class="card-text text texto-tierra">Total $ {el.order_line.price * el.order_line.cantidad}</h5>
               
               {/* BOTONES DECREMENTAR E INCREMENTAR */}
-              <button onClick={() => this.props.decrement(this.props.match.params.id, el.id)}>-</button>
-              <button onClick={() => this.props.increment(this.props.match.params.id, el.id)}>+</button>
+              <button onClick={() => this.props.decrement(this.props.user.id, el.id)}>-</button>
+              <button onClick={() => this.props.increment(this.props.user.id, el.id)}>+</button>
             </div>
           </div>
           ))

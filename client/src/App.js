@@ -23,6 +23,7 @@ import Admin from "./components/Admin";
 import TablaDeOrdenes from './components/TablaDeOrdenes.js';
 import ProductsFromOrder from './components/ProductsFromOrder.js';
 import PwdReset from "./components/user/PwdReset.js"
+import {Redirect} from 'react-router'
 
 class App extends React.Component{
   constructor(){
@@ -124,7 +125,8 @@ render(){
 
   	const mapStateToProps = state => {
   	  return {
-  	    productDetail: state.products
+        productDetail: state.products,
+        user: state.user
   	  }
   	}
 
