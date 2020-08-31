@@ -4,7 +4,7 @@ const { Sequelize } = require('sequelize');
 const  { bcrypt, hash } = require( 'bcrypt');
 const {isAuthenticated} =require('./helpers')
 
-//REVISAR LAS ESTA RUTA...
+//REVISAR ESTA RUTA...
 //crear un usuario
 server.post('/',async(req,res,next)=>{
   //en caso de que falte algun campo devolver un error
@@ -19,8 +19,8 @@ server.post('/',async(req,res,next)=>{
     telefono2,
     email,
     password} = req.body;
-     
-   
+
+
   password = await hash(password,10);
      //se crea el usuario
       User.create({
@@ -41,6 +41,7 @@ server.post('/',async(req,res,next)=>{
       })
   // }
 });
+
 
 //se trae todos los usuarios
 server.get('/',(req,res,next)=>{
@@ -110,7 +111,7 @@ server.put('/:id',async(req,res,next)=>{
     }).catch(err => res.status(400).send(err))
   })
 
-
+/*  SE DEJA COMENTADO PUES ES UNA FUNCIÃ“N DEL ADMIN
 //borra un usuario
 server.delete('/:id',(req,res,next)=>{
     User.findByPk(req.params.id)
@@ -125,7 +126,7 @@ server.delete('/:id',(req,res,next)=>{
         }
     })
 })
-
+*/
 
 server.post('/:id/cart',(req,res,next) =>{
   var orderID;
@@ -175,7 +176,7 @@ server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve todas las Ã
       },include:{
         model: Product
       }
-    })  
+    })
     .then(respuesta => {
       if (!respuesta){
           res.status(404).send("Error. No hay carrito o no existe usuario")
@@ -185,7 +186,7 @@ server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve todas las Ã
     })
   }
   })
-  
+
 
 server.delete('/:id/cart',(req,res,next) =>{ //vaciamos carrito
   Order.findOne({

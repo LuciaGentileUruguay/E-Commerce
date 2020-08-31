@@ -50,7 +50,7 @@ server.put('/:id',(req,res,next)=>{
 })
 
 
-//borra un usuario
+//borra un usuario (no lo borra de la base, sino que lo pasa a estado inactivo)
 server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     User.findByPk(req.params.id)
     .then(user=>{
@@ -59,8 +59,9 @@ server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
             return res.status(400).send("Usuario inexistente");
         } else {
             //borra usuario
-            user.destroy();
-            return res.status(200).send("Usuario eliminado")
+            user.activo = false;
+            user.save();
+            return res.status(200).send("Usuario inactivo")
         }
     })
 })

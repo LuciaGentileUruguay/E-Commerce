@@ -41,7 +41,7 @@ export class Admin extends Component {
       return (
         <div class="btn-group" role="group" aria-label="Basic example">
         <button  type="button" class="btn btn-secondary" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-        <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoria</button>
+        <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoría</button>
         <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
          </div>
       )
@@ -52,15 +52,15 @@ export class Admin extends Component {
       return(
         <div>
           <div class="btn-group" role="group" aria-label="Basic example">
-            <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoria</button>
+            <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoría</button>
             <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
         </div>
           <FormProduct/>
         </div>
-          
+
       )
     }
-      
+
       //RENDERIZADO CONDICIONAL NUEVA CATEGORIA-->
     if (this.state.irA === "Categoria"){
       return(
@@ -70,17 +70,17 @@ export class Admin extends Component {
             <button type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
           </div>
           <NewCategoryForm/>
-        </div> 
+        </div>
       )
     }
-    
+
     //RENDERIZADO CONDICIONAL LISTA DE USUARIOS-->
     if (this.state.irA === "Lista"){
       return(
         <div>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-            <button type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva Categoria</button>
+            <button type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva Categoría</button>
           </div>
           <Userlist/>
         </div>
