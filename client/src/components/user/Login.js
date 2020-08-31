@@ -4,6 +4,8 @@ import "./stilo.css"
 import axios from 'axios'
 import { connect } from 'react-redux';
 import {setUserState} from "../../actions/index"
+import swal from 'sweetalert';
+
 
 //COMPONENTE PARA INICIAR SESION
 export class Login extends React.Component {
@@ -27,7 +29,7 @@ export class Login extends React.Component {
     if (this.state.password.length>0 && /\S+@\S+\.\S+/.test(this.state.username)){
       //LE PEGA AL BACK TRAE EL USER QUE INICIO SESION Y LA COOKIEE
       axios.post('http://localhost:3001/login',this.state,{withCredentials:true})
-      .then(res =>{
+      .then(res => {  swal("Bienvenido/a " + res.data.user.nombre + "!");
 
         //EN RES ESTA TODA LA INFO DEL USER LOGUEADO Y LA COOKIEE!!
         //Se agrego el pwdResete(passwordReset) a los datos guardados de un usuario
