@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { increment,decrement,removeProductFromCart, getProductsCart} from "../actions/index";
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
+import axios from 'axios';
 
 //COMPONENTE ORDER
 export class Order extends Component {
@@ -16,7 +17,7 @@ export class Order extends Component {
       dangerMode: true,
 
       //USAR WILLDELETE SINO NO RECONOCE ESE TIPO DE SWEET ALERT
-    }).then(willDelete =>{
+    }).then(willDelete => {
       if(willDelete){
         this.props.removeProductFromCart(this.props.user.id, this.props.order.products[indice].id)
         swal({text: "El articulo se elimino correctamente eliminado", icon: "success"})
@@ -39,10 +40,41 @@ export class Order extends Component {
     return totalDeOrden;
   }
 
+  vaciarCarrito(order){
+    swal({
+      title: "¿Desea vaciar el carrito?",
+      icon: "warning",
+      buttons: ["No","Sí"],
+      dangerMode: true
+    }).then(willDelete=>{
+      if(willDelete){
+        axios.delete("http://localhost:3001/users/"+ this.props.user.id +"/cart")
+      .then(res=>{
+        swal({text: "Carrito vacío",icon:"error"});
+        return;
+      })
+     }
+    })
+
+    //MANEJO DE EERORES
+    .catch(err=>{
+      alert(err)
+    })
+  }
+
+
   render() {
     return (
       <div>
         <div>
+          {/* Boton para vaciar el carrito */}
+          <button type="button" class="btn btn-outline-primary">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg" onClick={(e)=>this.vaciarCarrito(e)}>
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            </svg>
+          </button>
+
           {/* MUESTRA EL TOTAL! */}
           <h5 className="texto-tierra shadowsIntoLight"> Total a pagar $ {this.props.order.products && this.calculoTotal(this.props.order.products)}</h5>
         </div>
@@ -53,7 +85,7 @@ export class Order extends Component {
         {this.props.order.products && this.props.order.products.map((el,i) => (
           <div class="card col-2">
             <div class="card-body">
-              
+
               <img className= "card-img-top foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
 
               {/* DETALLE DEL PRODUCTO */}
@@ -67,7 +99,7 @@ export class Order extends Component {
                {/* BOTONES DECREMENTAR E INCREMENTAR */}
                 <button class="btn btn-light" onClick={() => this.props.decrement(this.props.user.id, el.id)}>-</button>
                 <button class="btn btn-light" onClick={() => this.props.increment(this.props.user.id, el.id)}>+</button>
-                
+
               {/* TOTAL UNITARIO */}
               <h5 class="card-text text texto-tierra">Total $ {el.order_line.price * el.order_line.cantidad}</h5>
                 <br></br>
@@ -76,7 +108,7 @@ export class Order extends Component {
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                 </svg> </button>
-              
+
             </div>
           </div>
           ))

@@ -9,12 +9,15 @@ export  class PwdReset extends React.Component {
     constructor(props) {
         super(props);
           this.state = {
-              pwd: ""
+              pwd: "",
+              confirmPwd:""
           }
       }
     resetPassword(e){
         e.preventDefault()
+        if (this.state.pwd === this.state.confirmPwd && /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,}$/.test(this.state.pwd)){
         this.props.setPassword(this.props.user.id,this.state.pwd);
+      } else {alert ("Las contraseñas no coinciden")}
     }
 
     handleInputChange (e) {
@@ -28,10 +31,14 @@ export  class PwdReset extends React.Component {
             <div>
                 <form>
                    <div>
-                   <label>Contraseña Nueva: </label>
-                   <input name="pwd" type="text" value={this.state.pwd} onChange={(e) => this.handleInputChange(e) }></input>
-                   <button onClick={(e)=>this.resetPassword(e)}>Guardar</button>
+                    <label>Contraseña Nueva: </label>
+                    <input name="pwd" type="text" value={this.state.pwd} onChange={(e) => this.handleInputChange(e) }></input>
                    </div> 
+                   <div>
+                    <label>Confirmar Contraseña: </label>
+                    <input name="confirmPwd" type="text" value={this.state.confirmPwd} onChange={(e) => this.handleInputChange(e) }></input>
+                   </div> 
+                   <button onClick={(e)=>this.resetPassword(e)}>Guardar</button>
                 </form>
             </div>
         )
