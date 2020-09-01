@@ -5,7 +5,9 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const passport = require('passport');
 var Strategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
+const fileUpload = require('express-fileupload');
+var path = require('path');
 
 const db = require('./db.js');
 
@@ -54,6 +56,8 @@ passport.use(new Strategy(
   });
 
 const server = express();
+server.use(express.static(path.join(__dirname, 'public')));
+server.use(fileUpload());
 
 server.use(require('express-session')({
   secret: 'secret',
@@ -85,6 +89,24 @@ server.use((req, res, next) => {
 });
 
  server.use('/', routes);
+
+ server.post('/uploads', (req, res) => {
+
+  if (!req.files) {
+      return res.status(500).send({ msg: "file is not found" })
+  }
+
+  const myFile = req.files.image;
+  console.log(myFile)
+
+  myFile.mv(`${__dirname}/public/${myFile.name}`, function (err) {
+      if (err) {
+          console.log(err)
+          return res.status(500).send({ msg: "fuck eroor" });
+      }
+      return res.send({ file: myFile.name, path: `/${myFile.name}`, ty: myFile.type });
+  });
+})
 
 
 server.post('/login',

@@ -1,7 +1,7 @@
 const server = require('express').Router();
 const { User, Order_line, Product, Order } = require('../db.js');
 const { Sequelize } = require('sequelize');
-const  { bcrypt, hash } = require( 'bcrypt');
+const  { bcrypt, hash } = require( 'bcryptjs');
 const {isAuthenticated} =require('./helpers')
 
 //REVISAR ESTA RUTA...
