@@ -2,6 +2,7 @@ const server = require('express').Router();
 const { Product, Order, Order_line, User } = require('../db.js');
 const { Sequelize } = require('sequelize');
 
+//Devuelve todas las órdenes para todos los usuarios, sin incluir los carritos
 server.get('/',(req,res,next)=>{
     Order.findAll({
       where: {
@@ -15,6 +16,7 @@ server.get('/',(req,res,next)=>{
     })
 });
 
+//Devuelve todas las órdenes para un determinado usuario, sin incluir el carrito
 server.get('/:id/products',(req,res,next)=>{
     Order.findOne({
       where: {
@@ -28,6 +30,7 @@ server.get('/:id/products',(req,res,next)=>{
         return;
     })
 });
+
 
 //ruta para modificar estado de la compra
 server.put('/:id',(req,res,next)=>{
@@ -44,6 +47,7 @@ server.put('/:id',(req,res,next)=>{
     })
 });
 
+//Devuelve todas las órdenes de un usuario, incluyendo el carrito
 server.get('/:id',(req,res,next)=>{
     Order.findOne({
         where:{
