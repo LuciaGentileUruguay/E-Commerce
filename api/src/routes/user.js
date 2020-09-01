@@ -181,7 +181,7 @@ server.post('/:id/cart',(req,res,next) =>{
    res.send();
 })
 
-server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve todas las órdenes de un usuario
+server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve el carrito de un usuario
   console.log(req.params.id)
   if (req.params.id){
     Order.findOne({

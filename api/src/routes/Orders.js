@@ -16,7 +16,7 @@ server.get('/',(req,res,next)=>{
     })
 });
 
-//Devuelve todas las órdenes para un determinado usuario, sin incluir el carrito
+//Devuelve todos las órdenes para un determinado usuario, sin incluir el carrito
 server.get('/:id/products',(req,res,next)=>{
     Order.findOne({
       where: {

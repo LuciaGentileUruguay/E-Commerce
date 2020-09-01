@@ -26,7 +26,7 @@ export class TablaDeOrdenes extends Component {
       <div className="divroot">
         <h2 className = "text"> Órdenes </h2>
         <ul>
-          {this.props.order && this.props.ordenes.map((el,i) => (
+          {this.props.ordenes && this.props.ordenes.map((el,i) => (
             <div className = "container">
               <h5 className = "text">Número de órden: {el.id}</h5>
               <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>

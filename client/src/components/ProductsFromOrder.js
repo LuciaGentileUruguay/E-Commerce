@@ -6,10 +6,14 @@ import {Link,Route} from "react-router-dom";
 
 class ProductsFromOrder extends React.Component {
 
+  constructor(props){
+    super(props);
+  }
+  
   componentDidMount(){
-    const { match: { params: { id }}} = this.props; //id de la orden
-      this.props.getProductsFromOrder(id);
-      console.log(id);
+    //const { match: { params: { id }}} = this.props; //id de la orden
+      this.props.getProductsFromOrder(3);
+      console.log(this.props);
   }
 
   render() {
