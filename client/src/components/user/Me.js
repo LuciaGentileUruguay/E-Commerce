@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 
-
 export default class Me extends React.Component {
   constructor(props){
     super(props);
@@ -10,7 +9,10 @@ export default class Me extends React.Component {
   }
 
   componentDidMount(){
-    axios.get("http://localhost:3001/users/me")
+    const instance = axios.create({
+      withCredentials: true
+    })
+    instance.get("http://localhost:3001/users/me")
       .then(res => {
         this.setState({
           nombre:res.data.nombre,
