@@ -62,17 +62,21 @@ export class Nav extends Component {
           {/* SI ESTA LOGUEADO MUESTRA LOGOUT */}
           {this.props.user.id && <button class="btn btn-light shadowsIntoLight" onClick={(e)=>this.logout(e)}>Logout</button>}
 
+          {/* SI ESTA LOGUEADO MUESTRA "PERFIL" */}
+          {this.props.user.id && <Link to = "/users/me"><button class="btn btn-light shadowsIntoLight">Perfil</button></Link> }
+
           {/* LINK PARA IR AL CARRITO DE COMPRAS DE UN USUARIO LOGUEADO */}
           <Link to = {"/cart/" + this.props.user.id} onClick={()=>this.props.onSearch("")}>
             <span id="navigation"><svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-cart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-            </svg> </span>
+            </svg>
+            </span>
           </Link>
           </div>
 
           {/* LA NAV BAR SIEMPRE ESTA RENDERIZADA */}
           <Route exact path='/products' render={() => <SearchBar onSearch={this.props.onSearch}/>}/>
-          
+
         </nav>
       )}
   }
@@ -82,14 +86,12 @@ export class Nav extends Component {
       user: state.user
     };
   }
-  
+
   const mapDispatchToProps = dispatch => {
     return {
       userLogout:() => dispatch(userLogout()),
       setRedirectOff:() =>dispatch(setRedirectOff())
     }
   }
-  
+
   export default connect(mapStateToProps,mapDispatchToProps)(Nav);
-  
-  

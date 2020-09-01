@@ -51,6 +51,21 @@ server.get('/',(req,res,next)=>{
     })
 })
 
+//Devuelve los datos del usuario que está logueado
+server.get('/me',(req,res,next)=>{
+  User.findByPk(req.user.id)
+  .then(user=>{
+    if (!user){
+      res.status(401).send("Usuario no logueado");
+    }
+    else {
+     res.status(200).json(user);
+    }
+
+  })
+})
+
+
 //Bucar usuario por ID
 server.get('/id/:id',(req,res,next)=>{
   User.findByPk(req.params.id)
