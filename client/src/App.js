@@ -99,7 +99,7 @@ render(){
       <Route path='/pwdReset'>
         {this.props.user.pwdReset ? <PwdReset/>:<Redirect to= "/"/>}
       </Route>
-      <Route exact path='/users/me'>
+      <Route exact path='/me'>
         {this.props.user.id ? <Me/> : <Redirect to="/"/>}
       </Route>
 
