@@ -1,7 +1,7 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES,
   GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,GET_USER_DETAIL,
-  SET_REDIRECT,SET_REDIRECT_OFF, SET_ADMIN,SET_USER_STATE, USER_LOGOUT, SET_RATING,
+  SET_REDIRECT,SET_REDIRECT_OFF, SET_ADMIN,SET_USER_STATE, USER_LOGOUT, SET_RATING, 
   GET_ORDERS, GET_PRODUCTS_FROM_ORDER,SET_PASSWORD,RESET_PASSWORD } from '../actions';
 
 
@@ -30,10 +30,17 @@ function rootReducer(state = initialState, action) {
 
   if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
     console.log(action.payload);
-    if (state.user.id===0){
+    if (state.user.id==0) { 
+       let cosco = state.order.products.map((item, index) => {
+        state.order.products.filter((item2, index2) => {
+          return (item.id === item2.id) 
+
+         }
+        )})
+      
       return {
         ...state, //traigo todo el estado, tal cual
-        order: {...state.order, products: state.order.products.concat([action.payload])}
+        order: {...state.order, products: state.order.products.concat([action.payload])} 
       }
     } else {
       return{
@@ -41,15 +48,15 @@ function rootReducer(state = initialState, action) {
         order: action.payload
       }
     }
-
+     
   }
 
   if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
     return {
         ...state,
         order:{
-          ...state.order,
-          products: state.order.products.filter(item => item.id !== action.payload )}
+        ...state.order,
+          products: state.order.products.filter(item => /*item.id !== action.payload ||*/ item.productId != action.payload)}
         //dejamos en el array todos los que son distintos de la que quiero eliminar
     };
   }
@@ -161,7 +168,7 @@ function rootReducer(state = initialState, action) {
   if (action.type === GET_ORDERS){
     return{
       ...state,
-      ordenes: action.payload
+      order: action.payload
     }
   }
 
@@ -237,7 +244,7 @@ function rootReducer(state = initialState, action) {
       rating: action.payload
     }
   }
-
+  
   if (action.type === SET_PASSWORD){
     return{...state,
       user:{...state.user,pwdReset:false}
@@ -247,7 +254,7 @@ function rootReducer(state = initialState, action) {
   if (action.type === RESET_PASSWORD){
     return{...state}
   }
-
+  
   return state;
 }
 

@@ -56,7 +56,10 @@ export function addProductToCart(id, prodId, payload) { //id = userId, payload =
 }
 
 export function removeProductFromCart(id, prodId) { //eliminamos un producto del carrito de un usuario id
-  return function(dispatch) {
+  return function(dispatch) { 
+    if (id === 0){
+      dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: prodId });
+    }
     return instance.delete("http://localhost:3001/users/" + id +"/cart/" + prodId)
       .then(json => {
         dispatch({ type: REMOVE_PRODUCT_FROM_CART, payload: prodId });
