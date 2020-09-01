@@ -22,8 +22,9 @@ import UserList from './components/user/userList'
 import Admin from "./components/Admin";
 import TablaDeOrdenes from './components/TablaDeOrdenes.js';
 import ProductsFromOrder from './components/ProductsFromOrder.js';
-import PwdReset from "./components/user/PwdReset.js"
-import {Redirect} from 'react-router'
+import PwdReset from "./components/user/PwdReset.js";
+import {Redirect} from 'react-router';
+import Me from './components/user/Me.js';
 
 class App extends React.Component{
   constructor(){
@@ -63,40 +64,43 @@ render(){
 
       <Route exact path='/admin'>
         {this.props.user.isAdmin ? <Admin/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/new_category_form'>
         {this.props.user.isAdmin ? <NewCategoryForm/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/form_categories'>
         {this.props.user.isAdmin ? <FormCategories/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/form_product'>
         {this.props.user.isAdmin ? <FormProduct/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/orders'>
         {this.props.user.isAdmin ? <TablaDeOrdenes/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/orders/:id/products'>
         {this.props.user.isAdmin ? <ProductsFromOrder/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/login/userlist'>
       {this.props.user.isAdmin ? <UserList/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path='/users/:id'>
         {this.props.user.isAdmin ? <UserDetail/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
 
       {/*---------------------------------------------------------------*/}
 
       {/*Redireccion de las rutas del Usuario*/}
       <Route exact path='/cart/:id'>
         {this.props.user ? <Order/> : <Redirect to="/"/>}
-      </Route>   
+      </Route>
       <Route exact path={window.location.pathname}>
         {this.props.user.pwdReset ?<Redirect to="/pwdReset"/>:null}
       </Route>
       <Route path='/pwdReset'>
         {this.props.user.pwdReset ? <PwdReset/>:<Redirect to= "/"/>}
+      </Route>
+      <Route exact path='/users/me'>
+        {this.props.user.id ? <Me/> : <Redirect to="/"/>}
       </Route>
 
 
@@ -109,7 +113,7 @@ render(){
       <Route exact path='/login/userdata' component = {UpdateUser}/>
 
 
-      
+
   </div>
   )
 }
