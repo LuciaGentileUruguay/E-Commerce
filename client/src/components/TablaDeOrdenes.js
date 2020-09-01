@@ -2,7 +2,9 @@ import React, { Component} from 'react';
 import { connect } from "react-redux";
 import {getOrders} from '../actions/index';
 import Order from './Order.js';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+
 export class TablaDeOrdenes extends Component {
 
   componentDidMount(){
@@ -24,7 +26,7 @@ export class TablaDeOrdenes extends Component {
       <div className="divroot">
         <h2 className = "text"> Órdenes </h2>
         <ul>
-          {this.props.order && this.props.order.map((el,i) => (
+          {this.props.order && this.props.ordenes.map((el,i) => (
             <div className = "container">
               <h5 className = "text">Número de órden: {el.id}</h5>
               <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>
@@ -46,13 +48,13 @@ export class TablaDeOrdenes extends Component {
 //Funciones que mapean al store
 function mapStateToProps(state) {
   return {
-    order: state.order
+    ordenes: state.ordenes
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getOrders: order => dispatch(getOrders())
+    getOrders: ordenes => dispatch(getOrders())
   }
 }
 
