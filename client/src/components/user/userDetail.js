@@ -8,8 +8,7 @@ export default class UserDetail extends React.Component {
   }
 
   componentDidMount(){
-    const { match: { params: { id }}} = this.props; //id de usuario
-    console.log(id)
+   const id = window.location.pathname[window.location.pathname.length-1]; //id de usuario
     axios.get("http://localhost:3001/users/id/"+id)
     .then(res =>{
         console.log(res.data)
