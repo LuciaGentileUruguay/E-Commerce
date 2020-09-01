@@ -43,10 +43,15 @@ export function setAdmin(payload) {  //cambio a admin o usuario regular
 
 export function addProductToCart(id, prodId, payload) { //id = userId, payload = producto
   return function(dispatch) {
-    return instance.post("http://localhost:3001/users/" + id +"/cart/", payload)
+    if (id === 0){
+      dispatch({ type: ADD_PRODUCT_TO_CART, payload});
+    } else {
+      return instance.post("http://localhost:3001/users/" + id +"/cart/", payload)
       .then(json => {
         dispatch({ type: ADD_PRODUCT_TO_CART, payload});
       });
+    }
+    
   };
 }
 
@@ -87,9 +92,12 @@ export function getProductsFromCategory(id) { //Listar productos de una categorÃ
 }
 
 //ESTA RUTA ESTA PROTEGIDA DESDE EL BACK!!!!!!
-export function getProductsCart(userId){
+export function getProductsCart(userId,payload){
   return function(dispacth){
-    return instance.get("http://localhost:3001/users/"+userId+"/cart")
+    if (userId === 0){
+      dispacth({type: GET_PRODUCTS_CART, payload})
+    } else {
+      return instance.get("http://localhost:3001/users/"+userId+"/cart")
     .then(res=>{   
       console.log(res)
       dispacth({type: GET_PRODUCTS_CART, payload: res.data})
@@ -97,6 +105,8 @@ export function getProductsCart(userId){
     .catch(err=>{
       alert(err)
     })
+    }
+    
   }
 }
 

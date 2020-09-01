@@ -27,19 +27,46 @@ export class Order extends Component {
 
   //TRAE EL CARRITO DE UN USUARIO.. LO PRECARGA Y LO DEJA EN EL STORE DE REDUX
   componentDidMount(){
-    this.props.getProductsCart(this.props.user.id);
+    if (this.props.user.id != 0){
+      this.props.getProductsCart(this.props.user.id);
+    }
+    
   }
 
   //FUNCION QUE CALCULA EL TOTAL DE LA COMPRA
   calculoTotal (products) {
     var totalDeOrden = 0;
-    products.map( e => {
-      totalDeOrden = totalDeOrden + (e.order_line.price * e.order_line.cantidad)
-    })
-    return totalDeOrden;
+    if (this.props.user.id !=0){
+      products.map( e => {
+        totalDeOrden = totalDeOrden + (e.order_line.price * e.order_line.cantidad)
+      })
+      return totalDeOrden;
+    } else {
+      products.map( e =>{
+        totalDeOrden = totalDeOrden + e.price;
+      })
+      return totalDeOrden;
+    }
+     
+
   }
 
+
+  
   render() {
+    if (this.props.user.id ===0){
+      return(
+        <div>
+          <div>
+            {/* MUESTRA EL TOTAL! del guest */}
+            <h5 className="texto-tierra shadowsIntoLight"> Total a pagar $ {this.props.order.products[0] && this.calculoTotal(this.props.order.products)}</h5>
+          </div>
+        </div>
+        )
+
+
+    } else {
+
     return (
       <div>
         <div>
@@ -84,6 +111,7 @@ export class Order extends Component {
       </div>
     </div>
     );
+  }
   }
 }
 

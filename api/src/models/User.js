@@ -56,10 +56,12 @@ module.exports = (sequelize) => {
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: true
     },
     pwdReset: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: true
     },
     activo: {

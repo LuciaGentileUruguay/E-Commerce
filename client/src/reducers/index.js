@@ -8,8 +8,12 @@ import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CAT
 //Definimos el estado inicial
 const initialState = {
   products: [],
-  user: {},
-  order: [], //tenemos una lista de productos
+  user: {
+    id: 0,
+    pwdReset: false,
+    isAdmin: false
+  },
+  order: {products:[]}, //tenemos una lista de productos
   categories: [],
   productCategories:[],
   productDetail: {categoryId: []},
@@ -20,13 +24,24 @@ const initialState = {
   rating:0
 };
 
-
+//state.order.concat[action.payload]
+//state.order.concat([action.payload])
 function rootReducer(state = initialState, action) {
+
   if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
+    console.log(action.payload);
+    if (state.user.id===0){
       return {
         ...state, //traigo todo el estado, tal cual
+        order: {...state.order, products: state.order.products.concat([action.payload])} 
+      }
+    } else {
+      return{
+        ...state,
         order: action.payload
       }
+    }
+     
   }
 
   if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
@@ -199,14 +214,20 @@ function rootReducer(state = initialState, action) {
   if (action.type === SET_USER_STATE){
     return{
       ...state,
-      user: action.payload
+      user: action.payload,
+      order:{}
           }
   }
 
   if (action.type === USER_LOGOUT){
     return{
       ...state,
-      user: {}
+      user: {
+        id:0,
+        pwdReset:false,
+        isAdmin: false
+      },
+      order: {products:[]}
     }
   }
 

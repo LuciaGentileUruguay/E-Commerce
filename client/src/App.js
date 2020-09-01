@@ -90,7 +90,7 @@ render(){
 
       {/*Redireccion de las rutas del Usuario*/}
       <Route exact path='/cart/:id'>
-        {this.props.user.id ? <Order/> : <Redirect to="/"/>}
+        {this.props.user ? <Order/> : <Redirect to="/"/>}
       </Route>   
       <Route exact path={window.location.pathname}>
         {this.props.user.pwdReset ?<Redirect to="/pwdReset"/>:null}
