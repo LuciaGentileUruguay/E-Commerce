@@ -33,9 +33,25 @@ h1{
 }
 
 .titleLanding {
-  font-size: 4em;
+  font-size: 5em;
   margin-top: 60px;
 }
 .texto-tierra{
   color:#63321F;
+}
+
+.redes-container {
+  display: flex;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  color:#63321F;
+  font-size: small;
+}
+
+.redes-container ul li {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  text-align: center;
 }
