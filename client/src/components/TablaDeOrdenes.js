@@ -33,7 +33,7 @@ export class TablaDeOrdenes extends Component {
                 <h5 className="texto-tierra shadowsIntoLight">Número de órden: {el.id}</h5>
                 <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>
                 <h5 className = "text">Estado: {el.estado}</h5>
-                <h5 className = "text">Última fecha de modificación: {el.updatedAt}</h5>
+                <h5 className = "text">Fecha: {el.updatedAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
                 <Link to={`/orders/${el.id}/products`}>
                 <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
