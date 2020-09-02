@@ -9,6 +9,8 @@ class FormProduct extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
+        selectedFile: false,
+        data:{path:"0"}
       }
   }
 
@@ -46,10 +48,31 @@ class FormProduct extends React.Component {
     	    if(flag){		
     	      this.props.productDetail.categoryId.push(e.target.value)		
           }			
-    	   }
+         }
+
+    fileSelected(e){
+    e.preventDefault()
+    console.log(e.target.files)
+    this.state["selectedFile"]=e.target.files[0]
+
+      }     
+
+  uploadHandler(e){
+    e.preventDefault()
+    const fd=new FormData()
+    fd.append('image',this.state.selectedFile)
+    axios.post('http://localhost:3001/uploads',fd)
+    .then(res=>{
+      if (res.status==200){
+        alert("Imagen Cargada con Exito")
+      }
+      this.setState({data:res.data.path})
+    })
+  }         
 
   save(){
     console.log("save")
+    this.props.productDetail["image"]=this.state.selectedFile.name
     axios.post(`http://localhost:3001/products`, this.props.productDetail)
       .then(res => {
         if(res.status === 200){
@@ -60,6 +83,7 @@ class FormProduct extends React.Component {
     }
     modify(){
       console.log("modify")
+      this.props.productDetail["image"]=this.state.selectedFile.name
       axios.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
        this.props.productDetail)
         .then(res => {
@@ -128,6 +152,16 @@ class FormProduct extends React.Component {
             <label>Stock:</label>
             <input type="text" name="stock" placeholder={this.props.productDetail && this.props.productDetail.stock} onChange={(e) => this.handleInputChange(e)}  />
           </div>
+          {/* --------------------------------------Image Uploader--------------------------- */}
+            <div>
+              <input type="file" onChange={(e)=>this.fileSelected(e)}/><br></br>
+              <button onClick={(e)=>this.uploadHandler(e)}>Cargar Imagen</button>
+            </div>
+        
+          {/* {this.state.data.path !=="0" ?<div><img src={"http://localhost:3001"+this.state.data.path} /></div>:null} */}
+              
+          {/* ------------------------------------------------------------------------------------ */}
+
           <input id= "botonBorrar" type='submit' value="Borrar" onClick={(e) => {
           e.preventDefault();
           this.cleanStore()

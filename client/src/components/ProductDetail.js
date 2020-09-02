@@ -89,7 +89,7 @@ class ProductDetail extends React.Component {
         <div className="card col-4">
           <h2 className = "card-title title texto-tierra"> Detalle del producto </h2>
             <div className="card-body">
-               <img className="fotoDetalle" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+               <img className="fotoDetalle" src={"http://localhost:3001/"+this.props.productDetail.image} />
             </div>
             <div className="card-body" >
               <h3 className = "card-title title texto-tierra">{this.props.productDetail && this.props.productDetail.name}</h3>
