@@ -5,11 +5,16 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const passport = require('passport');
 var Strategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
+const Mailgun = require ('mailgun-js');
 var path = require('path');
-
 const db = require('./db.js');
+//---------------------mailgun settings-------------------
+const api_key = "a38d0d82787adb3bba4c9bd65dee85c6-7cd1ac2b-e43f79f2"
+const domain = "https://api.mailgun.net/v3/sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
+var from_who = "universoverde.henry@gmail.com"
+//--------------------------------------------------------
 
 passport.use(new Strategy(
   function(username, password, done){
@@ -58,7 +63,7 @@ passport.use(new Strategy(
 const server = express();
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(fileUpload());
-
+server.set('view engine', 'jade')
 server.use(require('express-session')({
   secret: 'secret',
   resave: false,
@@ -89,7 +94,7 @@ server.use((req, res, next) => {
 });
 
  server.use('/', routes);
-
+//-----------------FILEUPLOAD-----------------------------------------------------
  server.post('/uploads', (req, res) => {
 
   if (!req.files) {
@@ -107,7 +112,37 @@ server.use((req, res, next) => {
       return res.send({ file: myFile.name, path: `/${myFile.name}`, ty: myFile.type });
   });
 })
+//--------------------MAILGUN---------------------------------------------------------------
+server.get('/submit/:mail', function(req,res) {
+  //We pass the api_key and domain to the wrapper, or it won't be able to identify + send emails
+  var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+  var data = {
+  //Specify email data
+    from: from_who,
+  //The email to contact
+    to: req.params.mail,
+  //Subject and text data  
+    subject: 'Hello from Mailgun',
+    html: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
+  }
+  //Invokes the method to send emails given the above data with the helper library
+  mailgun.messages().send(data, function (err, body) {
+      //If there is an error, render the error page
+      if (err) {
+          res.render('error', { error : err});
+          console.log("got an error: ", err);
+      }
+      //Else we can greet    and leave
+      else {
+          //Here "submitted.jade" is the view file for this landing page 
+          //We pass the variable "email" from the url parameter in an object rendered by Jade
+          res.render('submitted', { email : req.params.mail });
+          console.log(body);
+      }
+  });
+});
 
+//--------------------------------------------------------------------------------------------
 
 server.post('/login',
   passport.authenticate('local', {failureRedirect: '/login'}),
