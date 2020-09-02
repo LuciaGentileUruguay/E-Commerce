@@ -14,9 +14,12 @@ const domain = "sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
 const mailgun = require ('mailgun-js')({apiKey: api_key, domain:domain});
 var path = require('path');
 const db = require('./db.js');
+
 //---------------------mailgun settings-------------------
+
+
 var from_who = "universoverde.henry@gmail.com"
-//--------------------------------------------------------
+
 
 passport.use(new Strategy(
   function(username, password, done){
