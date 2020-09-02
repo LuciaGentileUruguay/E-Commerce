@@ -14,6 +14,10 @@ const domain = "sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
 const mailgun = require ('mailgun-js')({apiKey: api_key, domain:domain});
 var path = require('path');
 const db = require('./db.js');
+
+//---------------------mailgun settings-------------------
+
+
 var from_who = "universoverde.henry@gmail.com"
 
 
@@ -122,7 +126,7 @@ server.get('/submit/:mail', function(req,res) {
     from: 'hola <universoverde.henry@gmail.com>',
   //DESTINATARIO
     to: req.params.mail,
-  //SUBJET ES EL ASUNTO Y TEXT EL CUERPO DEL MENSAJE  
+  //SUBJET ES EL ASUNTO Y TEXT EL CUERPO DEL MENSAJE
     subject: 'Hello from Mailgun',
     text: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
   }
@@ -135,7 +139,7 @@ server.get('/submit/:mail', function(req,res) {
           console.log("got an error: ", err);
       }
       //EN CASO DE NO TENER ERRORES SE ENVIA EL MENSAJE
-      else {          
+      else {
           res.send(data);
 
       }
