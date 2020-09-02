@@ -6,11 +6,13 @@ import {Link,Route} from "react-router-dom";
 
 class ProductsFromOrder extends React.Component {
 
-  componentDidMount(){
-    const { match: { params: { id }}} = this.props; //id de la orden
-      this.props.getProductsFromOrder(id);
-      console.log(id);
+  constructor(props){
+    super(props);
   }
+
+/*  componentDidMount(){
+    this.props.getProductsFromOrder(this.props);
+  }*/
 
   render() {
     return (
@@ -22,7 +24,7 @@ class ProductsFromOrder extends React.Component {
             </div>
             <div className="container" >
             {
-              this.props.order.products && this.props.order.products.map((el,i) => (
+              this.props.productsFromOrder.id && this.props.productsFromOrder.products.map((el,i) => (
                 <div>
                   <h4>{el.name}</h4>
                   <h5>IMAGEN</h5>
@@ -50,7 +52,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    order: state.order
+    ordenes: state.ordenes,
+    productsFromOrder: state.productsFromOrder
   }
 }
 

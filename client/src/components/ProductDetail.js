@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {FaStar} from 'react-icons/fa';
 import FiveStars from './FiveStars'
 import { getProductDetail, getProductsCategories, addProductToCart,
-  setRedirect, setRedirectOff, setRating } from '../actions/index';
+  setRedirect, setRedirectOff, setRating, getReview } from '../actions/index';
 import './ProductDetail.css';
 import {Link} from "react-router-dom";
 import Axios from 'axios';
@@ -25,7 +25,7 @@ class ProductDetail extends React.Component {
     if(this.props.user.isAdmin) {
       return(
         <Link to="/form_product">
-          <button type="button" class="btn btn-outline-secondary">Editar</button>
+          <button class="btn btn-outline-success botonDetalle1">Editar</button>
         </Link>
       )
     }
@@ -38,24 +38,26 @@ class ProductDetail extends React.Component {
 
  //----------------REVIEWS-----------------------------------------------
   nuevoReview(e){
-    e.preventDefault();
     let status = true;
     this.props.setRedirect(status);
+    //e.preventDefault();
   }
 
   postReview(e){
-    e.preventDefault();
+    //e.preventDefault();
     let data = {
       puntuacion:this.state.rating,
       comentario:this.state.comentario,
       userId:this.props.user.id
     }
-
     Axios.post('http://localhost:3001/products/'+this.props.productDetail.id+'/review', data)
     .then(res=>{
       alert("Reseña Guardada Correctamente")
     })
-    this.props.setRedirectOff()
+    .then(res =>{
+      this.props.getReview(this.props.productDetail.id);
+    })
+    this.props.setRedirectOff();
 
   }
  //--------------------------------------------------------------------------------------------------------
@@ -65,12 +67,12 @@ class ProductDetail extends React.Component {
     const { match: { params: { id }}} = this.props; //ID DEL PRODUCTO A BUSCAR
     this.props.getProductDetail(id); //TRAE EL PRODUCTO
     this.props.getProductsCategories(id); // SI TIENE CATEGORIAS..
-    Axios.get("http://localhost:3001/products/"+id+"/review_5")
-    .then(res =>{
-      this.setState({review:res.data})
-    })
+    this.props.getReview(id);
+    //Axios.get("http://localhost:3001/products/"+id+"/review_5")
+    //.then(res =>{
+  //    this.setState({review:res.data})
+  //  })
   }
-
 
     /*Calculo del promedio y su redondeo*/
 /*--------------------------------------------------------------------------*/
@@ -80,7 +82,7 @@ class ProductDetail extends React.Component {
     reviews.map( e => {
       average += e.puntuacion
     })
-    return Math.round(average/num);
+    return Number((average/num).toFixed(1));
   }
 /*--------------------------------------------------------------------------*/
   render() {
@@ -89,7 +91,7 @@ class ProductDetail extends React.Component {
         <div className="card col-4">
           <h2 className = "card-title title texto-tierra"> Detalle del producto </h2>
             <div className="card-body">
-               <img className="fotoDetalle" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+               <img className="fotoDetalle" src={"http://localhost:3001/"+this.props.productDetail.image} />
             </div>
             <div className="card-body" >
               <h3 className = "card-title title texto-tierra">{this.props.productDetail && this.props.productDetail.name}</h3>
@@ -105,7 +107,7 @@ class ProductDetail extends React.Component {
 
               {/* BOTON PARA EL ADMIN EDITA EL PRODUCTO */}
               <div>
-                  {this.botonEditar()}
+                {this.botonEditar()}
               </div>
 
               {/* AGREGA EL PRODUCTO AL CARRITO */}
@@ -127,8 +129,8 @@ class ProductDetail extends React.Component {
               {/*PROMEDIO DE LAS REVIEWS */}
     {/*--------------------------------------------------------------------------*/}
               <div>
-                <p>
-                  Promedio de {this.state.review.length && this.calculoPromedio(this.state.review)} Estrellas
+                <p className = "card-text text texto-tierra">
+                  Promedio de {this.props.review.length && this.calculoPromedio(this.props.review)} Estrellas
                 </p>
               </div>
     {/*--------------------------------------------------------------------------*/}
@@ -139,8 +141,8 @@ class ProductDetail extends React.Component {
         <div className="catalog row" >
           <div className="card col-4">
             {this.props.user.id? <div>
-                <button onClick={(e)=>this.nuevoReview(e)}>Crear Nueva Review</button>
-              </div>:null}
+                <button class="btn btn-outline-success botonDetalle1" onClick={(e)=>this.nuevoReview(e)}> Ingresar opinión </button>
+          </div>:null}
 
             {!this.props.redirect ? null:<div>
             {[...Array(5)].map((star, i)=>{
@@ -163,13 +165,9 @@ class ProductDetail extends React.Component {
                    </label>
                     )
                    })}
-              {/*   <p>Valoración:{this.state.rating}/5</p>  */}
-               </div>}
+                 </div>}
 
-                   {!this.props.redirect ? null:  <div className = "divForm"
-                   style={{display:"flex",
-                    flexDirection:"column",
-                    justifyContent:"center",
+                   {!this.props.redirect ? null:  <div className = "divForm" style={{display:"flex", flexDirection:"column", justifyContent:"center",
                     width:"80%" }}>
                   <label> Comentarios: </label>
                   <textarea placeholder={"Escriba su comentario aquí..."}
@@ -177,24 +175,24 @@ class ProductDetail extends React.Component {
                  <button onClick={(e)=>this.postReview(e)}>Guardar Review</button>
               </div>}
               <div style={{display:"flex",flexDirection:"row", justifyContent:"space-around"}}>
-                {this.state.review.length>0 ? <div>
+                {this.props.review && this.props.review.length>0 ? <div>
                 <label>Cliente</label>
-                {this.state.review.map(item =>{
+                {this.props.review && this.props.review.map(item =>{
                 return( <p>{item.user.nombre + " " + item.user.apellido}</p>)
                 })}
-              </div>:<p>Aun no hay reseñas para este producto</p>}
+              </div>:<p>Aún no hay reseñas para este producto</p>}
 
-                {this.state.review.length>0 ? <div>
+                {this.props.review && this.props.review.length>0 ? <div>
                 <label>Comentario</label>
-                {this.state.review.map(item =>{
+                {this.props.review && this.props.review.map(item =>{
                 return( <p>{item.comentario}</p>)
                  })}
               </div>
               :null}
 
-                {this.state.review.length>0 ? <div>
+                {this.props.review && this.props.review.length>0 ? <div>
                 <label>Valoración</label>
-                {this.state.review.map(item =>{
+                {this.props.review && this.props.review.map(item =>{
                   console.log(item.puntuacion)
                 return(<FiveStars rating={item.puntuacion} />)
                 })}
@@ -215,7 +213,8 @@ const mapDispatchToProps = dispatch => {
     addProductToCart: (id, prodId, payload) => dispatch(addProductToCart(id, prodId, payload)),
     setRedirect:(status) => dispatch(setRedirect(status)),
     setRedirectOff:() => dispatch(setRedirectOff()),
-    setRating:(rating)=>dispatch(setRating(rating))
+    setRating:(rating)=>dispatch(setRating(rating)),
+    getReview:(id) => dispatch(getReview(id))
   }
 }
 
@@ -225,7 +224,8 @@ const mapStateToProps = state => {
     productCategories: state.productCategories,
     user: state.user,
     redirect:state.redirect,
-    rating:state.rating
+    rating:state.rating,
+    review:state.review
   }
 }
 

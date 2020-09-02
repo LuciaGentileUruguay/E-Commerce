@@ -5,9 +5,21 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const passport = require('passport');
 var Strategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt')
-
+const bcrypt = require('bcrypt');
+const fileUpload = require('express-fileupload');
+//API KEY PARA MANDAR MAILS
+const api_key = "a38d0d82787adb3bba4c9bd65dee85c6-7cd1ac2b-e43f79f2";
+//EL DOMINIO A CUAL ESTAMOS SUSCRIPTOS
+const domain = "sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
+const mailgun = require ('mailgun-js')({apiKey: api_key, domain:domain});
+var path = require('path');
 const db = require('./db.js');
+
+//---------------------mailgun settings-------------------
+
+
+var from_who = "universoverde.henry@gmail.com"
+
 
 passport.use(new Strategy(
   function(username, password, done){
@@ -54,7 +66,8 @@ passport.use(new Strategy(
   });
 
 const server = express();
-
+server.use(express.static(path.join(__dirname, 'public')));
+server.use(fileUpload());
 server.use(require('express-session')({
   secret: 'secret',
   resave: false,
@@ -86,6 +99,54 @@ server.use((req, res, next) => {
 
  server.use('/', routes);
 
+//-----------------FILEUPLOAD-----------------------------------------------------
+ server.post('/uploads', (req, res) => {
+
+  if (!req.files) {
+      return res.status(500).send({ msg: "file is not found" })
+  }
+
+  const myFile = req.files.image;
+  console.log(myFile)
+
+  myFile.mv(`${__dirname}/public/${myFile.name}`, function (err) {
+      if (err) {
+          console.log(err)
+          return res.status(500).send({ msg: "fuck eroor" });
+      }
+      return res.send({ file: myFile.name, path: `/${myFile.name}`, ty: myFile.type });
+  });
+})
+//--------------------MAILGUN---------------------------------------------------------------
+server.get('/submit/:mail', function(req,res) {
+
+  //SE ENCAPSULA EL MENSAJE PARA SER ENVIADO
+  var data = {
+  //REMITENTE
+    from: 'hola <universoverde.henry@gmail.com>',
+  //DESTINATARIO
+    to: req.params.mail,
+  //SUBJET ES EL ASUNTO Y TEXT EL CUERPO DEL MENSAJE
+    subject: 'Hello from Mailgun',
+    text: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
+  }
+
+  //ACA ES CUANDO SE ESTA POR ENVIAR
+  mailgun.messages().send(data, function (err, body) {
+
+    //EN EL CASO DE ALGUN ERROR
+      if (err) {
+          console.log("got an error: ", err);
+      }
+      //EN CASO DE NO TENER ERRORES SE ENVIA EL MENSAJE
+      else {
+          res.send(data);
+
+      }
+  });
+});
+
+//--------------------------------------------------------------------------------------------
 
 server.post('/login',
   passport.authenticate('local', {failureRedirect: '/login'}),

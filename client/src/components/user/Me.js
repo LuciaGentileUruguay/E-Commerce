@@ -44,6 +44,9 @@ export default class Me extends React.Component {
           <p className = "p"> Email:{this.state.email}</p>
           <p className = "p"> Telefono Celular:{this.state.telefono1}</p>
           <p className = "p"> Telefono Hogar/Trabajo:{this.state.telefono2}</p>
+          <Link to={`/me/orders`}>
+              <span> Mis órdenes </span>
+          </Link>
         </div>
       </div>
     )

@@ -19,6 +19,7 @@ export class Products extends Component {
               description={item.description}
               price={item.price}
               stock={item.stock}
+              image={item.image}
             />
           }})
         }

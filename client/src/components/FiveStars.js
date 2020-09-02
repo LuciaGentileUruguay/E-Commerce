@@ -26,13 +26,13 @@ export const StarRating = (props) =>{
             </label>
         )
     })}
-  {/* <p>Valoración:{rating}/5</p> */}   
+
     </div>
 }
 
 const mapStateToProps = state => {
     return {
-
+      
 
     }
   }

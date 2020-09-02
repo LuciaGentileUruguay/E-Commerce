@@ -1,8 +1,8 @@
 import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CATEGORY, SET_PRODUCT, SET_CATEGORY,
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES,
   GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,GET_USER_DETAIL,
-  SET_REDIRECT,SET_REDIRECT_OFF, SET_ADMIN,SET_USER_STATE, USER_LOGOUT, SET_RATING, 
-  GET_ORDERS, GET_PRODUCTS_FROM_ORDER,SET_PASSWORD,RESET_PASSWORD } from '../actions';
+  SET_REDIRECT,SET_REDIRECT_OFF, SET_ADMIN,SET_USER_STATE, USER_LOGOUT, SET_RATING,
+  GET_ORDERS, GET_PRODUCTS_FROM_ORDER, SET_PASSWORD,RESET_PASSWORD, GET_REVIEWS } from '../actions';
 
 
 //Definimos el estado inicial
@@ -21,7 +21,10 @@ const initialState = {
   userDetails:{},
   admin:false,
   redirect:null,
-  rating:0
+  rating: 0,
+  ordenes: [],
+  productsFromOrder: {},
+  review: []
 };
 
 //state.order.concat[action.payload]
@@ -76,6 +79,8 @@ function rootReducer(state = initialState, action) {
         products: action.payload
       };
   }
+
+
   if (action.type === GET_PRODUCTS_BY_NAME) { //traemos los productos por nombtr
     return {
       ...state,
@@ -176,14 +181,14 @@ function rootReducer(state = initialState, action) {
   if (action.type === GET_ORDERS){
     return{
       ...state,
-      order: action.payload
+      ordenes: action.payload
     }
   }
 
   if (action.type === GET_PRODUCTS_FROM_ORDER){
     return{
       ...state,
-      order: action.payload
+      productsFromOrder: action.payload
     }
   }
 
@@ -252,7 +257,16 @@ function rootReducer(state = initialState, action) {
       rating: action.payload
     }
   }
-  
+
+
+  if (action.type === GET_REVIEWS) { //traemos todas las reviews de un producto
+      return {
+        ...state,
+        review: action.payload.data
+      };
+  }
+
+
   if (action.type === SET_PASSWORD){
     return{...state,
       user:{...state.user,pwdReset:false}

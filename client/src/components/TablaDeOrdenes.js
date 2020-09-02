@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { connect } from "react-redux";
-import {getOrders} from '../actions/index';
+import {getOrders, getProductsFromOrder} from '../actions/index';
 import Order from './Order.js';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ export class TablaDeOrdenes extends Component {
 
   componentDidMount(){
     this.props.getOrders();
+    this.props.getProductsFromOrder();
   }
 
   calculoTotalOrden (products) {
@@ -24,37 +25,50 @@ export class TablaDeOrdenes extends Component {
   render() {
     return (
       <div className="divroot">
-        <h2 className = "text"> Órdenes </h2>
-        <ul>
-          {this.props.order && this.props.ordenes.map((el,i) => (
-            <div className = "container">
-              <h5 className = "text">Número de órden: {el.id}</h5>
-              <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>
-              <h5 className = "text">Estado: {el.estado}</h5>
-              <h5 className = "text">Última fecha de modificación: {el.updatedAt}</h5>
-              <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-              <Link to={`/orders/${el.id}/products`}>
-                  <span> Detalle </span>
-              </Link>
+        <h5 className="texto-tierra shadowsIntoLight"> Órdenes </h5>
+        <div className="catalogCarrito row">
 
+          {this.props.ordenes && this.props.ordenes.filter(el => this.props.user.isAdmin || this.props.user.id === el.userId).map((el,i) => (
+            <div class="card col-2">
+              <div class="card-body">
+                <h5 className="texto-tierra shadowsIntoLight">Número de órden: {el.id}</h5>
+                <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>
+                <h5 className = "text">Estado: {el.estado}</h5>
+                <h5 className = "text">Fecha: {el.updatedAt}</h5>
+                <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
+
+
+                {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
+                {this.props.isAdmin && <Link to={`/orders/${el.id}/products`}>
+                <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
+                </Link>}
+
+                {/*Si es el usuario logueado muestra todos los productos de su orden*/}
+                {!this.props.isAdmin  && <Link to={`/me/orders/products`}>
+                <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
+                </Link>}
+
+              </div>
             </div>
           ))}
-      </ul>
-
-    </div>
+        </div>
+      </div>
     )
   }
 }
 //Funciones que mapean al store
 function mapStateToProps(state) {
   return {
-    ordenes: state.ordenes
+    ordenes: state.ordenes,
+    productsFromOrder: state.productsFromOrder,
+    user: state.user
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getOrders: ordenes => dispatch(getOrders())
+    getOrders: ordenes => dispatch(getOrders()),
+    getProductsFromOrder: (id) => dispatch(getProductsFromOrder(id))
   }
 }
 

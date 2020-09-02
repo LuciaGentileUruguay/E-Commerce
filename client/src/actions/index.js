@@ -25,9 +25,10 @@ export const GET_ORDERS ='GET_ORDERS';
 export const GET_PRODUCTS_FROM_ORDER = 'GET_PRODUCTS_FROM_ORDER';
 export const SET_USER_STATE = 'SET_USER_STATE';
 export const USER_LOGOUT = 'USER_LOGOUT';
-export const SET_RATING = 'SET_RATING' 
+export const SET_RATING = 'SET_RATING'
 export const SET_PASSWORD = "SET_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
+export const GET_REVIEWS = "GET_REVIEWS";
 
 const instance = axios.create({
   withCredentials: true
@@ -51,7 +52,7 @@ export function addProductToCart(id, prodId, payload) { //id = userId, payload =
         dispatch({ type: ADD_PRODUCT_TO_CART, payload});
       });
     }
-    
+
   };
 }
 
@@ -101,7 +102,7 @@ export function getProductsCart(userId,payload){
       dispacth({type: GET_PRODUCTS_CART, payload})
     } else {
       return instance.get("http://localhost:3001/users/"+userId+"/cart")
-    .then(res=>{   
+    .then(res=>{
       console.log(res)
       dispacth({type: GET_PRODUCTS_CART, payload: res.data})
     })
@@ -109,7 +110,7 @@ export function getProductsCart(userId,payload){
       alert(err)
     })
     }
-    
+
   }
 }
 
@@ -227,7 +228,7 @@ export function setPassword(id,pwd) { //Cambia la password del usuario en caso d
         .then(answer => {
           return instance.put("http://localhost:3001/admin/"+data.id,data)  // ya no se le pide al usuario que cambio de contraseña
           .then(answer => {
-            dispatch({ type: SET_PASSWORD}); 
+            dispatch({ type: SET_PASSWORD});
           })
 
         });
@@ -249,6 +250,15 @@ export function setPasswordReset(id){
     return ({type: USER_LOGOUT})
   }
 
-  export function setRating(rating){
-    return{type: SET_RATING, payload:rating}
-  }  
+  export function setRating (rating){
+    return {type: SET_RATING, payload:rating}
+  }
+
+  export function getReview (id){
+    return function(dispatch) {
+      return axios.get("http://localhost:3001/products/"+ id +"/review") //Se le pida al usuario "id" que cambie su contraseña, (tambien si se vuelve a ejecutar, el pedido es negado)
+        .then(json => {
+          dispatch({ type: GET_REVIEWS, payload:json});
+        });
+    };
+  }
