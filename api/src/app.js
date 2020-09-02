@@ -14,6 +14,11 @@ const domain = "sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
 const mailgun = require ('mailgun-js')({apiKey: api_key, domain:domain});
 var path = require('path');
 const db = require('./db.js');
+//---------------------mailgun settings-------------------
+const api_key = "a38d0d82787adb3bba4c9bd65dee85c6-7cd1ac2b-e43f79f2"
+const domain = "https://api.mailgun.net/v3/sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
+var from_who = "universoverde.henry@gmail.com"
+//--------------------------------------------------------
 
 passport.use(new Strategy(
   function(username, password, done){
@@ -62,7 +67,6 @@ passport.use(new Strategy(
 const server = express();
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(fileUpload());
-//server.set('view engine', 'jade')
 server.use(require('express-session')({
   secret: 'secret',
   resave: false,
@@ -93,7 +97,7 @@ server.use((req, res, next) => {
 });
 
  server.use('/', routes);
- 
+
 //-----------------FILEUPLOAD-----------------------------------------------------
  server.post('/uploads', (req, res) => {
 
@@ -136,6 +140,7 @@ server.get('/submit/:mail', function(req,res) {
       //EN CASO DE NO TENER ERRORES SE ENVIA EL MENSAJE
       else {          
           res.send(data);
+
       }
   });
 });
