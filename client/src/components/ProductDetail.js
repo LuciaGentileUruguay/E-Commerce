@@ -25,7 +25,7 @@ class ProductDetail extends React.Component {
     if(this.props.user.isAdmin) {
       return(
         <Link to="/form_product">
-          <button type="button" class="btn btn-outline-secondary">Editar</button>
+          <button class="btn btn-outline-success botonDetalle1">Editar</button>
         </Link>
       )
     }
@@ -105,7 +105,7 @@ class ProductDetail extends React.Component {
 
               {/* BOTON PARA EL ADMIN EDITA EL PRODUCTO */}
               <div>
-                  {this.botonEditar()}
+                {this.botonEditar()}
               </div>
 
               {/* AGREGA EL PRODUCTO AL CARRITO */}
@@ -117,7 +117,7 @@ class ProductDetail extends React.Component {
               {/*PROMEDIO DE LAS REVIEWS */}
     {/*--------------------------------------------------------------------------*/}
               <div>
-                <p>
+                <p className = "card-text text texto-tierra">
                   Promedio de {this.state.review.length && this.calculoPromedio(this.state.review)} Estrellas
                 </p>
               </div>
@@ -129,8 +129,8 @@ class ProductDetail extends React.Component {
         <div className="catalog row" >
           <div className="card col-4">
             {this.props.user.id? <div>
-                <button onClick={(e)=>this.nuevoReview(e)}>Crear Nueva Review</button>
-              </div>:null}
+                <button class="btn btn-outline-success botonDetalle1" onClick={(e)=>this.nuevoReview(e)}> Ingresar opinión </button>
+          </div>:null}
 
             {!this.props.redirect ? null:<div>
             {[...Array(5)].map((star, i)=>{
@@ -172,7 +172,7 @@ class ProductDetail extends React.Component {
                 {this.state.review.map(item =>{
                 return( <p>{item.user.nombre + " " + item.user.apellido}</p>)
                 })}
-              </div>:<p>Aun no hay reseñas para este producto</p>}
+              </div>:<p>Aún no hay reseñas para este producto</p>}
 
                 {this.state.review.length>0 ? <div>
                 <label>Comentario</label>
