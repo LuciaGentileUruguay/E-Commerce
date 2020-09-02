@@ -7,7 +7,11 @@ const passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
-const Mailgun = require ('mailgun-js');
+//API KEY PARA MANDAR MAILS
+const api_key = "a38d0d82787adb3bba4c9bd65dee85c6-7cd1ac2b-e43f79f2";
+//EL DOMINIO A CUAL ESTAMOS SUSCRIPTOS
+const domain = "sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
+const mailgun = require ('mailgun-js')({apiKey: api_key, domain:domain});
 var path = require('path');
 const db = require('./db.js');
 //---------------------mailgun settings-------------------
@@ -63,7 +67,6 @@ passport.use(new Strategy(
 const server = express();
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(fileUpload());
-server.set('view engine', 'jade')
 server.use(require('express-session')({
   secret: 'secret',
   resave: false,
@@ -94,6 +97,7 @@ server.use((req, res, next) => {
 });
 
  server.use('/', routes);
+
 //-----------------FILEUPLOAD-----------------------------------------------------
  server.post('/uploads', (req, res) => {
 
@@ -114,30 +118,29 @@ server.use((req, res, next) => {
 })
 //--------------------MAILGUN---------------------------------------------------------------
 server.get('/submit/:mail', function(req,res) {
-  //We pass the api_key and domain to the wrapper, or it won't be able to identify + send emails
-  var mailgun = new Mailgun({apiKey: api_key, domain: domain});
+
+  //SE ENCAPSULA EL MENSAJE PARA SER ENVIADO
   var data = {
-  //Specify email data
-    from: from_who,
-  //The email to contact
+  //REMITENTE
+    from: 'hola <universoverde.henry@gmail.com>',
+  //DESTINATARIO
     to: req.params.mail,
-  //Subject and text data  
+  //SUBJET ES EL ASUNTO Y TEXT EL CUERPO DEL MENSAJE  
     subject: 'Hello from Mailgun',
-    html: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
+    text: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
   }
-  //Invokes the method to send emails given the above data with the helper library
+
+  //ACA ES CUANDO SE ESTA POR ENVIAR
   mailgun.messages().send(data, function (err, body) {
-      //If there is an error, render the error page
+
+    //EN EL CASO DE ALGUN ERROR
       if (err) {
-          res.render('error', { error : err});
           console.log("got an error: ", err);
       }
-      //Else we can greet    and leave
-      else {
-          //Here "submitted.jade" is the view file for this landing page 
-          //We pass the variable "email" from the url parameter in an object rendered by Jade
-          res.render('submitted', { email : req.params.mail });
-          console.log(body);
+      //EN CASO DE NO TENER ERRORES SE ENVIA EL MENSAJE
+      else {          
+          res.send(data);
+
       }
   });
 });
