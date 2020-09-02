@@ -51,14 +51,22 @@ function rootReducer(state = initialState, action) {
      
   }
 
-  if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
+  if (action.type === REMOVE_PRODUCT_FROM_CART) {
+    if (state.user.id==0) //quitamos un producto del carrito de compras
     return {
         ...state,
         order:{
         ...state.order,
-          products: state.order.products.filter(item => /*item.id !== action.payload ||*/ item.productId != action.payload)}
-        //dejamos en el array todos los que son distintos de la que quiero eliminar
-    };
+          products: state.order.products.filter(item => item.productId != action.payload)}
+          // Elimina el producto desde el carrito como guest
+    }; else { 
+      return {
+        ...state,
+        order:{
+        ...state.order,
+          products: state.order.products.filter(item => item.id !== action.payload)}
+        }; //dejamos en el array todos los que son distintos de la que quiero eliminar
+    }
   }
 
 
