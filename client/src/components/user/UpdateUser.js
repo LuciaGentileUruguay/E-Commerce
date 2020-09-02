@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import {addUser, saveNewUser} from "../../actions/index"
+import {saveNewUser, setRedirectOff} from "../../actions/index"
 import swal from 'sweetalert';
 
+//COMPONENTE PARA TERMINAR DE CREAR EL USUARIO
 export  class UpdateUser extends React.Component {
   constructor(props) {
+    //PROPIEDADES DEL USUARIO
     super(props);
     this.state={
       email:"",
@@ -22,9 +24,12 @@ export  class UpdateUser extends React.Component {
     };
   }
 
+  //MANEJO DEL ESTADO DE LOS INPUTS
   handleInputChange(e){
     this.setState({[e.target.name]:e.target.value})
 }
+
+//FUNCION QUE GUARDA LOS DATOS DEL USUARIO
 saveData(e){
   e.preventDefault()
   let data = {
@@ -40,17 +45,22 @@ saveData(e){
     telefono1:this.state.telefono1,
     telefono2:this.state.telefono2
   }
-  console.log(data)
+
+  //GUARDA LOS DATOS EN LA BASE DE DATOS
   axios.post(`http://localhost:3001/users`, data)
   .then(res => {
+    //CREADO!!
     if(res.status === 201){
       swal ({
         title: "Usuario creado!",
         icon: "success"})
-
+        return;
     }  
   })
+  //MANEJO DE ERRORES
   .catch(err => {return "error"})
+  this.props.setRedirectOff();
+
 }
 
   render () {
@@ -84,7 +94,7 @@ saveData(e){
 
 const mapDispatchToProps = dispatch => {
   return {
-    saveNewUser: (data) => dispatch(saveNewUser(data)),
+    setRedirectOff:() => dispatch(setRedirectOff())
   }
 }
 
