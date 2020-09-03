@@ -118,11 +118,11 @@ class ProductDetail extends React.Component {
               </Link>
               {/*PROMEDIO DE LAS REVIEWS */}
     {/*--------------------------------------------------------------------------*/}
-              <div>
+              {/* <div>
                 <p className = "card-text text texto-tierra">
                   Promedio de {this.props.review.length && this.calculoPromedio(this.props.review)} Estrellas
                 </p>
-              </div>
+              </div> */}
     {/*--------------------------------------------------------------------------*/}
             </div>
         </div>

@@ -1,12 +1,19 @@
 const server = require('express').Router();
 const { Product, Order, Order_line, User } = require('../db.js');
 const { Sequelize } = require('sequelize');
+const bodyParser = require('body-parser');
 
 //Devuelve todas las órdenes para todos los usuarios, sin incluir los carritos
-server.get('/',(req,res,next)=>{
+server.get('/:condition',(req,res,next)=>{
+    console.log(req.params.condition)
+    let estado = []
+    if (req.params.condition == "todas"){
+        estado = ['procesando', 'cancelada', 'completada']
+    }else{estado=[req.params.condition]}
+    console.log(estado)
     Order.findAll({
       where: {
-        estado: ['procesando', 'cancelada', 'completada']
+        estado: estado
       },
       include:[{model: Product}, {model: User}]
     })

@@ -7,9 +7,18 @@ import { Link } from 'react-router-dom';
 
 export class TablaDeOrdenes extends Component {
 
+
   componentDidMount(){
-    this.props.getOrders();
+    let condition = "todas"
+    this.props.getOrders(condition);
     this.props.getProductsFromOrder();
+  }
+
+  filterByCondition(e){
+    console.log(e.target.value)
+    let condition = e.target.value
+    console.log(condition) 
+    this.props.getOrders(condition)
   }
 
   calculoTotalOrden (products) {
@@ -24,9 +33,26 @@ export class TablaDeOrdenes extends Component {
 
   render() {
     return (
+
       <div className="divroot">
         <h5 className="texto-tierra shadowsIntoLight"> Órdenes </h5>
+        <div>
+        <p>Filtrar Ordenes por Estado:</p>
+        <button value="procesando" onClick={(e)=>this.filterByCondition(e)}>Procesando</button>
+        <button value="cancelada" onClick={(e)=>this.filterByCondition(e)}>Cancelada</button>
+        <button value="completada" onClick={(e)=>this.filterByCondition(e)} >Completada</button>
+        <button value="todas" onClick={(e)=>this.filterByCondition(e)}>Todas</button>
+      </div>
+      <div>
+        <p>Filtrar por número de Orden:</p>
+        <div>
+        <p>Orden Nº:</p>
+        <input type="number" />
+        <button>Buscar</button>
+        </div>
+      </div>
         <div className="catalogCarrito row">
+        {this.props.ordenes.length==0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
           {this.props.ordenes && this.props.ordenes.map((el,i) => (
             <div class="card col-2">
               <div class="card-body">
@@ -56,7 +82,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getOrders: ordenes => dispatch(getOrders()),
+    getOrders: condition => dispatch(getOrders(condition)),
     getProductsFromOrder: (id) => dispatch(getProductsFromOrder(id))
   }
 }
