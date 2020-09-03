@@ -17,7 +17,7 @@ export class Categories extends Component {
           {this.props.categories && this.props.categories.map(item => <CategoryCard
             id ={item.id}
            name={item.name}
-           />)}
+           />)} 
       </div>
     );
   }

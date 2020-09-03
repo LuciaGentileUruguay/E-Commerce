@@ -4,11 +4,9 @@ import './landing.css'
 export default function Landing () {
  return (
    <div>
-        
-  {/*     <img className="fotoLanding" src='http://www.hdfondos.eu/pictures/2016/0615/1/love-tree-love-romance-white-flowers-grass-sky-hearts-trees-green-fields-pics-766530.jpg' />*/}
      
 <div> 
-  
+
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -19,8 +17,6 @@ export default function Landing () {
     <div class="carousel-item active">
       <img src="https://estaticos.qdq.com/swdata/home_photos/399/399647927/51e2525523da4c24af93ebe32e312cc5.jpg"/>
       <div class="carousel-caption d-none d-md-block">
-        <h5></h5>
-        <p></p>
       </div>
     </div>
     <div class="carousel-item">

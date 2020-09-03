@@ -77,7 +77,7 @@ export class TablaDeOrdenes extends Component {
 
               </div>
             </div>
-          ))}
+          )}
         </div>
       </div>
     )

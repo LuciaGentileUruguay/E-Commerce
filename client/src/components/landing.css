@@ -3,25 +3,10 @@ html {
   line-height: 1.4;
 }
 
-body{
-  background-color: #C1D9D4;
-	height: 100%;
-}
-
 html, body {
+  background-color: #BCD952;
 	height: 100%;
-	width: 100%;
-}
-
-h1{
-  position:absolute;
-}
-
-.fotoLanding {
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
+  width: 100%;
 }
 
 .amaticSC {
@@ -32,10 +17,6 @@ h1{
 	font-weight: bold;
 }
 
-.titleLanding {
-  font-size: 5em;
-  margin-top: 60px;
-}
 .texto-tierra{
   color:#63321F;
 }
@@ -54,4 +35,9 @@ h1{
   width: auto;
   height: auto;
   text-align: center;
+}
+
+.carousel-inner { 
+ overflow: hidden;
+ visibility: visible;
 }
