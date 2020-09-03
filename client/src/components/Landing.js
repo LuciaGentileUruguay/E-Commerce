@@ -1,14 +1,13 @@
 import React from 'react';
-import './landing.css'
+import style from './landing.css';
+import './global.css';
 
 export default function Landing () {
  return (
    <div>
-        
-  {/*     <img className="fotoLanding" src='http://www.hdfondos.eu/pictures/2016/0615/1/love-tree-love-romance-white-flowers-grass-sky-hearts-trees-green-fields-pics-766530.jpg' />*/}
-     
-<div> 
-  
+
+<div>
+
 <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
@@ -54,7 +53,7 @@ export default function Landing () {
       <li><a class="btn-floating btn-li mx-1"><i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"></i></a></li>
       <li><a class="btn-floating btn-li mx-1"><i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"></i></a></li>
     </ul>
-  </div> 
+  </div>
 
   <div class="footer-copyright text-center py-3">
     <a href="https://mdbootstrap.com/"> Universo Verde</a>

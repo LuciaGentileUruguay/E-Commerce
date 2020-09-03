@@ -9,20 +9,15 @@
 }
 
 #navigation {
-  background-color: #e9f2ea;
+  background-color: #BCD952;
   width: 100%;
   padding: 3px 7px;
   text-decoration: none;
   color: #63321F;
   font-family: 'Amatic SC', cursive;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
-
-/*#navigation :hover {
-  background-color: #C1D9D4; /*esto hace que cuando seleccionemos alguna opción del menú, la misma cambie el color a verde}*/
-
-
 
 #navigation a {
   color: #63321F;
@@ -39,6 +34,11 @@
 
 .shadowsIntoLight {
 	font-family: 'Shadows Into Light', cursive;
+}
+
+.textSize {
+  font-size: 1.2em;
+  color: #63321F;
 }
 
 .fixed{
