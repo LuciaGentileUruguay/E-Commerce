@@ -52,8 +52,10 @@ export class TablaDeOrdenes extends Component {
         </div>
       </div>
         <div className="catalogCarrito row">
+
         {this.props.ordenes.length==0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
-          {this.props.ordenes && this.props.ordenes.map((el,i) => (
+         
+          {this.props.ordenes && this.props.ordenes.filter(el => this.props.user.isAdmin || this.props.user.id === el.userId).map((el,i) => 
             <div class="card col-2">
               <div class="card-body">
                 <h5 className="texto-tierra shadowsIntoLight">Número de órden: {el.id}</h5>
@@ -61,9 +63,18 @@ export class TablaDeOrdenes extends Component {
                 <h5 className = "text">Estado: {el.estado}</h5>
                 <h5 className = "text">Fecha: {el.updatedAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-                <Link to={`/orders/${el.id}/products`}>
+
+
+                {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
+                {this.props.isAdmin && <Link to={`/orders/${el.id}/products`}>
                 <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
-                </Link>
+                </Link>}
+
+                {/*Si es el usuario logueado muestra todos los productos de su orden*/}
+                {!this.props.isAdmin  && <Link to={`/me/orders/products`}>
+                <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
+                </Link>}
+
               </div>
             </div>
           ))}
@@ -76,7 +87,8 @@ export class TablaDeOrdenes extends Component {
 function mapStateToProps(state) {
   return {
     ordenes: state.ordenes,
-    productsFromOrder: state.productsFromOrder
+    productsFromOrder: state.productsFromOrder,
+    user: state.user
   }
 }
 

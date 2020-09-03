@@ -33,10 +33,17 @@ function rootReducer(state = initialState, action) {
 
   if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
     console.log(action.payload);
-    if (state.user.id===0){
+    if (state.user.id==0) { 
+       let cosco = state.order.products.map((item, index) => {
+        state.order.products.filter((item2, index2) => {
+          return (item.id === item2.id) 
+
+         }
+        )})
+      
       return {
         ...state, //traigo todo el estado, tal cual
-        order: {...state.order, products: state.order.products.concat([action.payload])}
+        order: {...state.order, products: state.order.products.concat([action.payload])} 
       }
     } else {
       return{
@@ -44,17 +51,25 @@ function rootReducer(state = initialState, action) {
         order: action.payload
       }
     }
-
+     
   }
 
-  if (action.type === REMOVE_PRODUCT_FROM_CART) { //quitamos un producto del carrito de compras
+  if (action.type === REMOVE_PRODUCT_FROM_CART) {
+    if (state.user.id==0) //quitamos un producto del carrito de compras
     return {
         ...state,
         order:{
-          ...state.order,
-          products: state.order.products.filter(item => item.id !== action.payload )}
-        //dejamos en el array todos los que son distintos de la que quiero eliminar
-    };
+        ...state.order,
+          products: state.order.products.filter(item => item.productId != action.payload)}
+          // Elimina el producto desde el carrito como guest
+    }; else { 
+      return {
+        ...state,
+        order:{
+        ...state.order,
+          products: state.order.products.filter(item => item.id !== action.payload)}
+        }; //dejamos en el array todos los que son distintos de la que quiero eliminar
+    }
   }
 
 
@@ -243,6 +258,7 @@ function rootReducer(state = initialState, action) {
     }
   }
 
+
   if (action.type === GET_REVIEWS) { //traemos todas las reviews de un producto
       return {
         ...state,
@@ -260,7 +276,7 @@ function rootReducer(state = initialState, action) {
   if (action.type === RESET_PASSWORD){
     return{...state}
   }
-
+  
   return state;
 }
 

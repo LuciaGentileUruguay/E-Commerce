@@ -60,10 +60,10 @@ export class Nav extends Component {
           {!this.props.user.id && <Link to = "/login"><button class="btn btn-light shadowsIntoLight">Login</button></Link> }
 
           {/* SI ESTA LOGUEADO MUESTRA LOGOUT */}
-          {this.props.user.id && <button class="btn btn-light shadowsIntoLight" onClick={(e)=>this.logout(e)}>Logout</button>}
+          {this.props.user.id && this.props.user.id?<button class="btn btn-light shadowsIntoLight" onClick={(e)=>this.logout(e)}>Logout</button>: null}
 
           {/* SI ESTA LOGUEADO MUESTRA "PERFIL" */}
-          {this.props.user.id && <Link to = "/me"><button class="btn btn-light shadowsIntoLight">Perfil</button></Link> }
+          {this.props.user.id && this.props.user.id?<Link to = "/me"><button class="btn btn-light shadowsIntoLight">Perfil</button></Link>: null}
 
           {/* LINK PARA IR AL CARRITO DE COMPRAS DE UN USUARIO LOGUEADO */}
           <Link to = {"/cart/" + this.props.user.id} onClick={()=>this.props.onSearch("")}>

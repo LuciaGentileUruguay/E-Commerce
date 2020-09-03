@@ -102,6 +102,12 @@ render(){
       <Route exact path='/me'>
         {this.props.user.id ? <Me/> : <Redirect to="/"/>}
       </Route>
+      <Route exact path='/me/orders'>
+        {this.props.user.id ? <TablaDeOrdenes/> : <Redirect to="/"/>}
+      </Route>
+      <Route exact path='/me/orders/products'>
+        {this.props.user.id ? <ProductsFromOrder/> : <Redirect to="/"/>}
+      </Route>
 
 
       {/*---------------------------------------------------------------*/}
