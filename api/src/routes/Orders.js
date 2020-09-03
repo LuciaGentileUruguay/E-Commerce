@@ -2,15 +2,16 @@ const server = require('express').Router();
 const { Product, Order, Order_line, User } = require('../db.js');
 const { Sequelize } = require('sequelize');
 const bodyParser = require('body-parser');
+const {isAuthenticated, isAdmin} =require('./helpers')
 
 //Devuelve todas las órdenes para todos los usuarios, sin incluir los carritos
 server.get('/:condition',(req,res,next)=>{
-    console.log(req.params.condition)
+    //console.log(req.params.condition)
     let estado = []
     if (req.params.condition == "todas"){
         estado = ['procesando', 'cancelada', 'completada']
     }else{estado=[req.params.condition]}
-    console.log(estado)
+    //console.log(estado)
     Order.findAll({
       where: {
         estado: estado
@@ -40,19 +41,19 @@ server.get('/:id/products',(req,res,next)=>{
 
 
 //ruta para modificar estado de la compra
-server.put('/:id',(req,res,next)=>{
-    Order.findOne({
-        where:{
-            userId: req.params.id
-        }
-    })
-    .then(order=>{
-        order.estado = req.body.estado;
-        order.save();
-        res.status(201).send(order)
-        return;
-    })
-});
+// server.put('/:id',(req,res,next)=>{
+//     Order.findOne({
+//         where:{
+//             userId: req.params.id
+//         }
+//     })
+//     .then(order=>{
+//         order.estado = req.body.estado;
+//         order.save();
+//         res.status(201).send(order)
+//         return;
+//     })
+// });
 
 //Devuelve todas las órdenes de un usuario, incluyendo el carrito
 server.get('/:id',(req,res,next)=>{
@@ -69,6 +70,24 @@ server.get('/:id',(req,res,next)=>{
             res.status(200).send(order);
             return;
         }
+    })
+})
+
+server.put('/:id/:estado',(req,res,next)=>{
+    Order.findOne({
+        where:{
+            id: req.params.id,
+        }
+    })
+    .then(order=>{
+        order.estado=req.params.estado;
+        order.save();
+        res.status(201).send(order.data);
+        return;
+    })
+    .catch(err=>{
+        res.send(err);
+        return;
     })
 })
 

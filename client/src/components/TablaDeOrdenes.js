@@ -1,9 +1,8 @@
 import React, { Component} from 'react';
 import { connect } from "react-redux";
-import {getOrders, getProductsFromOrder} from '../actions/index';
+import {getOrders, getProductsFromOrder, completeOrder} from '../actions/index';
 import Order from './Order.js';
 import { Link } from 'react-router-dom';
-
 
 export class TablaDeOrdenes extends Component {
 
@@ -15,10 +14,17 @@ export class TablaDeOrdenes extends Component {
   }
 
   filterByCondition(e){
-    console.log(e.target.value)
     let condition = e.target.value
-    console.log(condition) 
     this.props.getOrders(condition)
+  }
+
+  changeStatus(id,estado){
+    this.props.completeOrder(id,estado);
+    alert("ordern modificada")
+    window.location.reload(false); 
+
+
+    return;
   }
 
   calculoTotalOrden (products) {
@@ -53,7 +59,7 @@ export class TablaDeOrdenes extends Component {
       </div>
         <div className="catalogCarrito row">
 
-        {this.props.ordenes.length==0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
+        {this.props.ordenes.length===0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
          
           {this.props.ordenes && this.props.ordenes.filter(el => this.props.user.isAdmin || this.props.user.id === el.userId).map((el,i) => 
             <div class="card col-2">
@@ -63,7 +69,9 @@ export class TablaDeOrdenes extends Component {
                 <h5 className = "text">Estado: {el.estado}</h5>
                 <h5 className = "text">Fecha: {el.updatedAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-
+                {el.estado === "procesando" || el.estado ==="completada" ? <button onClick={()=>this.changeStatus(el.id,"cancelada")}>Cancelar</button>:null}
+                {el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"completada")}>Completar</button>:null}
+                {el.estado === "completada" ? <button onClick={()=>this.changeStatus(el.id,"procesando")}>Procesar</button>:null}
 
                 {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
                 {this.props.isAdmin && <Link to={`/orders/${el.id}/products`}>
@@ -77,7 +85,7 @@ export class TablaDeOrdenes extends Component {
 
               </div>
             </div>
-          ))}
+          )}
         </div>
       </div>
     )
@@ -94,6 +102,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    completeOrder: (id,estado) => dispatch(completeOrder(id,estado)),
     getOrders: condition => dispatch(getOrders(condition)),
     getProductsFromOrder: (id) => dispatch(getProductsFromOrder(id))
   }

@@ -181,8 +181,8 @@ server.post('/:id/cart',(req,res,next) =>{
    res.send();
 })
 
-server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve el carrito de un usuario
-  console.log(req.params.id)
+server.get('/:id/cart',(req,res,next) =>{ //devuelve el carrito de un usuario
+  //console.log(req.params.id)
   if (req.params.id){
     Order.findOne({
       where:{
@@ -193,11 +193,10 @@ server.get('/:id/cart',isAuthenticated,(req,res,next) =>{ //devuelve el carrito 
       }
     })
     .then(respuesta => {
-      if (!respuesta){
-          res.status(404).send("Error. No hay carrito o no existe usuario")
-      } else {
-          res.status(200).send(respuesta);
-      }
+      res.status(200).send(respuesta);  
+    })
+    .catch(err=>{
+      res.status(404).send(err)
     })
   }
   })
