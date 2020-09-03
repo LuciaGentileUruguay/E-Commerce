@@ -69,17 +69,17 @@ export class TablaDeOrdenes extends Component {
                 <h5 className = "text">Estado: {el.estado}</h5>
                 <h5 className = "text">Fecha: {el.updatedAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-                {el.estado === "procesando" || el.estado ==="completada" ? <button onClick={()=>this.changeStatus(el.id,"cancelada")}>Cancelar</button>:null}
-                {el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"completada")}>Completar</button>:null}
-                {el.estado === "completada" ? <button onClick={()=>this.changeStatus(el.id,"procesando")}>Procesar</button>:null}
+                {this.props.user.isAdmin && el.estado === "procesando" || el.estado ==="completada" ? <button onClick={()=>this.changeStatus(el.id,"cancelada")}>Cancelar</button>:null}
+                {this.props.user.isAdmin && el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"completada")}>Completar</button>:null}
+                {this.props.user.isAdmin && el.estado === "completada" ? <button onClick={()=>this.changeStatus(el.id,"procesando")}>Procesar</button>:null}
 
                 {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
-                {this.props.isAdmin && <Link to={`/orders/${el.id}/products`}>
+                {this.props.user.isAdmin && <Link to={`/orders/${el.id}/products`}>
                 <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
                 </Link>}
 
                 {/*Si es el usuario logueado muestra todos los productos de su orden*/}
-                {!this.props.isAdmin  && <Link to={`/me/orders/products`}>
+                {!this.props.user.isAdmin  && <Link to={`/me/orders/products`}>
                 <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
                 </Link>}
 
