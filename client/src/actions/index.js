@@ -201,9 +201,9 @@ export const decrement = (id, prodId) => (
       });
 });
 
-export function getOrders() { //lista todas las órdenes que no son carrito, de todos los usuarios
+export function getOrders(condition) { //lista todas las órdenes que no son carrito, de todos los usuarios
   return function(dispatch) {
-    return instance.get("http://localhost:3001/orders")
+    return instance.get("http://localhost:3001/orders/"+condition)
       .then(json => {
         dispatch({ type: GET_ORDERS, payload: json.data }); //el payload seran todos las órdenes
       });
