@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { increment,decrement,removeProductFromCart, getProductsCart} from "../actions/index";
+import { increment,decrement,removeProductFromCart, getProductsCart, completeOrder} from "../actions/index";
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import axios from 'axios';
@@ -172,6 +172,7 @@ export class Order extends Component {
           ))
         }
       </div>
+      {this.props.order.id ? <button onClick={()=>this.props.completeOrder(this.props.order.id,"procesando")}>Finalizar compra</button>:null}
     </div>
     );
   }
@@ -189,11 +190,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
    return {
-            getProductsCart: id => dispatch(getProductsCart(id)),
-            removeProductFromCart: (id, prodId) => dispatch(removeProductFromCart(id, prodId)),
-            decrement: (id, prodId) => dispatch(decrement(id, prodId)),
-            increment: (id, prodId) => dispatch(increment(id, prodId))
-          }
+    getProductsCart: id => dispatch(getProductsCart(id)),
+    removeProductFromCart: (id, prodId) => dispatch(removeProductFromCart(id, prodId)),
+    decrement: (id, prodId) => dispatch(decrement(id, prodId)),
+    increment: (id, prodId) => dispatch(increment(id, prodId)),
+    completeOrder:(id,estado)=>dispatch(completeOrder(id,estado))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Order);

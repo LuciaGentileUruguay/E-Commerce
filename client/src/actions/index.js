@@ -29,6 +29,7 @@ export const SET_RATING = 'SET_RATING'
 export const SET_PASSWORD = "SET_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
 export const GET_REVIEWS = "GET_REVIEWS";
+export const COMPLETE_ORDER = "COMPLETE_ORDER";
 
 const instance = axios.create({
   withCredentials: true
@@ -261,4 +262,17 @@ export function setPasswordReset(id){
           dispatch({ type: GET_REVIEWS, payload:json});
         });
     };
+  }
+
+  export function completeOrder(id,estado){
+    return function (dispatch){
+      return instance.put('http://localhost:3001/orders/'+id+"/"+estado)
+      .then(resp =>{
+        // alert("ordern modificada")
+        dispatch({type: COMPLETE_ORDER, payload:resp.data}) 
+      })
+      .catch(err=>{
+        alert(err);
+      })
+    }
   }
