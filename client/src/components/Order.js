@@ -105,6 +105,10 @@ export class Order extends Component {
 
           {/* CANTIDAD DEL PRODUCTO */}
           <h5 class="card-text text texto-tierra"> Cantidad {el.cantidad}</h5>
+          
+           {/* BOTONES DECREMENTAR E INCREMENTAR */}
+          <button class="btn btn-light" onClick={() => this.props.decrement(this.props.order.products[0])}>-</button>
+          <button class="btn btn-light" onClick={() => this.props.increment(this.props.order.products[0])}>+</button>
 
            {/* BORRA EL PRODUCTO SELECCIONADO */}
           <button class="btn btn-light" onClick={() => this.mostrarAlerta(i)}> <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

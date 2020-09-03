@@ -26,7 +26,7 @@
 
 .form3{
     max-width: 85%;
-    border: solid 4px #c1946a;
+    border: solid 4px rgb(193, 148, 106);
     border-radius: 8px;
     margin-top: 40px;
     margin-left: 15px;
@@ -34,5 +34,9 @@
 }
 
 body{
-    background-color: #E9F2EA;
+    background-image:  url(https://foodandtravel.mx/wp-content/uploads/2020/05/Frutas-y-verduras-de-temporada-Por.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
