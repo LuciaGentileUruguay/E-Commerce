@@ -29,8 +29,9 @@ export class Login extends React.Component {
     if (this.state.password.length>0 && /\S+@\S+\.\S+/.test(this.state.username)){
       //LE PEGA AL BACK TRAE EL USER QUE INICIO SESION Y LA COOKIEE
       axios.post('http://localhost:3001/login',this.state,{withCredentials:true})
-      .then(res => {  swal("Bienvenido/a " + res.data.user.nombre + "!");
-
+      .then(res => {  swal("Bienvenido/a " + res.data.user.nombre + "!")
+        console.log(res);
+       
         //EN RES ESTA TODA LA INFO DEL USER LOGUEADO Y LA COOKIEE!!
         //Se agrego el pwdResete(passwordReset) a los datos guardados de un usuario
         let UserData={
@@ -46,6 +47,11 @@ export class Login extends React.Component {
       //LA SESION QUEDA INICIADA HASTA QUE SE REFRESQUE LA PAGINA--->LA COOKIEE PERSISTE EN EL BROWSER!!  
       this.props.setUserState(UserData)
 
+      })
+
+      //MANEJO DE ERRORES
+      .catch(err=>{
+        alert("Datos incorrectos!")
       })
       return;
       //EN CASO DE ERRAR AL PASSWORD O UN USARIO INVALIDO VALIDA EN FRONT PERO SOLO QUE LOS CAMPOS SEAN CORRECTOS
