@@ -35,16 +35,16 @@ export default class Me extends React.Component {
       <div className="divroot">
         <h2 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h2>
         <ul className="list-group lista">
-          <li class="list-group-item item">Nombre: {this.state.nombre}</li>
-          <li class="list-group-item item">Apellido: {this.state.apellido}</li>
-          <li class="list-group-item item">Calle: {this.state.calle}</li>
-          <li class="list-group-item item">Número: {this.state.numero}</li>
-          <li class="list-group-item item">Departamento: {this.state.departament}</li>
-          <li class="list-group-item item">Localidad: {this.state.localidad}</li>
-          <li class="list-group-item item">Provincia: {this.state.provincia}</li>
-          <li class="list-group-item item">Email: {this.state.email}</li>
-          <li class="list-group-item item">Teléfono Celular: {this.state.telefono1}</li>
-          <li class="list-group-item item">Teléfono Hogar/Trabajo: {this.state.telefono2}</li>
+          <li className="list-group-item item">Nombre: {this.state.nombre}</li>
+          <li className="list-group-item item">Apellido: {this.state.apellido}</li>
+          <li className="list-group-item item">Calle: {this.state.calle}</li>
+          <li className="list-group-item item">Número: {this.state.numero}</li>
+          <li className="list-group-item item">Departamento: {this.state.departament}</li>
+          <li className="list-group-item item">Localidad: {this.state.localidad}</li>
+          <li className="list-group-item item">Provincia: {this.state.provincia}</li>
+          <li className="list-group-item item">Email: {this.state.email}</li>
+          <li className="list-group-item item">Teléfono Celular: {this.state.telefono1}</li>
+          <li className="list-group-item item">Teléfono Hogar/Trabajo: {this.state.telefono2}</li>
         </ul>
           <Link to={`/me/orders`}>
               <span> Mis órdenes </span>

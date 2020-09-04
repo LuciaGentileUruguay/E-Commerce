@@ -1,22 +1,28 @@
 .navBar {
   display: flex;
   align-items: center;
-  justify-content: space-around;
 }
 
-#margen {
-  margin-left: 5px;
+.icono{
+  width: 30px;
+  height: 30px;
 }
+
+.nombreEmpresa{
+  font-size: 20px;
+  margin-left: 0;
+}
+
 
 #navigation {
-  background-color: #BCD952;
+  background-color: rgb(203, 243, 162);
   width: 100%;
   padding: 3px 7px;
   text-decoration: none;
   color: #63321F;
   font-family: 'Amatic SC', cursive;
   font-weight: bold;
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 #navigation a {
@@ -37,7 +43,10 @@
 }
 
 .textSize {
-  font-size: 1.2em;
+  font-size: 1.1em;
+}
+
+.color{
   color: #63321F;
 }
 

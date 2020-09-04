@@ -1,0 +1,36 @@
+.amaticSC {
+	font-family: 'Amatic SC', cursive;
+}
+
+.bold{
+	font-weight: bold;
+}
+
+.texto-tierra{
+  color:#63321F;
+}
+
+.carrusel{
+
+}
+
+.redesContainer {
+  display: flex;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  color:#63321F;
+  font-size: small;
+}
+
+.redesContainer ul li {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  text-align: center;
+}
+
+body{
+  background-color: #BCD952;
+	height: 100%;
+}

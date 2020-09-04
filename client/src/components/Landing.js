@@ -1,14 +1,12 @@
 import React from 'react';
-import style from './landing.css';
+import style from './landing.module.css';
 import './global.css';
 
 export default function Landing () {
  return (
    <div>
-
-<div>
-
-<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+    <div className={style.carrusel}>
+      <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
@@ -41,11 +39,11 @@ export default function Landing () {
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
-</div>
-</div>
+    </div>
+  </div>
 
 <footer class="page-footer font-small special-color-dark pt-4">
-  <div class="redes-container">
+  <div class={style.redesContainer}>
     <ul>
       <li><a class="btn-floating btn-fb mx-1"><i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"></i></a></li>
       <li><a class="btn-floating btn-tw mx-1"><i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"></i></a></li>

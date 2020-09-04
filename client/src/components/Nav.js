@@ -27,7 +27,7 @@ export class Nav extends Component {
     .then(res=>{
       alert("Sesion cerrada");
     })
-    
+
     //MANEJO DE ERRORES...
     .catch(err=>{
       alert(err);
@@ -37,8 +37,14 @@ export class Nav extends Component {
 
   render(){
     return (
-        <nav id="navigation" className = 'fixed top right navigation shadowsIntoLight navBar'>
-          <div id="margen">
+      
+      <nav id="navigation" className = 'fixed top right navigation shadowsIntoLight navBar'>
+        <div>
+          <span id="navigation nombreEmpresa">
+            Universo Verde
+            <img className= "icono" src="http://localhost:3001/food.ico" />
+          </span>
+
             <Link to='/' onClick={()=>this.props.onSearch("")}>
               <span id="navigation">
                 Inicio
@@ -66,13 +72,13 @@ export class Nav extends Component {
           </Link>: null}
 
           {/* SI NO HAY USER LOGUEADO MUESTRA LOGIN */}
-          {!this.props.user.id && <Link to = "/login"><button class="btn btn-light shadowsIntoLight textSize">Login</button></Link> }
+          {!this.props.user.id && <Link to = "/login"><button class="btn shadowsIntoLight textSize color">Login</button></Link> }
 
           {/* SI ESTA LOGUEADO MUESTRA LOGOUT */}
-          {this.props.user.id && this.props.user.id?<button class="btn btn-light shadowsIntoLight textSize" onClick={(e)=>this.logout(e)}>Logout</button>: null}
+          {this.props.user.id && this.props.user.id?<button class="btn shadowsIntoLight textSize color" onClick={(e)=>this.logout(e)}>Logout</button>: null}
 
           {/* SI ESTA LOGUEADO MUESTRA "PERFIL" */}
-          {this.props.user.id && this.props.user.id?<Link to = "/me"><button class="btn btn-light shadowsIntoLight textSize">Perfil</button></Link>: null}
+          {this.props.user.id && this.props.user.id?<Link to = "/me"><button class="btn shadowsIntoLight textSize color">Perfil</button></Link>: null}
 
           {/* LINK PARA IR AL CARRITO DE COMPRAS DE UN USUARIO LOGUEADO */}
           <Link to = {"/cart/" + this.props.user.id} onClick={()=>this.props.onSearch("")}>
@@ -87,6 +93,7 @@ export class Nav extends Component {
           <Route exact path='/products' render={() => <SearchBar onSearch={this.props.onSearch}/>}/>
 
         </nav>
+
       )}
   }
 
