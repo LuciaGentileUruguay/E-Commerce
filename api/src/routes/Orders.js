@@ -2,7 +2,8 @@ const server = require('express').Router();
 const { Product, Order, Order_line, User } = require('../db.js');
 const { Sequelize } = require('sequelize');
 const bodyParser = require('body-parser');
-const {isAuthenticated, isAdmin} =require('./helpers')
+const {isAuthenticated, isAdmin} =require('./helpers');
+const e = require('express');
 
 //Devuelve todas las órdenes para todos los usuarios, sin incluir los carritos
 server.get('/:condition',(req,res,next)=>{
@@ -40,21 +41,6 @@ server.get('/:id/products',(req,res,next)=>{
 });
 
 
-//ruta para modificar estado de la compra
-// server.put('/:id',(req,res,next)=>{
-//     Order.findOne({
-//         where:{
-//             userId: req.params.id
-//         }
-//     })
-//     .then(order=>{
-//         order.estado = req.body.estado;
-//         order.save();
-//         res.status(201).send(order)
-//         return;
-//     })
-// });
-
 //Devuelve todas las órdenes de un usuario, incluyendo el carrito
 server.get('/:id',(req,res,next)=>{
     Order.findOne({
@@ -73,18 +59,62 @@ server.get('/:id',(req,res,next)=>{
     })
 })
 
-server.put('/:id/:estado',(req,res,next)=>{
+//RUTA PARA QUE EL ADMIN MODIFIQUE LOS ESTADOS DE LAS ORDENES!!
+server.put('/:id/:estado',isAuthenticated,isAdmin,(req,res,next)=>{
     Order.findOne({
         where:{
             id: req.params.id,
         }
     })
+
+    //BUSCA LA ORDEN!
     .then(order=>{
+
+        //SETEA EL ESTADO PASADO POR PARAMS!
         order.estado=req.params.estado;
         order.save();
         res.status(201).send(order.data);
         return;
     })
+
+    //MANEJO DE ERRORES
+    .catch(err=>{
+        res.send(err);
+        return;
+    })
+})
+
+server.put('/:id',isAuthenticated,(req,res,next)=>{
+    Order.findOne({
+        where:{
+            id: req.params.id,
+        }, include:[{model: Product}]
+    })
+    .then(order=>{
+        order.products.map(el=>{
+            
+            //SE CONSULTAN LOS VALORES DE STOCK
+            if (el.order_line.cantidad>el.stock){
+                
+                //RETORNA UN ERROR EN CASO DE QUE LA CANTIDAD DE COMPRA SUPERE AL STOCK
+                res.status(400).send(el);
+            } else {
+
+                //SE BUSCA EL PRODUCTO PARA MODIFICAR EL STOCK
+                Product.findByPk(el.id)
+                .then(product=>{
+                    //SE MODIFICA EL STOCK
+                    product.stock = product.stock - el.order_line.cantidad;
+                    product.save();
+                })
+            }
+        })   
+         order.estado = "procesando";
+         order.save();
+         //SE ENVIA LA ORDER COMPLETADA
+         res.status(201).send(order)
+    })
+    //MANEJO DE ERRORES.. FIJARSE EN EL FRONT!
     .catch(err=>{
         res.send(err);
         return;

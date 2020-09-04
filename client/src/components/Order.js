@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { increment,decrement,removeProductFromCart, getProductsCart, completeOrder} from "../actions/index";
+import { increment,decrement,removeProductFromCart, getProductsCart, completeOrderUser} from "../actions/index";
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import axios from 'axios';
@@ -172,7 +172,8 @@ export class Order extends Component {
           ))
         }
       </div>
-      {this.props.order.id ? <button onClick={()=>this.props.completeOrder(this.props.order.id,"procesando")}>Finalizar compra</button>:null}
+      {/* BOTON PARA QUE EL USUARIO FINALICE LA COMPRA.. LLAMA A UNA FUNCION PARA MODIFICAR LA ORDEN! */}
+      {this.props.order.id ? <button onClick={()=>this.props.completeOrderUser(this.props.order.id)}>Finalizar compra</button>:null}
     </div>
     );
   }
@@ -194,7 +195,7 @@ function mapDispatchToProps(dispatch) {
     removeProductFromCart: (id, prodId) => dispatch(removeProductFromCart(id, prodId)),
     decrement: (id, prodId) => dispatch(decrement(id, prodId)),
     increment: (id, prodId) => dispatch(increment(id, prodId)),
-    completeOrder:(id,estado)=>dispatch(completeOrder(id,estado))
+    completeOrderUser:(id)=>dispatch(completeOrderUser(id))
   }
 }
 
