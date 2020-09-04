@@ -18,10 +18,19 @@ export class Nav extends Component {
   logout (e){
     e.preventDefault(e)
     this.props.setRedirectOff()
+
+    //CON ESTA FUNCION SOLO CAMBIAMOS EL ESTADO DE USERID A 0, ISADMIN A FALSE Y PWRESET A FALSE
     this.props.userLogout()
-    axios.get('http://localhost:3001/logout')
+
+    //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK Y SE ROMPE LA COOKIE.. NO OLVIDAR MANDAR LAS CREDENCIALES
+    axios.get('http://localhost:3001/logout',{withCredentials:true})
     .then(res=>{
       alert("Sesion cerrada");
+    })
+    
+    //MANEJO DE ERRORES...
+    .catch(err=>{
+      alert(err);
     })
     return;
   }

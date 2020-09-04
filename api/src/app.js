@@ -14,13 +14,9 @@ const domain = "sandboxc4e43d9163f94e18a965795b7d6dcfc8.mailgun.org"
 const mailgun = require ('mailgun-js')({apiKey: api_key, domain:domain});
 var path = require('path');
 const db = require('./db.js');
+//var from_who = "universoverde.henry@gmail.com"
 
-//---------------------mailgun settings-------------------
-
-
-var from_who = "universoverde.henry@gmail.com"
-
-
+//CON ESTA FUNCION NOS BUSCA EL USER EN LA BASE DE DATOS PARA LOGUEARSE
 passport.use(new Strategy(
   function(username, password, done){
 
@@ -35,7 +31,7 @@ passport.use(new Strategy(
       console.log(user);
       //SINO ENCUENTRA USUARIO VUELVE FALSE
       if(!user){
-        return done(null, false);
+        return done(null,false);
       }
       //COMPARA LA PASSWORD CON EL HASH DE BCRYPT
       bcrypt.compare(password, user.password, function(err, res) {
@@ -47,6 +43,7 @@ passport.use(new Strategy(
       });
     })
     .catch(err => {
+      console.log(err)
       return done(err);
     })
   }));
@@ -117,6 +114,7 @@ server.use((req, res, next) => {
       return res.send({ file: myFile.name, path: `/${myFile.name}`, ty: myFile.type });
   });
 })
+
 //--------------------MAILGUN---------------------------------------------------------------
 server.get('/submit/:mail', function(req,res) {
 
@@ -146,8 +144,7 @@ server.get('/submit/:mail', function(req,res) {
   });
 });
 
-//--------------------------------------------------------------------------------------------
-
+//ESTA FUNCION ES PARA INICIAR SESION!!
 server.post('/login',
   passport.authenticate('local', {failureRedirect: '/login'}),
   function(req, res) {
@@ -158,12 +155,7 @@ server.post('/login',
     res.send(aux);
   });
 
-//ACA ESTO NO SERIA ASI... HAY QUE FIJARSE A DONDE LLEVAR EL USUARIO NO LOGUADO O QUEIEN NO ESTE AUTENTICADO PARA ESA RUTA!!!!
-server.get('/login',(req,res,next)=>{
-  res.status(404).send('Usuario no logueado')
-})
-
-//PARA DESLOGUIARSE!!! FIJARSE LA COOKIE COMO SE DESTRUYE...
+//PARA DESLOGUIARSE!!! LA COOKIE AHORA SI SE DESTRUYE!
 server.get('/logout', function(req, res){
   req.logOut();
   if (req.session) {
@@ -172,11 +164,10 @@ server.get('/logout', function(req, res){
         next(err)
       } else {
         res.clearCookie('connect.sid')
-        res.redirect('/')
+        //res.redirect('/')
       }
     })
   }
-
 });
 
    // Error catching endware.
