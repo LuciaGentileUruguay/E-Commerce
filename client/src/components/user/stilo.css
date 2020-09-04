@@ -40,14 +40,11 @@
   margin-left: 20em;
   margin-bottom: 30px;
   border-radius: 8px;
-
+  position: relative;
+  opacity:1;
 }
 
 .item{
   color: #63321F;
   font-family: 'Catamaran', sans-serif;
-}
-
-body{
-  background-image: url('http://localhost:3001/arbolCorazon.jpg');
 }

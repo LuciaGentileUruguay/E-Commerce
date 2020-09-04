@@ -4,6 +4,10 @@ html {
 }
 
 body{
-  background-color: #BCD952;
-	height: 100%;
+  background-image: url("http://localhost:3001/arbolCorazon.jpg");
+  background-size: cover;
+  width: 100%;
+  top: 0;
+  position : absolute;
+  background-blend-mode: saturation;
 }
