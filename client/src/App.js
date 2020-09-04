@@ -25,6 +25,7 @@ import ProductsFromOrder from './components/ProductsFromOrder.js';
 import PwdReset from "./components/user/PwdReset.js";
 import {Redirect} from 'react-router';
 import Me from './components/user/Me.js';
+import history from './utils/history';
 
 class App extends React.Component{
   constructor(){
@@ -42,7 +43,7 @@ class App extends React.Component{
 render(){
   return (
     <div>
-
+      <Route history={history}>
       {/* Rutas para todos */}
 
       <Route path='/' render={() => <Nav onSearch={this.onSearch}/>}/>
@@ -119,7 +120,7 @@ render(){
       <Route exact path='/login/userdata' component = {UpdateUser}/>
 
 
-
+      </Route>
   </div>
   )
 }

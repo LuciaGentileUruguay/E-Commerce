@@ -69,7 +69,7 @@ export class TablaDeOrdenes extends Component {
                 <h5 className = "text">Estado: {el.estado}</h5>
                 <h5 className = "text">Fecha: {el.updatedAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-                {this.props.user.isAdmin && el.estado === "procesando" || el.estado ==="completada" ? <button onClick={()=>this.changeStatus(el.id,"cancelada")}>Cancelar</button>:null}
+                {this.props.user.isAdmin && (el.estado === "procesando" || el.estado ==="completada") ? <button onClick={()=>this.changeStatus(el.id,"cancelada")}>Cancelar</button>:null}
                 {this.props.user.isAdmin && el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"completada")}>Completar</button>:null}
                 {this.props.user.isAdmin && el.estado === "completada" ? <button onClick={()=>this.changeStatus(el.id,"procesando")}>Procesar</button>:null}
 

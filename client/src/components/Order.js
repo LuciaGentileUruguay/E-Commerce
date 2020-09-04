@@ -4,6 +4,7 @@ import { increment,decrement,removeProductFromCart, getProductsCart, completeOrd
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import axios from 'axios';
+import history from '../utils/history'
 
 //COMPONENTE ORDER
 export class Order extends Component {
@@ -34,6 +35,38 @@ export class Order extends Component {
     if (this.props.user.id != 0){
       this.props.getProductsCart(this.props.user.id);
     }
+    
+  }
+
+    refresh(){
+      window.location.reload(false); 
+    }
+
+  //FUNCION PARA COMPLETAR LA COMPRA
+  onClick(){
+
+    //SWEET ALERT PARA MEJOR UX
+    swal({
+      title: "¿Desea confirmar compra?",
+      icon: "info",
+      buttons: ["Cancelar","Confirmar"],
+      dangerMode: false
+    })
+    .then (aceptar=>{
+      if(aceptar){
+
+        //FUNCION QUE VEREFICA EN EL LA BASE DE DATOS EL STOCK DE LA COMPRA
+        this.props.completeOrderUser(this.props.order.id)    
+        swal({text: "Orden confirmada!",icon:"success"});
+        history.push("/products");
+        setTimeout(this.refresh,3000)
+        return 
+      }
+    }) 
+    .catch(err=>{
+      swal({text: "Producto sin stock suficiente!", icon:"error"})
+    })  
+    
     
   }
 
@@ -173,7 +206,7 @@ export class Order extends Component {
         }
       </div>
       {/* BOTON PARA QUE EL USUARIO FINALICE LA COMPRA.. LLAMA A UNA FUNCION PARA MODIFICAR LA ORDEN! */}
-      {this.props.order.id ? <button onClick={()=>this.props.completeOrderUser(this.props.order.id)}>Finalizar compra</button>:null}
+      {this.props.order.id ? <button onClick={()=>this.onClick()}>Finalizar compra</button>:null}
     </div>
     );
   }
