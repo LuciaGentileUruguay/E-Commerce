@@ -9,8 +9,8 @@ body{
   /* width: 100%; */
   /* top: 0; */
   /* position: absolute; */
-  /* background-blend-mode: lighten; */
+  /*background-blend-mode: lighten;*/
   background-attachment: fixed;
   background-color: rgba(200, 200, 200, 0.5);
-  overflow-x: hidden; 
+  overflow-x: hidden;
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SearchBar from './SearchBar.js';
 import { Link, Route} from 'react-router-dom';
 import { connect } from "react-redux";
-import stilo from './Nav.module.css';
+import stilo from './nav.module.css';
 import { userLogout, setRedirectOff } from '../actions/index';
 import axios from 'axios';
 //import './global.css';
@@ -26,7 +26,7 @@ export class Nav extends Component {
     //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK Y SE ROMPE LA COOKIE.. NO OLVIDAR MANDAR LAS CREDENCIALES
     axios.get('http://localhost:3001/logout',{withCredentials:true})
     .then(res=>{
-      alert("Sesion cerrada");
+      alert("Sesión cerrada");
     })
 
     //MANEJO DE ERRORES...
@@ -38,21 +38,19 @@ export class Nav extends Component {
 
   render(){
     return (
-      
+
       <nav id={stilo.navigation} className = {`${stilo.fixed} ${stilo.top} right ${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.navBar}`}>
         <div>
           <Link to='/' onClick={()=>this.props.onSearch("")}>
             <span id={`${stilo.navigation}${stilo.nombreEmpresa}`}>
-              Universo Verde
-              <img className= {stilo.icono} src="http://localhost:3001/food.ico" />
+              Universo Verde <img className= {stilo.icono} src="http://localhost:3001/food.ico" />
             </span>
           </Link>
         </div>
         <div>
           {/* MUESTRA EL CATALOGO COMPLETO */}
           <Link to='/products'onClick={()=>this.props.onSearch("")}>
-            <span id={stilo.navigation}> Tienda 
-              <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-shop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <span id={stilo.navigation}> Tienda <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-shop" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" d="M0 15.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5zM3.12 1.175A.5.5 0 0 1 3.5 1h9a.5.5 0 0 1 .38.175l2.759 3.219A1.5 1.5 0 0 1 16 5.37v.13h-1v-.13a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.13H0v-.13a1.5 1.5 0 0 1 .361-.976l2.76-3.22z"/>
                 <path d="M2.375 6.875c.76 0 1.375-.616 1.375-1.375h1a1.375 1.375 0 0 0 2.75 0h1a1.375 1.375 0 0 0 2.75 0h1a1.375 1.375 0 1 0 2.75 0h1a2.375 2.375 0 0 1-4.25 1.458 2.371 2.371 0 0 1-1.875.917A2.37 2.37 0 0 1 8 6.958a2.37 2.37 0 0 1-1.875.917 2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.5h1c0 .76.616 1.375 1.375 1.375z"/>
                 <path d="M4.75 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm3.75 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm3.75 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
@@ -68,18 +66,18 @@ export class Nav extends Component {
 
           {/* RENDERIZADO CONDICIONAL SI ES ADMIN MUESTRA LAS OPCIONES DE ADMINISTRADOR(AGREGAR PRODUCTO, CATEGORIA, MANEJO DE USERS) */}
           {this.props.user.isAdmin ? <Link to = "/admin">
-            <span id={stilo.navigation}>Opciones Admin</span>
+            <span id={stilo.navigation}> Opciones Admin </span>
           </Link>: null}
 
           {/* SI NO HAY USER LOGUEADO MUESTRA LOGIN */}
-          {!this.props.user.id && <Link to = "/login"><span class={`${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.textSize} `}>Login</span></Link> }
+          {!this.props.user.id && <Link to = "/login"><span className={`${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.textSize} `}>Login </span></Link> }
 
           {/* SI ESTA LOGUEADO MUESTRA LOGOUT */}
-          {this.props.user.id && this.props.user.id? <button class={`${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.textSize} `} onClick={(e)=>this.logout(e)}>Logout</button>: null}
+          {this.props.user.id && this.props.user.id?<Link to = "/"><span className={`${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.textSize} `} onClick={(e)=>this.logout(e)}> Logout </span></Link>: null}
 
           {/* SI ESTA LOGUEADO MUESTRA "PERFIL" */}
-          {this.props.user.id && this.props.user.id?<Link to = "/me"><span class={`${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.textSize} `}>Perfil</span></Link>: null}
-   
+          {this.props.user.id && this.props.user.id?<Link to = "/me"><span className={`${stilo.navigation} ${stilo.shadowsIntoLight} ${stilo.textSize} `}> Perfil </span></Link>: null}
+
           {/* LINK PARA IR AL CARRITO DE COMPRAS DE UN USUARIO LOGUEADO */}
           <Link to = {"/cart/" + this.props.user.id} onClick={()=>this.props.onSearch("")}>
             <span id={stilo.navigation}><svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-cart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -88,11 +86,11 @@ export class Nav extends Component {
             </span>
           </Link>
         </div>
-        
+
           {/* LA NAV BAR SIEMPRE ESTA RENDERIZADA */}
           <Route exact path='/products' render={() => <SearchBar onSearch={this.props.onSearch}/>}/>
-        
-       
+
+
       </nav>
 
     )
