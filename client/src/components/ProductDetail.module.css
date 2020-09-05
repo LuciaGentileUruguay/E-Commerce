@@ -36,16 +36,18 @@ a:link, a:visited, a:active {
   display: flex;
   justify-content: center;
   padding: 2px;
-}
-
-.texto-tierra {
   color: #63321F;
 }
+/* 
+.texto-tierra {
+  color: #63321F;
+} */
 
 .text {
   font-size: 18px;
   display: flex;
   justify-content: center;
+  color: #63321F;
 }
 
 .botonDetalle1{

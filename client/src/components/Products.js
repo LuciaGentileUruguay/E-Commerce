@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './products.css';
+import style from './ProductDetail.module.css';
 import { connect } from "react-redux";
 import Product from './Product.js';
 
@@ -9,7 +9,7 @@ export class Products extends Component {
 
   render() {
     return (
-      <div className="catalog row">
+      <div className={`row ${style.catalog}`}>
         {this.props.products && this.props.products.map(item =>
           {
           if (item.stock>0) {

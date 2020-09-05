@@ -66,7 +66,7 @@ export class Nav extends Component {
 
           {/* RENDERIZADO CONDICIONAL SI ES ADMIN MUESTRA LAS OPCIONES DE ADMINISTRADOR(AGREGAR PRODUCTO, CATEGORIA, MANEJO DE USERS) */}
           {this.props.user.isAdmin ? <Link to = "/admin">
-            <span id={stilo.navigation}> Opciones Admin </span>
+            <span id={stilo.navigation}> Opciones </span>
           </Link>: null}
 
           {/* SI NO HAY USER LOGUEADO MUESTRA LOGIN */}

@@ -23,17 +23,17 @@ export default function Landing () {
       <img src="https://hidroponia.mx/wp-content/uploads/2014/10/forraje-verde-hidropc3b3nico.jpg" class="d-block w-100"/>
     </div>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+  <a class={`carousel-control-prev ${style.active}`} href="#carouselExampleCaptions" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <a class={`carousel-control-next ${style.active}`} href="#carouselExampleCaptions" role="button" data-slide="next">
+    <span class={`carousel-control-next-icon`} aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
 </div>
 
-<footer class={`page-footer font-small special-color-dark pt-4 ${style.hola}`}>
+<footer class={`page-footer font-small special-color-dark pt-4`}>
   <div class={style.redesContainer}>
     <ul>
       <li><a class="btn-floating btn-fb mx-1"><i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"></i></a></li>
