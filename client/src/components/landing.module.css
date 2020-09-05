@@ -10,13 +10,14 @@
   color:#63321F;
 }
 
-.carrusel{
-
+.imgNormal{
+  width: auto;
+  max-height: 600px;
 }
 
 .redesContainer {
   display: flex;
-  height: auto;
+  height: 20px;
   align-items: center;
   justify-content: center;
   color:#63321F;
@@ -30,7 +31,7 @@
   text-align: center;
 }
 
-body{
-  background-color: #BCD952;
-	height: 100%;
-}
+.body{
+  background-blend-mode: lighten;
+  overflow: hidden;
+} 

@@ -7,8 +7,8 @@ export default function SearchBar({onSearch}) {
   //BUSCA PRODUCTOS Y LOS GUARDA EN UN ARREGLO DE PRODUCTOS, SINO ENCUENTRA RENDERIZA TODOS LOS OBJETOS
   const [products, setProducts] = useState("");
   return (
-    <div className = "search">
-      <form onSubmit={(e) =>
+    <div>
+      <form  onSubmit={(e) =>
         {
           //NO REFRESCA LA PAGINA
           e.preventDefault();
@@ -16,14 +16,16 @@ export default function SearchBar({onSearch}) {
           setProducts('');
         }
       }>
-        <div className="input-group-append mb-3 buttonsearch">
-          <input type="text" className={"form-control texto "+ s.shadows} placeholder="Productos..."
+        <div className="input-group-append mb-3">
+          <input type="text" id={s.boton} className={`form-control ${s.shadows}`} placeholder="Productos..."
           value={products} onChange={e => setProducts(e.target.value)}
           />
           {/* NO SACAR EL SUBMIT DE ABAJO!! */}
-          <button className={"btn texto "+ s.shadows} type="submit" id="button-addon2">Buscar</button>
+          <button className={`btn ${s.shadows}`} type="submit" id="button-addon2">Buscar</button>
         </div>
       </form>
     </div>
   )
 };
+
+//${s.shadows}

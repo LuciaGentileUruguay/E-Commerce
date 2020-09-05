@@ -1,6 +1,9 @@
 .navBar {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: 'Shadows Into Light', cursive;
+  font-size: xx-large;
 }
 
 .icono{
@@ -15,14 +18,17 @@
 
 
 #navigation {
-  background-color: rgb(203, 243, 162);
+  background-color: rgb(171, 230, 112);
   width: 100%;
-  padding: 3px 7px;
+  max-height: 12%;
+  /* height: 20px; */
+  padding-right: 25px;
   text-decoration: none;
   color: #63321F;
-  font-family: 'Amatic SC', cursive;
+  /* font-family: 'Amatic SC', cursive;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.2em; */
+  /* opacity: 0.85; */
 }
 
 #navigation a {
@@ -39,16 +45,14 @@
  }
 
 .shadowsIntoLight {
-	font-family: 'Shadows Into Light', cursive;
+  font-family: 'Shadows Into Light', cursive;
+  color: #63321F
 }
 
 .textSize {
   font-size: 1.1em;
 }
 
-.color{
-  color: #63321F;
-}
 
 .fixed{
   position: fixed;
