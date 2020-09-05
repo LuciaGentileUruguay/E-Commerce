@@ -4,7 +4,8 @@ import {FaStar} from 'react-icons/fa';
 import FiveStars from './FiveStars'
 import { getProductDetail, getProductsCategories, addProductToCart,
   setRedirect, setRedirectOff, setRating, getReview } from '../actions/index';
-import style from './ProductDetail.module.css';
+import style from './product.module.css';
+import './global.css';
 import {Link} from "react-router-dom";
 import Axios from 'axios';
 
@@ -25,7 +26,7 @@ class ProductDetail extends React.Component {
     if(this.props.user.isAdmin) {
       return(
         <Link to="/form_product">
-          <button class="btn btn-outline-success botonDetalle1">Editar</button>
+          <button class={`btn btn-outline-success ${style.botonDetalle1}`}>Editar</button>
         </Link>
       )
     }
@@ -87,14 +88,14 @@ class ProductDetail extends React.Component {
 /*--------------------------------------------------------------------------*/
   render() {
     return (
-      <div className="catalog row" style={{display:"flex", flexDirection:"row"}}>
+      <div className="catalog row">
         <div className="card col-4">
-          <h2 className = {`"card-title ${style.title}`}> Detalle del producto </h2>
+          <h2 className = {`card-title ${style.title}`}> Detalle del producto </h2>
             <div className="card-body">
                <img className={style.fotoDetalle} src={"http://localhost:3001/"+this.props.productDetail.image} />
             </div>
             <div className="card-body" >
-              <h3 className = {`"card-title ${style.title}`}>{this.props.productDetail && this.props.productDetail.name}</h3>
+              <h3 className = {`card-title ${style.title}`}>{this.props.productDetail && this.props.productDetail.name}</h3>
               <p className = {`card-text ${style.text}`}>Categoría:</p>
 
               {/* MAPEA LAS CATEGORIAS */}
@@ -102,7 +103,7 @@ class ProductDetail extends React.Component {
                 return <p className = {`card-text ${style.text}`}>{item.name}</p>
               })}
               <p className = {`card-text ${style.text}`}>Descripción: {this.props.productDetail && this.props.productDetail.description}</p>
-              <p className = {`"card-title ${style.title}`}>Precio $: {this.props.productDetail && this.props.productDetail.price}</p>
+              <p className = {`card-title ${style.title}`}>Precio $: {this.props.productDetail && this.props.productDetail.price}</p>
               <p className = {`card-text ${style.text}`}>Stock: {this.props.productDetail && this.props.productDetail.stock}</p>
 
               {/* BOTON PARA EL ADMIN EDITA EL PRODUCTO */}
@@ -111,28 +112,28 @@ class ProductDetail extends React.Component {
               </div>
 
               {/* AGREGA EL PRODUCTO AL CARRITO */}
-              {this.props.user.id && this.props.user.id?<Link to="/products">  
-              <button class="btn btn-outline-success botonDetalle1" onClick={() =>
+              {this.props.user.id && this.props.user.id?<Link to="/products">
+              <button class={`btn btn-outline-success ${style.botonDetalle1}`} onClick={() =>
                 this.props.addProductToCart(this.props.user.id, this.props.match.params.id,
                   {price: this.props.productDetail && this.props.productDetail.price,
                    productId: this.props.match.params.id})}> Comprar </button>
               </Link>:null}
 
               {/* AGREGA EL PRODUCTO AL CARRITO COMO INVITADO*/}
-              {!this.props.user.id && <p><button class="btn btn-outline-success botonDetalle1" onClick={() =>
+              {!this.props.user.id && <p><button class={`btn btn-outline-success ${style.botonDetalle1}`} onClick={() =>
                 this.props.addProductToCart(this.props.user.id, this.props.match.params.id,
                   {price: this.props.productDetail && this.props.productDetail.price,
                   productId: this.props.match.params.id,
                   name: this.props.productDetail && this.props.productDetail.name})}>
                   Agregar producto como invitado</button></p>}
-              
+
               {/*PROMEDIO DE LAS REVIEWS */}
     {/*--------------------------------------------------------------------------*/}
-              {/* <div>
-                <p className = "card-text text texto-tierra">
+              <div>
+                <p className = {`card-text ${style.text}`}>
                   Promedio de {this.props.review.length && this.calculoPromedio(this.props.review)} Estrellas
                 </p>
-              </div> */}
+              </div>
     {/*--------------------------------------------------------------------------*/}
             </div>
         </div>
@@ -141,7 +142,7 @@ class ProductDetail extends React.Component {
         <div className="catalog row" >
           <div className="card col-4">
             {this.props.user.id? <div>
-                <button class="btn btn-outline-success botonDetalle1" onClick={(e)=>this.nuevoReview(e)}> Ingresar opinión </button>
+                <button class={`btn btn-outline-success ${style.botonDetalle1}`} onClick={(e)=>this.nuevoReview(e)}> Ingresar opinión </button>
           </div>:null}
 
             {!this.props.redirect ? null:<div>
@@ -169,31 +170,31 @@ class ProductDetail extends React.Component {
 
                    {!this.props.redirect ? null:  <div className = "divForm" style={{display:"flex", flexDirection:"column", justifyContent:"center",
                     width:"80%" }}>
-                  <label> Comentarios: </label>
-                  <textarea placeholder={"Escriba su comentario aquí..."}
+                  <label className={`card-title ${style.title}`}> Comentarios: </label>
+                  <textarea className={`${style.title}`} placeholder={"Escriba su comentario aquí..."}
                   rows="5" colums="40" name="comentario" onChange={(e)=>this.handleChange(e)}> </textarea>
-                 <button onClick={(e)=>this.postReview(e)}>Guardar Review</button>
+                 <button className= {`btn btn-outline-success ${style.botonDetalle1}`} onClick={(e)=>this.postReview(e)}>Guardar Review</button>
               </div>}
               <div style={{display:"flex",flexDirection:"row", justifyContent:"space-around"}}>
                 {this.props.review && this.props.review.length>0 ? <div>
-                <label>Cliente</label>
+                <label className={`card-title ${style.title}`}>Cliente</label>
                 {this.props.review && this.props.review.map(item =>{
-                return( <p>{item.user.nombre + " " + item.user.apellido}</p>)
+                return( <p className={`${style.text}`}>{item.user.nombre + " " + item.user.apellido}</p>)
                 })}
-              </div>:<p>Aún no hay reseñas para este producto</p>}
+              </div>:<p className={`${style.text}`}>Aún no hay reseñas para este producto</p>}
 
                 {this.props.review && this.props.review.length>0 ? <div>
-                <label>Comentario</label>
+                <label className={`card-title ${style.title}`}>Comentario</label>
                 {this.props.review && this.props.review.map(item =>{
-                return( <p>{item.comentario}</p>)
+                return( <p className={`${style.text}`}>{item.comentario}</p>)
                  })}
               </div>
               :null}
 
                 {this.props.review && this.props.review.length>0 ? <div>
-                <label>Valoración</label>
+                <label className={`card-title ${style.title}`}>Valoración</label>
                 {this.props.review && this.props.review.map(item =>{
-                  console.log(item.puntuacion)
+                  //console.log(item.puntuacion)
                 return(<FiveStars rating={item.puntuacion} />)
                 })}
                </div>

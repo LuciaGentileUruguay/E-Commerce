@@ -12,15 +12,7 @@
   font-weight: bold;
 }
 
-.category {
-  display: flex;
-  justify-content: space-around;
-  margin: 15px;
-  border-radius: 15px;
-  /* max-width: 500px; */
-  /* max-height: 150px; */
 
-}
 
 .fotoDetalle2{
   border-radius: 15px;

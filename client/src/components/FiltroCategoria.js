@@ -4,6 +4,7 @@ import Product from "./Product.js";
 import CategoryCard from "./CategoryCard.js";
 import {getProductsFromCategory} from '../actions/index.js';
 import { connect } from "react-redux";
+import './global.css';
 
 
 class FiltroCategoria extends React.Component{
@@ -15,7 +16,7 @@ class FiltroCategoria extends React.Component{
 
     render () {
         return(
-            <div class="Categories">
+            <div class="catalog row">
                 {this.props.products && this.props.products.map(item => <Product
                  id={item.id}
                  name={item.name}

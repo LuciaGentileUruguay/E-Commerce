@@ -1,3 +1,4 @@
+
 a {
   color: #63321F;
   text-decoration: none;
@@ -5,6 +6,15 @@ a {
 
 a:link, a:visited, a:active {
     text-decoration:none;
+}
+
+
+.fotoDetalle{
+    border-radius: 15px;
+    padding: 5px;
+    display: block;
+    margin: auto;
+    width: 100%;
 }
 
 .foto{
@@ -15,32 +25,26 @@ a:link, a:visited, a:active {
     margin: 0 auto;
 }
 
-.card {
-  width: 100rem;
-  padding: 20px;
-  margin: 10px;
-  min-width: 10rem;
-}
 
 .title {
   font-size: 20px;
   display: flex;
   justify-content: center;
   padding: 2px;
+  color: #63321F;
+  font-weight: bold;
 }
 
-.texto-tierra {
+
+.text {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
   color: #63321F;
 }
 
-.text {
-  font-size: 2px;
-  display: flex;
-  justify-content: center;
-}
-
-.botonDetalle{
+.botonDetalle1{
   width: auto;
-  display: flex;
-  justify-content: center;
+  display: block;
+  margin: auto;
 }
