@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import {Link} from "react-router-dom";
 import { getCategories} from '../actions/index';
+import style from "../components/user/stilo.module.css";
 
 export class NewCategoryForm extends React.Component {
 
@@ -31,37 +32,34 @@ export class NewCategoryForm extends React.Component {
 
   render () {
     return (
-      <form >
+      <form class={style.form} >
             
            
             
           <div>
           
             <label>Nombre:</label>		
-	        <input name="name" type="text" 
+	        <input name="name" type="text" class="form-control" id="exampleInputEmail1"
           onChange={(e) => this.handleInputChange(e) }>		
 			     </input>
         </div>
 
         <div className = "divForm">
         <label>Descripción:</label>
-        <input name="description" type="text" 
+        <input name="description" type="text" class="form-control" id="exampleInputEmail1"
           onChange={(e) => this.handleInputChange(e) }>		
 			     </input>
           
         </div>
-
+        <br></br>
         
-        <button onClick={(e) => {
+        <button type="button" class="btn btn-success" onClick={(e) => {
         e.preventDefault()
         this.saveCat() }}> Guardar </button>
           <Link to={"/products/"+this.props.productDetail.id}>
-          <button>Volver a Producto</button>
+          <button type="button" class="btn btn-success">Volver a Producto</button>
           </Link>
-          <Link to="/products/">
-          <button>Volver a Tienda</button>
-          </Link>
-      </form>
+        </form>
     )
     }
 

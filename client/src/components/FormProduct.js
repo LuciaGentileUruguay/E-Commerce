@@ -3,6 +3,7 @@ import axios from 'axios';
 import {getCategories,cleanProductDetail } from '../actions/index';		
 import { connect } from 'react-redux';		
 import {Link} from "react-router-dom";
+import style from "../components/user/stilo.module.css";
 
 class FormProduct extends React.Component {
 
@@ -108,10 +109,10 @@ class FormProduct extends React.Component {
 
       return (
           
-        <form >
+        <form class={style.form}>
           <div className = "divForm">
             <label> Nombre: </label>
-            <input type="text" name="name" 
+            <input type="text" name="name" class="form-control" id="exampleInputPassword1" 
             placeholder={this.props.productDetail && this.props.productDetail.name} 
             
             onChange={(e) => this.handleInputChange(e)} />
@@ -138,35 +139,36 @@ class FormProduct extends React.Component {
              
           </div>
           <Link to="/form_categories">
-          <button>Editar Categorias</button>
+          <button ttype="button" class="btn btn-secondary">Editar Categorias</button>
           </Link>
           <div className = "divForm">
             <label>Descripción:</label>
-            <input type="text" name="description" placeholder={ this.props.productDetail.description} onChange={(e) => this.handleInputChange(e)}  />
+            <input type="text" name="description" class="form-control" id="exampleInputPassword1" placeholder={ this.props.productDetail.description} onChange={(e) => this.handleInputChange(e)}  />
           </div>
           <div className = "divForm">
             <label>Precio:</label>
-            <input type="text" name="price" placeholder={this.props.productDetail && this.props.productDetail.price} onChange={(e) => this.handleInputChange(e)}  />
+            <input type="text" name="price" class="form-control" id="exampleInputPassword1" placeholder={this.props.productDetail && this.props.productDetail.price} onChange={(e) => this.handleInputChange(e)}  />
           </div>
           <div className = "divForm">
             <label>Stock:</label>
-            <input type="text" name="stock" placeholder={this.props.productDetail && this.props.productDetail.stock} onChange={(e) => this.handleInputChange(e)}  />
+            <input type="text" name="stock" class="form-control" id="exampleInputPassword1" placeholder={this.props.productDetail && this.props.productDetail.stock} onChange={(e) => this.handleInputChange(e)}  />
           </div>
           {/* --------------------------------------Image Uploader--------------------------- */}
             <div>
-              <input type="file" onChange={(e)=>this.fileSelected(e)}/><br></br>
-              <button onClick={(e)=>this.uploadHandler(e)}>Cargar Imagen</button>
+              <input type="file" onChange={(e)=>this.fileSelected(e)}/>
+              <br></br>
+              <button type="button" class="btn btn-success btn-sm" onClick={(e)=>this.uploadHandler(e)}>Cargar Imagen</button>
             </div>
         
           {/* {this.state.data.path !=="0" ?<div><img src={"http://localhost:3001"+this.state.data.path} /></div>:null} */}
               
           {/* ------------------------------------------------------------------------------------ */}
 
-          <input id= "botonBorrar" type='submit' value="Borrar" onClick={(e) => {
+          <input id= "botonBorrar" type="button" class="btn btn-danger btn-sm" type='submit' value="Borrar" onClick={(e) => {
           e.preventDefault();
           this.cleanStore()
           this.delete() }}/>
-          <input id= "botonGuardar" type='submit' value="Guardar" onClick={(e) => {
+          <input id= "botonGuardar" type='submit' type="button" class="btn btn-success btn-sm" value="Guardar" onClick={(e) => {
           e.preventDefault();
           if (this.props.productDetail.id){
             this.modify()
@@ -174,11 +176,8 @@ class FormProduct extends React.Component {
           }
           this.save() }}/>
           <Link to={"/products/"+this.props.productDetail.id}>		
-          <button>Volver a Producto</button>		
+          <button type="button" class="btn btn-success btn-sm">Volver a Producto</button>		
 	        </Link>		
-          <Link to="/products/">		
-          <button>Volver a Tienda</button>		
-	         </Link>
         </form>
       )
   
