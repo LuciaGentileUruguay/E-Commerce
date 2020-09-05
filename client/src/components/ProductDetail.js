@@ -4,7 +4,7 @@ import {FaStar} from 'react-icons/fa';
 import FiveStars from './FiveStars'
 import { getProductDetail, getProductsCategories, addProductToCart,
   setRedirect, setRedirectOff, setRating, getReview } from '../actions/index';
-import './ProductDetail.css';
+import style from './ProductDetail.module.css';
 import {Link} from "react-router-dom";
 import Axios from 'axios';
 
@@ -89,21 +89,21 @@ class ProductDetail extends React.Component {
     return (
       <div className="catalog row" style={{display:"flex", flexDirection:"row"}}>
         <div className="card col-4">
-          <h2 className = "card-title title texto-tierra"> Detalle del producto </h2>
+          <h2 className = {`"card-title ${style.title}`}> Detalle del producto </h2>
             <div className="card-body">
-               <img className="fotoDetalle" src={"http://localhost:3001/"+this.props.productDetail.image} />
+               <img className={style.fotoDetalle} src={"http://localhost:3001/"+this.props.productDetail.image} />
             </div>
             <div className="card-body" >
-              <h3 className = "card-title title texto-tierra">{this.props.productDetail && this.props.productDetail.name}</h3>
-              <p className = "card-text text texto-tierra">Categoría:</p>
+              <h3 className = {`"card-title ${style.title}`}>{this.props.productDetail && this.props.productDetail.name}</h3>
+              <p className = {`card-text ${style.text}`}>Categoría:</p>
 
               {/* MAPEA LAS CATEGORIAS */}
               {this.props.productCategories.map(item=>{
-                return <p className = "card-text text texto-tierra">{item.name}</p>
+                return <p className = {`card-text ${style.text}`}>{item.name}</p>
               })}
-              <p className = "card-text text texto-tierra">Descripción: {this.props.productDetail && this.props.productDetail.description}</p>
-              <p className = "card-text title texto-tierra">Precio $: {this.props.productDetail && this.props.productDetail.price}</p>
-              <p className = "card-text text texto-tierra">Stock: {this.props.productDetail && this.props.productDetail.stock}</p>
+              <p className = {`card-text ${style.text}`}>Descripción: {this.props.productDetail && this.props.productDetail.description}</p>
+              <p className = {`"card-title ${style.title}`}>Precio $: {this.props.productDetail && this.props.productDetail.price}</p>
+              <p className = {`card-text ${style.text}`}>Stock: {this.props.productDetail && this.props.productDetail.stock}</p>
 
               {/* BOTON PARA EL ADMIN EDITA EL PRODUCTO */}
               <div>

@@ -1,26 +1,32 @@
-.titleCategory {
+/* .titleCategory {
   font-size: 1.2rem;
   font-weight: bold;
 
-}
+} */
 
 
 .shadowsIntoLight {
   font-family: 'Shadows Into Light', cursive;
   text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .category {
   display: flex;
   justify-content: space-around;
-  margin-top: auto;
+  margin: 15px;
+  border-radius: 15px;
+  /* max-width: 500px; */
+  /* max-height: 150px; */
 
 }
 
 .fotoDetalle2{
   border-radius: 15px;
-  padding: 5px;
-  display: block;
+  /* padding: 50px; */
+  /* display: block; */
   margin: auto;
-  width: 100%;
+  /* width: 100%; */
+  max-width: 100%;
 }

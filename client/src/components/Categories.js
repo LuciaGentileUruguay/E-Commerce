@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import {getCategories} from '../actions/index';
 import CategoryCard from './CategoryCard.js';
+import style from './ProductDetail.module.css';
 
 //se borro import de Link
 export class Categories extends Component {
@@ -13,7 +14,7 @@ export class Categories extends Component {
 
   render() {
     return (
-      <div className="catalog row">
+      <div className={`row ${style.catalog}`}>
           {this.props.categories && this.props.categories.map(item => <CategoryCard
             id ={item.id}
            name={item.name}
