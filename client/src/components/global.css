@@ -6,9 +6,22 @@ html {
 body{
   background-image: url("http://localhost:3001/brotes.jpg");
   background-size: cover;
-  background-blend-mode: lighten ;
+  background-blend-mode: lighten;
   background-attachment: fixed;
-  background-color: rgba(14, 219, 100,0.3);
+  background-color: rgba(200, 200, 200, 0.4);
   overflow-x: hidden;
 
+}
+
+.catalog{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 150px;
+}
+
+.card {
+  width: 100rem;
+  padding: 20px;
+  margin: 10px;
+  min-width: 10rem;
 }
