@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {cleanProductDetail } from '../actions/index';
-import './nav.css';
 import Userlist from './user/userList';
 import FormProduct from './FormProduct';
-import NewCategoryForm from './NewCategoryForm'
+import NewCategoryForm from './NewCategoryForm';
 
 //COMPONENTE PARA EL ADMIN
 export class Admin extends Component {

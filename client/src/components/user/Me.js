@@ -32,18 +32,20 @@ export default class Me extends React.Component {
   render() {
     return (
       <div>
-        <div className="divroot">
-          <h2 className = "text"> Detalle del Usuario </h2>
-          <p className = "p"> Nombre:{this.state.nombre}</p>
-          <p className = "p"> Apellido:{this.state.apellido}</p>
-          <p className = "p"> Calle:{this.state.calle}</p>
-          <p className = "p"> Numero:{this.state.numero}</p>
-          <p className = "p"> Departamento:{this.state.departament}</p>
-          <p className = "p"> Localidad:{this.state.localidad}</p>
-          <p className = "p"> Provincia:{this.state.provincia}</p>
-          <p className = "p"> Email:{this.state.email}</p>
-          <p className = "p"> Telefono Celular:{this.state.telefono1}</p>
-          <p className = "p"> Telefono Hogar/Trabajo:{this.state.telefono2}</p>
+      <div className="divroot">
+        <h2 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h2>
+        <ul className="list-group lista">
+          <li className="list-group-item item">Nombre: {this.state.nombre}</li>
+          <li className="list-group-item item">Apellido: {this.state.apellido}</li>
+          <li className="list-group-item item">Calle: {this.state.calle}</li>
+          <li className="list-group-item item">Número: {this.state.numero}</li>
+          <li className="list-group-item item">Departamento: {this.state.departament}</li>
+          <li className="list-group-item item">Localidad: {this.state.localidad}</li>
+          <li className="list-group-item item">Provincia: {this.state.provincia}</li>
+          <li className="list-group-item item">Email: {this.state.email}</li>
+          <li className="list-group-item item">Teléfono Celular: {this.state.telefono1}</li>
+          <li className="list-group-item item">Teléfono Hogar/Trabajo: {this.state.telefono2}</li>
+        </ul>
           <Link to={`/me/orders`}>
               <span> Mis órdenes </span>
           </Link>

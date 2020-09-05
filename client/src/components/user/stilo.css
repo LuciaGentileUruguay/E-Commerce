@@ -33,6 +33,18 @@
     padding: 10px;
 }
 
-body{
-    background-color: #E9F2EA;
+.lista{
+  display: flex;
+  justify-content: center;
+  margin-right: 20em;
+  margin-left: 20em;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  position: relative;
+  opacity:1;
+}
+
+.item{
+  color: #63321F;
+  font-family: 'Catamaran', sans-serif;
 }
