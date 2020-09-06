@@ -40,7 +40,8 @@ componentDidMount(){
             <button  type="button" class="btn btn-secondary" name="Ordenes" >Lista Ordenes</button>
           </Link>
         </div>
-        <div class="catalog row">
+        <div className={style.form}>
+        <div className="form catalog row">
             {this.state.userlist && this.state.userlist.map(item =>
               { console.log(item)
             return < UserCard
@@ -58,7 +59,7 @@ componentDidMount(){
                   />})
               }
         </div>
-
+      </div>
     </div>  
  
     );
