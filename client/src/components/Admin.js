@@ -1,107 +1,42 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import {cleanProductDetail } from '../actions/index';
-import Userlist from './user/userList';
-import FormProduct from './FormProduct';
-import NewCategoryForm from './NewCategoryForm';
+import { connect } from 'react-redux';
+import {Link} from "react-router-dom";
+import { cleanProductDetail } from "../actions";
 import style from './user/stilo.module.css'
 
-//COMPONENTE PARA EL ADMIN
 export class Admin extends Component {
-  constructor(props){
-    super(props)
-    this.state={
-      irA:""
-    }
+
+  componentDidMount(){
+   this.props.cleanProductDetail()
   }
 
-  //AGREGAR UN PRODUCTO NUEVO
-  newProduct(e){
-    e.preventDefault(e);
-    this.props.cleanProductDetail()
-    this.setState({irA:"Producto"})
-  }
+render(){
 
-  //AGREGA UNA CATEGORIA NUEVA
-  newCategory(e){
-    e.preventDefault();
-    this.setState({irA:"Categoria"})
-  }
-
-  //TRAE LA LISTA DE TODOS LOS USUARIOS
-  userList(e){
-    e.preventDefault(e);
-    this.setState({irA:"Lista"})
-  }
-
-  render(){
-
-    //RENDERIZADO CONDICIONAL VACIO-->
-    if (this.state.irA === ""){
-      return (
+      return(
         <div class={`btn-group ${style.margen}`} role="group" aria-label="Basic example">
-        <button  type="button" class="btn btn-secondary" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-        <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoría</button>
-        <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
-         </div>
-      )
-    }
-
-    //RENDERIZADO CONDICIONAL NUEVO PRODUCTO-->
-    if (this.state.irA === "Producto"){
-      return(
-        <div class={style.margen}>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoría</button>
-            <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
-        </div>
-          <FormProduct/>
-        </div>
-
-      )
-    }
-
-      //RENDERIZADO CONDICIONAL NUEVA CATEGORIA-->
-    if (this.state.irA === "Categoria"){
-      return(
-        <div class={style.margen}>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-            <button type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
-          </div>
-          <NewCategoryForm/>
+            <Link to="/form_product">
+              <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
+            </Link>
+            <Link to="/new_category_form">
+              <button  type="button" class="btn btn-secondary" name="Categoria" >Nueva categoría</button>
+            </Link>
+            <Link to="/login/userlist">  
+              <button  type="button" class="btn btn-secondary" name="Lista" >Lista Usuarios</button>
+            </Link>
+            <Link to="/orders">  
+              <button  type="button" class="btn btn-secondary" name="Ordenes" >Lista Ordenes</button>
+            </Link>
         </div>
       )
     }
 
-    //RENDERIZADO CONDICIONAL LISTA DE USUARIOS-->
-    if (this.state.irA === "Lista"){
-      return(
-        <div class={style.margen}>
-          <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
-            <button type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva Categoría</button>
-          </div>
-          <Userlist/>
-        </div>
-      )
+  }   
+  const mapDispatchToProps = dispatch => {
+    return {
+      cleanProductDetail:() => dispatch(cleanProductDetail())
+  
     }
-    
-    return;
   }
-}
 
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    cleanProductDetail: () => dispatch(cleanProductDetail())
-
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Admin);
+  export default connect(null, mapDispatchToProps)(Admin);
+   

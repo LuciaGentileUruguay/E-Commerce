@@ -35,34 +35,46 @@ export class FormCategories extends React.Component {
   }
 
   saveCat(){
-    axios.post(`http://localhost:3001/categories`,this.state)
-    .then(res => {
+    const instance = axios.create({
+      withCredentials: true
+    })
+    instance.post(`http://localhost:3001/categories`,this.state)
+    .then(async res => {
       if(res.status === 200){
-        alert("CATEGORIA GUARDADA CORRECTAMENTE");
+        await alert("CATEGORIA GUARDADA CORRECTAMENTE");
       }
     })
+    .then(res=>{window.location.reload(false);})
 
   }
   modifyCat(){
-    axios.put("http://localhost:3001/categories/" + this.state.id,
+    const instance = axios.create({
+      withCredentials: true
+    })
+    instance.put("http://localhost:3001/categories/" + this.state.id,
     this.state)
-    .then(res => {
+    .then(async res => {
       if(res.status === 200){
-        alert("CATEGORIA MODIFICADA CORRECTAMENTE");
+        await alert("CATEGORIA MODIFICADA CORRECTAMENTE");
       }
     })
+    .then(res=>{window.location.reload(false);})
 
   }
   deleteCat(){
-    axios.delete("http://localhost:3001/categories/" + this.state.id)
-    .then(res => {
+    const instance = axios.create({
+      withCredentials: true
+    })
+    console.log(this.state.id)
+    instance.delete("http://localhost:3001/categories/" + this.state.id)
+    .then(async res => {
       if(res.status === 200){
-        alert("CATEGORIA BORRADA CORRECTAMENTE");
+        await alert("CATEGORIA BORRADA CORRECTAMENTE");
       }
     })
+    .then(res=>{window.location.reload(false);})
 
   }
-    
    render () {
     return (
       <form class={style.form}>

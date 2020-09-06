@@ -1,8 +1,8 @@
 import React, { Component} from 'react';
 import { connect } from "react-redux";
 import {getOrders, getProductsFromOrder, completeOrder} from '../actions/index';
-import Order from './Order.js';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export class TablaDeOrdenes extends Component {
 
@@ -13,18 +13,32 @@ export class TablaDeOrdenes extends Component {
     this.props.getProductsFromOrder();
   }
 
+
+
   filterByCondition(e){
     let condition = e.target.value
     this.props.getOrders(condition)
   }
 
-  changeStatus(id,estado){
-    this.props.completeOrder(id,estado);
-    alert("ordern modificada")
-    window.location.reload(false); 
-
-
-    return;
+  async changeStatus(id,estado,direccion,nombre,apellido,email){
+    let data = direccion
+    this.props.completeOrder(id,estado,data);
+    console.log(estado)
+    const instance = axios.create({
+      withCredentials: true
+    })
+    let fullname = nombre + " " +apellido
+    
+    await instance.get("http://localhost:3001/submit?email="+email+"&direccion="
+      +data+"&nombre="+fullname+"&orderID="+id+"&status="+estado)
+      .then(res=>{
+        alert("Orden Modificada")
+      })
+      .catch(err =>{
+        alert("hubo un error")
+      })
+    window.location.reload()
+ 
   }
 
   calculoTotalOrden (products) {
@@ -39,12 +53,24 @@ export class TablaDeOrdenes extends Component {
 
   render() {
     return (
-
+    <div>
+           <div>
+            <Link to="/form_product">
+              <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
+            </Link>
+            <Link to="/new_category_form">
+              <button  type="button" class="btn btn-secondary" name="Categoria" >Nueva categoría</button>
+            </Link>
+            <Link to="/login/userlist">  
+              <button  type="button" class="btn btn-secondary" name="Lista" >Lista Usuarios</button>
+            </Link>
+        </div>
       <div className="divroot">
         <h5 className="texto-tierra shadowsIntoLight"> Órdenes </h5>
         <div>
         <p>Filtrar Ordenes por Estado:</p>
         <button value="procesando" onClick={(e)=>this.filterByCondition(e)}>Procesando</button>
+        <button value="enviada" onClick={(e)=>this.filterByCondition(e)}>Enviada</button>
         <button value="cancelada" onClick={(e)=>this.filterByCondition(e)}>Cancelada</button>
         <button value="completada" onClick={(e)=>this.filterByCondition(e)} >Completada</button>
         <button value="todas" onClick={(e)=>this.filterByCondition(e)}>Todas</button>
@@ -67,11 +93,12 @@ export class TablaDeOrdenes extends Component {
                 <h5 className="texto-tierra shadowsIntoLight">Número de órden: {el.id}</h5>
                 <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>
                 <h5 className = "text">Estado: {el.estado}</h5>
-                <h5 className = "text">Fecha: {el.updatedAt}</h5>
+                <h5 className = "text">Fecha: {el.createdAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-                {this.props.user.isAdmin && el.estado === "procesando" || el.estado ==="completada" ? <button onClick={()=>this.changeStatus(el.id,"cancelada")}>Cancelar</button>:null}
-                {this.props.user.isAdmin && el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"completada")}>Completar</button>:null}
-                {this.props.user.isAdmin && el.estado === "completada" ? <button onClick={()=>this.changeStatus(el.id,"procesando")}>Procesar</button>:null}
+                {this.props.user.isAdmin && el.estado === "procesando" ||el.estado==="enviada" ? <button onClick={(e)=>this.changeStatus(el.id,"cancelada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Cancelar</button>:null}
+                {this.props.user.isAdmin && el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"enviada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Despachar</button>:null}
+                {this.props.user.isAdmin && el.estado === "enviada" ? <button onClick={()=>this.changeStatus(el.id,"completada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Completar</button>:null}
+                {this.props.user.isAdmin && el.estado === "enviada" ? <button onClick={()=>this.changeStatus(el.id,"procesando",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Re-Procesar</button>:null}
 
                 {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
                 {this.props.user.isAdmin && <Link to={`/orders/${el.id}/products`}>
@@ -88,6 +115,7 @@ export class TablaDeOrdenes extends Component {
           )}
         </div>
       </div>
+    </div>  
     )
   }
 }
@@ -102,7 +130,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    completeOrder: (id,estado) => dispatch(completeOrder(id,estado)),
+    completeOrder: (id,estado,data) => dispatch(completeOrder(id,estado,data)),
     getOrders: condition => dispatch(getOrders(condition)),
     getProductsFromOrder: (id) => dispatch(getProductsFromOrder(id))
   }

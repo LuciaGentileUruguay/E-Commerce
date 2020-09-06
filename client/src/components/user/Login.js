@@ -38,6 +38,11 @@ export class Login extends React.Component {
           id:res.data.user.id,
           nombre:res.data.user.nombre,
           apellido:res.data.user.apellido,
+          calle:res.data.user.calle,
+          numero:res.data.user.numero,
+          departamento:res.data.user.departamento,
+          localidad: res.data.user.localidad,
+          provincia: res.data.user.provincia,
           email:res.data.user.email,
           isAdmin:res.data.user.isAdmin,
           pwdReset:res.data.user.pwdReset

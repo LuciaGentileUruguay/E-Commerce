@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { increment,decrement,removeProductFromCart, getProductsCart, completeOrderUser} from "../actions/index";
+import { increment,decrement,removeProductFromCart, getProductsCart, completeOrderUser,
+newOrderID, setRedirect, setRedirectOff} from "../actions/index";
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import axios from 'axios';
+import MailingAddress from './mailingAddr'
 
 //COMPONENTE ORDER
 export class Order extends Component {
@@ -34,7 +36,11 @@ export class Order extends Component {
     if (this.props.user.id != 0){
       this.props.getProductsCart(this.props.user.id);
     }
-    
+    this.props.setRedirect(true)
+  }
+
+  componentWillUnmount(){
+    this.props.setRedirectOff()
   }
 
   //FUNCION QUE CALCULA EL TOTAL DE LA COMPRA
@@ -65,17 +71,23 @@ export class Order extends Component {
     }).then(willDelete=>{
       if(willDelete){
         axios.delete("http://localhost:3001/users/"+ this.props.user.id +"/cart")
-      .then(res=>{
-        swal({text: "Carrito vacío",icon:"error"});
-        return;
+      .then(async res=>{
+        await swal({text: "Carrito vacío",icon:"error"});
       })
+      .then(res=>{window.location.reload(false);})
      }
     })
-
     //MANEJO DE EERORES
     .catch(err=>{
       alert(err)
     })
+
+  }
+  
+  async orderToProcess(){
+    await this.props.newOrderID(this.props.order.id)
+    await this.props.completeOrderUser(this.props.order.id)
+    this.props.setRedirectOff()
   }
 
 
@@ -90,7 +102,6 @@ export class Order extends Component {
 
           <div className="catalogCarrito row">
 
-          {/* MAPEA LOS PRODUCTOS DEL CARRITO */}
           {this.props.order.products[0] && this.props.order.products.map((el,i) => (
           <div class="card col-2">
           <div class="card-body">
@@ -116,13 +127,18 @@ export class Order extends Component {
           </div>
           ))} </div>
           </div>
+      ) 
 
-        )
 
+    }
+    
+    if (!this.props.redirect){
+      return <MailingAddress />
+    }  
+    
+    else {
 
-    } else {
-
-    return (
+      return (
       <div>
         <div>
           {/* Boton para vaciar el carrito */}
@@ -173,7 +189,7 @@ export class Order extends Component {
         }
       </div>
       {/* BOTON PARA QUE EL USUARIO FINALICE LA COMPRA.. LLAMA A UNA FUNCION PARA MODIFICAR LA ORDEN! */}
-      {this.props.order.id ? <button onClick={()=>this.props.completeOrderUser(this.props.order.id)}>Finalizar compra</button>:null}
+      {this.props.order.id ? <button onClick={()=>this.orderToProcess()}>Finalizar compra</button>:null}
     </div>
     );
   }
@@ -185,7 +201,8 @@ export class Order extends Component {
 function mapStateToProps(state) {
   return {
     order: state.order,
-    user: state.user
+    user: state.user,
+    redirect:state.redirect
   };
 }
 
@@ -195,7 +212,10 @@ function mapDispatchToProps(dispatch) {
     removeProductFromCart: (id, prodId) => dispatch(removeProductFromCart(id, prodId)),
     decrement: (id, prodId) => dispatch(decrement(id, prodId)),
     increment: (id, prodId) => dispatch(increment(id, prodId)),
-    completeOrderUser:(id)=>dispatch(completeOrderUser(id))
+    completeOrderUser:(id)=>dispatch(completeOrderUser(id)),
+    newOrderID: (orderID) => dispatch(newOrderID(orderID)),
+    setRedirect:(state)=> dispatch(setRedirect(state)),
+    setRedirectOff:()=>dispatch(setRedirectOff())
   }
 }
 

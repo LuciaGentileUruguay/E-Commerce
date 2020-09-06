@@ -30,7 +30,7 @@ export const SET_PASSWORD = "SET_PASSWORD";
 export const RESET_PASSWORD = "RESET_PASSWORD";
 export const GET_REVIEWS = "GET_REVIEWS";
 export const COMPLETE_ORDER = "COMPLETE_ORDER";
-
+export const NEW_ORDER_ID = 'NEW_ORDER_ID'
 
 const instance = axios.create({
   withCredentials: true
@@ -288,4 +288,8 @@ export function setPasswordReset(id){
         alert(err);
       })
     }
+  }
+  
+  export function newOrderID (orderID){
+    return {type: NEW_ORDER_ID, payload:orderID}
   }

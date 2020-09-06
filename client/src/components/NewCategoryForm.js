@@ -32,24 +32,37 @@ export class NewCategoryForm extends React.Component {
 
   render () {
     return (
+     <div>
+        <div class={`btn-group ${style.margen}`} role="group" aria-label="Basic example">
+            <Link to="/form_product">
+              <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
+            </Link>
+            <Link to="/new_category_form">
+              <button  type="button" class="btn btn-secondary" name="Categoria" >Nueva categoría</button>
+            </Link>
+            <Link to="/login/userlist">  
+              <button  type="button" class="btn btn-secondary" name="Lista" >Lista Usuarios</button>
+            </Link>
+            <Link to="/orders">  
+              <button  type="button" class="btn btn-secondary" name="Ordenes" >Lista Ordenes</button>
+            </Link>
+        </div>
+
+
       <form class={style.form} >
-            
-           
-            
-          <div>
-          
-            <label>Nombre:</label>		
+                  
+        <div>
+          <label>Nombre:</label>		
 	        <input name="name" type="text" class="form-control" id="exampleInputEmail1"
           onChange={(e) => this.handleInputChange(e) }>		
 			     </input>
         </div>
 
         <div className = "divForm">
-        <label>Descripción:</label>
-        <input name="description" type="text" class="form-control" id="exampleInputEmail1"
-          onChange={(e) => this.handleInputChange(e) }>		
-			     </input>
-          
+          <label>Descripción:</label>
+          <input name="description" type="text" class="form-control" id="exampleInputEmail1"
+            onChange={(e) => this.handleInputChange(e) }>		
+            </input>
         </div>
         <br></br>
         
@@ -59,7 +72,8 @@ export class NewCategoryForm extends React.Component {
           <Link to={"/products/"+this.props.productDetail.id}>
           <button type="button" class="btn btn-success">Volver a Producto</button>
           </Link>
-        </form>
+      </form>
+    </div>   
     )
     }
 
