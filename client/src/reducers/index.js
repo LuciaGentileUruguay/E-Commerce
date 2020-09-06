@@ -2,7 +2,7 @@ import { ADD_PRODUCT_TO_CART, ADD_CATEGORY, REMOVE_PRODUCT_FROM_CART, REMOVE_CAT
   GET_PRODUCTS,GET_PRODUCTS_BY_NAME, GET_PRODUCTS_FROM_CATEGORY, GET_CATEGORIES,GET_PRODUCT_CATEGORIES,
   GET_CAT_FROM_PRODUCT, GET_PRODUCT_DETAIL,CLEAN_PRODUCT_DETAIL, GET_PRODUCTS_CART, ADD_USER, SAVE_NEW_USER,GET_USER_DETAIL,
   SET_REDIRECT,SET_REDIRECT_OFF, SET_ADMIN,SET_USER_STATE, USER_LOGOUT, SET_RATING, COMPLETE_ORDER,
-  GET_ORDERS, GET_PRODUCTS_FROM_ORDER, SET_PASSWORD,RESET_PASSWORD, GET_REVIEWS, NEW_ORDER_ID } from '../actions';
+  GET_ORDERS, GET_PRODUCTS_FROM_ORDER, SET_PASSWORD,RESET_PASSWORD, GET_REVIEWS } from '../actions';
 
 
 //Definimos el estado inicial
@@ -24,8 +24,7 @@ const initialState = {
   rating: 0,
   ordenes: [],
   productsFromOrder: {},
-  review: [],
-  newOrderID:""
+  review: []
 };
 
 //state.order.concat[action.payload]
@@ -36,14 +35,13 @@ function rootReducer(state = initialState, action) {
  
     if (state.user.id==0) { //SI EL USUARIO ES GUEST...
       var aux = state.order.products.concat([action.payload]) //SE GUARDA EL ESTADO ACTUAL DE LA ORDEN Y SE AGREGA EL ULTIMO PRODUCTO
-      var array = aux.filter( (el, i, self) => i === self.findIndex( (t) => (t.productId === el.productId) ) ) // FILTRA LOS PRODUCTOS REPETIDOS
-
-      var res = array.map(el => {   //CALCULA Y GUARDA LAS CANTIDADES DE CADA PRODUCTO
-        if(el.cantidad){
-          cantidad = el.cantidad
-        }else {var cantidad = 0}
-        array.map(item => {
-          if (el.price === item.price){
+      var noDuplicados = aux.filter((el, i, self) =>
+      i === self.findIndex((t) => (t.productId == el.productId))
+      )
+      var res = noDuplicados.map(el => {
+        let cantidad = 0
+        aux.map(item => {
+          if (el.productId == item.productId){
             cantidad++
           }
         })
@@ -207,7 +205,7 @@ function rootReducer(state = initialState, action) {
       ...state,
       order:{...state.order,
         products:state.order.products.map(product =>  {
-          if (product.id === action.payload){
+          if (product.id == action.payload || product.productId == action.payload){
             if (state.user.id === 0){
               return {
                 ...product,
@@ -233,7 +231,7 @@ function rootReducer(state = initialState, action) {
       order:{
         ...state.order,
         products:state.order.products.map(product =>  {
-          if (product.id === action.payload){
+          if (product.id == action.payload || product.productId == action.payload){
             let canti
             if (state.user.id === 0){
               canti = product.cantidad
@@ -313,12 +311,6 @@ function rootReducer(state = initialState, action) {
 
   if (action.type === RESET_PASSWORD){
     return{...state}
-  }
-
-  if (action.type === NEW_ORDER_ID){
-    return{...state,
-      newOrderID:action.payload
-    }
   }
   
   return state;

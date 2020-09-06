@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {saveNewUser, setRedirectOff} from "../../actions/index"
 import swal from 'sweetalert';
 import style from "./stilo.module.css"
+
 //COMPONENTE PARA TERMINAR DE CREAR EL USUARIO
 export  class UpdateUser extends React.Component {
   constructor(props) {
