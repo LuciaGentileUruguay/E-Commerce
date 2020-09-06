@@ -28,7 +28,7 @@ export class TablaDeOrdenes extends Component {
       withCredentials: true
     })
     let fullname = nombre + " " +apellido
-    
+
     await instance.get("http://localhost:3001/submit?email="+email+"&direccion="
       +data+"&nombre="+fullname+"&orderID="+id+"&status="+estado)
       .then(res=>{
@@ -38,7 +38,7 @@ export class TablaDeOrdenes extends Component {
         alert("hubo un error")
       })
     window.location.reload()
- 
+
   }
 
   calculoTotalOrden (products) {
@@ -61,7 +61,7 @@ export class TablaDeOrdenes extends Component {
             <Link to="/new_category_form">
               <button  type="button" class="btn btn-secondary btn-sm" name="Categoria" >Nueva categoría</button>
             </Link>
-            <Link to="/login/userlist">  
+            <Link to="/login/userlist">
               <button  type="button" class="btn btn-secondary btn-sm" name="Lista" >Lista Usuarios</button>
             </Link>
         </div>
@@ -87,8 +87,9 @@ export class TablaDeOrdenes extends Component {
         <div className="catalogCarrito row">
 
         {this.props.ordenes.length===0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
-         
-          {this.props.ordenes && this.props.ordenes.filter(el => this.props.user.isAdmin || this.props.user.id === el.userId).map((el,i) => 
+
+         {/*Se muestran todas las órdenes cuando sos Admin y se muestran solo tus órdenes, cuando sos usuario*/}
+          {this.props.ordenes && this.props.ordenes.filter(el => this.props.user.isAdmin || this.props.user.id === el.userId).map((el,i) =>
             <div className={style.form}>
             <div className="form">
                 <h5 className="texto-tierra shadowsIntoLight">Número de órden: {el.id}</h5>
@@ -116,7 +117,7 @@ export class TablaDeOrdenes extends Component {
           )}
         </div>
       </div>
-    </div>  
+    </div>
     )
   }
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {FaStar} from 'react-icons/fa';
 import FiveStars from './FiveStars'
 import { getProductDetail, getProductsCategories, addProductToCart,
-  setRedirect, setRedirectOff, setRating, getReview } from '../actions/index';
+  setRedirect, setRedirectOff, setRating, getReview, getOrders } from '../actions/index';
 import style from './product.module.css';
 import './global.css';
 import {Link} from "react-router-dom";
@@ -34,7 +34,6 @@ class ProductDetail extends React.Component {
 
   handleChange(e){
     this.setState({[e.target.name]:e.target.value})
-    console.log(this.state.comentario)
   }
 
  //----------------REVIEWS-----------------------------------------------
@@ -53,7 +52,7 @@ class ProductDetail extends React.Component {
     }
     Axios.post('http://localhost:3001/products/'+this.props.productDetail.id+'/review', data)
     .then(res=>{
-      alert("Reseña Guardada Correctamente")
+      alert("Reseña guardada correctamente")
     })
     .then(res =>{
       this.props.getReview(this.props.productDetail.id);
@@ -69,6 +68,8 @@ class ProductDetail extends React.Component {
     this.props.getProductDetail(id); //TRAE EL PRODUCTO
     this.props.getProductsCategories(id); // SI TIENE CATEGORIAS..
     this.props.getReview(id);
+    let completada = "completada";
+    this.props.getOrders(completada);
     //Axios.get("http://localhost:3001/products/"+id+"/review_5")
     //.then(res =>{
   //    this.setState({review:res.data})
@@ -86,6 +87,27 @@ class ProductDetail extends React.Component {
     return Number((average/num).toFixed(1));
   }
 /*--------------------------------------------------------------------------*/
+  reviewUsuario(){
+    var aux = false;
+    this.props.ordenes.map( el => {
+      if (el.userId === this.props.user.id){
+        el.products.map(item => {
+          if (item.id === this.props.productDetail.id){
+            aux = true;
+          }
+        })
+      }
+    })
+    this.props.review.map( e => {
+      if(e.userId === this.props.user.id){
+        aux = false;
+      }
+    })
+    return aux;
+  }
+
+
+
   render() {
     return (
       <div className="catalog row">
@@ -141,9 +163,10 @@ class ProductDetail extends React.Component {
         {/* REVIEW DE PRODUCTO */}
         <div className="catalog row" >
           <div className="card col-4">
-            {this.props.user.id? <div>
+            {this.props.user.id && this.reviewUsuario() ? <div>
+
                 <button class={`btn btn-outline-success ${style.botonDetalle1}`} onClick={(e)=>this.nuevoReview(e)}> Ingresar opinión </button>
-          </div>:null}
+            </div>:null}
 
             {!this.props.redirect ? null:<div>
             {[...Array(5)].map((star, i)=>{
@@ -215,7 +238,8 @@ const mapDispatchToProps = dispatch => {
     setRedirect:(status) => dispatch(setRedirect(status)),
     setRedirectOff:() => dispatch(setRedirectOff()),
     setRating:(rating)=>dispatch(setRating(rating)),
-    getReview:(id) => dispatch(getReview(id))
+    getReview:(id) => dispatch(getReview(id)),
+    getOrders:(completada) => dispatch(getOrders(completada))
   }
 }
 
@@ -226,7 +250,8 @@ const mapStateToProps = state => {
     user: state.user,
     redirect:state.redirect,
     rating:state.rating,
-    review:state.review
+    review:state.review,
+    ordenes: state.ordenes
   }
 }
 

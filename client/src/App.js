@@ -114,7 +114,9 @@ render(){
 
       {/*Rutas exclisivas para Guests(en un futuro)*/}
 
-      <Route exact path='/login' component = {Login}/>
+      <Route exact path='/login'>
+      {!this.props.user.id ? <Login/> : <Redirect to="/"/>}
+      </Route>
       <Route exact path='/login/newuser' component = {NewUser}/>
       <Route exact path='/login/userdata' component = {UpdateUser}/>
 
