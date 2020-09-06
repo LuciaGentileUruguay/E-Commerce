@@ -34,7 +34,6 @@ class ProductDetail extends React.Component {
 
   handleChange(e){
     this.setState({[e.target.name]:e.target.value})
-    console.log(this.state.comentario)
   }
 
  //----------------REVIEWS-----------------------------------------------
@@ -53,7 +52,7 @@ class ProductDetail extends React.Component {
     }
     Axios.post('http://localhost:3001/products/'+this.props.productDetail.id+'/review', data)
     .then(res=>{
-      alert("Reseña Guardada Correctamente")
+      alert("Reseña guardada correctamente")
     })
     .then(res =>{
       this.props.getReview(this.props.productDetail.id);

@@ -34,7 +34,7 @@ export default class Me extends React.Component {
     return (
       <div className={style.form}>
       <div className="form">
-        <h2 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h2>
+        <h4 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h4>
         <ul className="list-group lista">
           <li className="list-group-item item">Nombre: {this.state.nombre}</li>
           <li className="list-group-item item">Apellido: {this.state.apellido}</li>

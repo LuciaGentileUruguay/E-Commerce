@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SearchBar from './SearchBar.js';
 import { Link, Route} from 'react-router-dom';
 import { connect } from "react-redux";
-import stilo from './Nav.module.css';
+import stilo from './nav.module.css';
 import { userLogout, setRedirectOff } from '../actions/index';
 import axios from 'axios';
 //import './global.css';
