@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import UserCard from './userCard.js';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import style from "./stilo.module.css"
 
 export default class Userlist extends Component {
     constructor(){
@@ -27,8 +28,8 @@ componentDidMount(){
 
   render() {
     return (
-    <div>
-        <div class="btn-group" role="group" aria-label="Basic example">
+      <div className={style.form}>
+        <div className="form" class="btn-group" role="group" aria-label="Basic example">
           <Link to="/form_product">
             <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
           </Link>
