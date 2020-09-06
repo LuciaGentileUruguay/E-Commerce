@@ -10,7 +10,7 @@ server.get('/:condition',(req,res,next)=>{
     //console.log(req.params.condition)
     let estado = []
     if (req.params.condition == "todas"){
-        estado = ['procesando', 'cancelada', 'completada']
+        estado = ['procesando','enviada','cancelada', 'completada']
     }else{estado=[req.params.condition]}
     //console.log(estado)
     Order.findAll({
@@ -29,7 +29,7 @@ server.get('/:condition',(req,res,next)=>{
 server.get('/:id/products',(req,res,next)=>{
     Order.findOne({
       where: {
-        estado: ['procesando', 'cancelada', 'completada'],
+        estado: ['procesando','enviada','cancelada','completada'],
         id: req.params.id
       },
       include:[{model: Product}]
@@ -72,6 +72,7 @@ server.put('/:id/:estado',isAuthenticated,isAdmin,(req,res,next)=>{
 
         //SETEA EL ESTADO PASADO POR PARAMS!
         order.estado=req.params.estado;
+        order.direccion=req.query.direccion
         order.save();
         res.status(201).send(order.data);
         return;

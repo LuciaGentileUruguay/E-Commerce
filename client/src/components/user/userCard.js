@@ -27,10 +27,11 @@ export  class User extends React.Component {
     }).then(willDelete=>{
       if(willDelete){
         instance.delete("http://localhost:3001/admin/"+this.props.id,{withCredentials:true})
-      .then(res=>{
-        swal({text: "Usuario eliminado",icon:"error"});
+      .then(async res=>{
+        await swal({text: "Usuario eliminado",icon:"error"});
         return;
       })
+      .then(res=>{window.location.reload(false);})
      }
     })
     
@@ -52,10 +53,11 @@ export  class User extends React.Component {
       if(willDelete){
         console.log(this.props.id)
         instance.put("http://localhost:3001/admin/isAdmin/"+this.props.id,{withCredentials:true})
-        .then(res=>{
-          swal({text: "El usuario ahora es administrador!",icon:"success"});
+        .then(async res=>{
+          await swal({text: "El usuario ahora es administrador!",icon:"success"});
           return;
         })
+        .then(res=>{window.location.reload(false);})
       } 
     }) 
 
@@ -72,13 +74,14 @@ export  class User extends React.Component {
       icon: "warning",
       buttons: ["No","Si"],
       dangerMode: true
-    }).then(willDelete=>{
+    }).then(async willDelete=>{
        if (willDelete){
-        swal({text: "El usuario  ahora debera reiniciar se password!",icon:"info"});
+        await swal({text: "El usuario  ahora debera reiniciar se password!",icon:"info"});
         this.props.setPasswordReset(this.props.id);
         return;
        }
     }) 
+    .then(res=>{window.location.reload(false);})
   }
 
 // se agrego el link to correctament, mirar app para la ruta

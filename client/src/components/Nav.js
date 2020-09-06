@@ -24,7 +24,8 @@ export class Nav extends Component {
     this.props.userLogout()
 
     //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK Y SE ROMPE LA COOKIE.. NO OLVIDAR MANDAR LAS CREDENCIALES
-    axios.get('http://localhost:3001/logout',{withCredentials:true})
+    // axios.get('http://localhost:3001/logout',{withCredentials:true})
+    axios.get('http://localhost:3001/logout')
     .then(res=>{
       alert("Sesión cerrada");
     })

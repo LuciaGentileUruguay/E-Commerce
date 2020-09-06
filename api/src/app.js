@@ -115,18 +115,88 @@ server.use((req, res, next) => {
   });
 })
 
-//--------------------MAILGUN---------------------------------------------------------------
-server.get('/submit/:mail', function(req,res) {
+//--------------------MAILGUN Order Confirmation---------------------------------------------------------------
+server.get('/submit/confirmation', function(req,res) {
+  let email = req.query.email
+  let nombre = req.query.nombre
+  let direccion = req.query.direccion
+  let orderID = req.query.orderID
 
   //SE ENCAPSULA EL MENSAJE PARA SER ENVIADO
   var data = {
   //REMITENTE
     from: 'hola <universoverde.henry@gmail.com>',
   //DESTINATARIO
-    to: req.params.mail,
+    // to: req.query.email,
+    to:"universoverde.henry@gmail.com",
   //SUBJET ES EL ASUNTO Y TEXT EL CUERPO DEL MENSAJE
-    subject: 'Hello from Mailgun',
-    text: 'Hello, This is not a plain-text email, I wanted to test some spicy Mailgun sauce in NodeJS! <a href="http://0.0.0.0:3030/validate?' + req.params.mail + '">Click here to add your email address to a mailing list</a>'
+    subject: 'Confrimación de Orden de Compra Nº:'+orderID,
+    text: 'Estimado/a: '+nombre+".\n Su compra esta siendo procesada y será despachada a la brevedad al siguiente domicilio:\n "+
+    direccion+".\n Orden Nº:"+orderID
+    
+  }
+
+  //ACA ES CUANDO SE ESTA POR ENVIAR
+  mailgun.messages().send(data, function (err, body) {
+
+    //EN EL CASO DE ALGUN ERROR
+      if (err) {
+          console.log("got an error: ", err);
+      }
+      //EN CASO DE NO TENER ERRORES SE ENVIA EL MENSAJE
+      else {
+          res.send(data);
+
+      }
+  });
+});
+
+//--------------------MAILGUN Order Confirmation---------------------------------------------------------------
+server.get('/submit/', function(req,res) {
+  let email = req.query.email
+  let nombre = req.query.nombre
+  let direccion = req.query.direccion
+  let orderID = req.query.orderID
+  let orderStatus = req.query.status
+  console.log(orderStatus, orderID)
+  let subject = ""
+  let text = ""
+  if (orderStatus==="confirmar"){
+    subject = 'Confrimación de Orden de Compra Nº:'+orderID,
+    text= 'Estimado/a: '+nombre+".\n Su compra esta siendo procesada y será despachada a la brevedad al siguiente domicilio:\n "+
+    direccion+".\n Orden Nº:"+orderID
+  }
+  if (orderStatus==="enviada"){
+    subject = 'Notificación de Envio de la Orden Nº:'+orderID
+    text= 'Estimado/a: '+nombre+'.\n Su compra esta en camimo hacia siguiente domicilio:\n '+
+           direccion+'.\n  Consulte con la companía de correos'
+  }
+  if (orderStatus==="cancelada"){
+    subject = 'Notificación de Cancelación  de la Orden Nº:'+orderID
+    text= 'Estimado/a: '+nombre+".\n Su compra ha sido cancelada. \n Lamentamos los inconvenientes ocacionados y esperams nuevamente su visita"
+  }
+  if (orderStatus==="completada"){
+    subject = 'Ha recibido su compra!!'
+    text= 'Estimado/a:'+nombre+'.\n Estamos muy contentos de que haya recibido su compra con número de orden '
+    +orderID+". Esperamos que disfrute de nuestros productos."
+  }
+  if (orderStatus==="procesando"){
+    subject = 'Reprocesando su compra con número de orden: '+orderID
+    text= 'Estimado/a:'+nombre+'.\n Estamos reprocesando su pedido y se lo envieremos a la brevedad.\n Disculpe los inconvenientes y esperamos que disfrute de nuestros productos.'
+  }
+  
+
+  //SE ENCAPSULA EL MENSAJE PARA SER ENVIADO
+  var data = {
+  //REMITENTE
+    from: 'hola <universoverde.henry@gmail.com>',
+  //DESTINATARIO
+    // to: req.query.email,
+    to:"universoverde.henry@gmail.com",
+  //SUBJET ES EL ASUNTO Y TEXT EL CUERPO DEL MENSAJE
+    subject: subject,
+    text: text
+    
   }
 
   //ACA ES CUANDO SE ESTA POR ENVIAR

@@ -58,56 +58,85 @@ class FormProduct extends React.Component {
 
       }     
 
-  uploadHandler(e){
-    e.preventDefault()
-    const fd=new FormData()
-    fd.append('image',this.state.selectedFile)
-    axios.post('http://localhost:3001/uploads',fd)
-    .then(res=>{
-      if (res.status==200){
-        alert("Imagen Cargada con Exito")
-      }
-      this.setState({data:res.data.path})
-    })
-  }         
+      uploadHandler(e){
+        e.preventDefault()
+        const instance = axios.create({
+          withCredentials: true
+        })
+        const fd=new FormData()
+        fd.append('image',this.state.selectedFile)
+        instance.post('http://localhost:3001/uploads',fd)
+        .then(res=>{
+          if (res.status==200){
+            alert("Imagen Cargada con Exito")
+          }
+          this.setState({data:res.data.path})
+        })
+      }          
 
-  save(){
-    console.log("save")
-    this.props.productDetail["image"]=this.state.selectedFile.name
-    axios.post(`http://localhost:3001/products`, this.props.productDetail)
-      .then(res => {
-        if(res.status === 200){
-          alert("PRODUCTO GUARDADO CORRECTAMENTE");
-        }else {alert("hubo un error!!!")
+      save(){
+        const instance = axios.create({
+          withCredentials: true
+        })
+        console.log("save")
+        this.props.productDetail["image"]=this.state.selectedFile.name
+        instance.post(`http://localhost:3001/products`, this.props.productDetail)
+          .then(async res => {
+            if(await res.status === 200){
+              alert("PRODUCTO GUARDADO CORRECTAMENTE");
+            }else {alert("hubo un error!!!")
+            }
+          })
+          .then(res=>{window.location.reload(false);})
         }
-      })
-    }
-    modify(){
-      console.log("modify")
-      this.props.productDetail["image"]=this.state.selectedFile.name
-      axios.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
-       this.props.productDetail)
-        .then(res => {
-          if(res.status === 201){
-            alert("PRODUCTO GUARDADO CORRECTAMENTE");
-          } else {alert("hubo un error!!!")
-          console.log(res);}
-        })
-    }
-    delete(){
-      axios.delete(`http://localhost:3001/products/${this.props.productDetail.id}`,
-       this.props.productDetail)
-        .then(res => {
-          if(res.status === 200){
-            alert("PRODUCTO BORRADO CORRECTAMENTE");
-          } else {alert("hubo un error!!!")
-          console.log(res);}
-        })
-    } 
+        modify(){
+          const instance = axios.create({
+            withCredentials: true
+          })
+          console.log("modify")
+          this.props.productDetail["image"]=this.state.selectedFile.name
+          instance.put(`http://localhost:3001/products/${this.props.productDetail.id}`,
+           this.props.productDetail)
+            .then(async res => {
+              if(res.status === 201){
+                await alert("PRODUCTO GUARDADO CORRECTAMENTE");
+              } else {alert("hubo un error!!!")
+              console.log(res);}
+            })
+            .then(res=>{window.location.reload(false);})
+        }
+        delete(){
+          const instance = axios.create({
+            withCredentials: true
+          })
+          instance.delete(`http://localhost:3001/products/${this.props.productDetail.id}`,
+           this.props.productDetail)
+            .then(async res => {
+              if(res.status === 200){
+                await alert("PRODUCTO BORRADO CORRECTAMENTE");
+              } else {alert("hubo un error!!!")
+              console.log(res);}
+            })
+            .then(res=>{window.location.reload(false);})
+        } 
+    
 
     render () {
 
       return (
+        <div>
+        <div class={`btn-group ${style.margen}`} role="group" aria-label="Basic example">
+    
+            <Link to="/new_category_form">
+              <button  type="button" class="btn btn-secondary" name="Categoria" >Nueva categoría</button>
+            </Link>
+            <Link to="/login/userlist">  
+              <button  type="button" class="btn btn-secondary" name="Lista" >Lista Usuarios</button>
+            </Link>
+            <Link to="/orders">  
+              <button  type="button" class="btn btn-secondary" name="Ordenes" >Lista Ordenes</button>
+            </Link>
+        </div>
           
         <form class={style.form}>
           <div className = "divForm">
@@ -179,6 +208,7 @@ class FormProduct extends React.Component {
           <button type="button" class="btn btn-success btn-sm">Volver a Producto</button>		
 	        </Link>		
         </form>
+      </div>  
       )
   
     }
