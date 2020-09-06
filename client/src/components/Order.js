@@ -126,8 +126,8 @@ export class Order extends Component {
               <h5 class="card-text text texto-tierra"> Cantidad {el.cantidad}</h5>
 
               {/* BOTONES DECREMENTAR E INCREMENTAR */}
-              <button class="btn btn-light" onClick={() => this.props.decrement(this.props.user.id, el.id)}>-</button>
-              <button class="btn btn-light" onClick={() => this.props.increment(this.props.user.id, el.id)}>+</button>
+              <button class="btn btn-light" onClick={() => this.props.decrement(this.props.user.id, el.productId)}>-</button>
+              <button class="btn btn-light" onClick={() => this.props.increment(this.props.user.id, el.productId)}>+</button>
 
               {/*TOTAL DEL COSTO DE UN PRODUCTO */}
               <h5 class="card-text text texto-tierra"> Total $ {el.cantidad*Number(el.price)}</h5>
