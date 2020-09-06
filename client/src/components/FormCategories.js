@@ -106,22 +106,22 @@ export class FormCategories extends React.Component {
 			     </input>
 
         </div>
-        <button onClick={(e) => {
+        <button class="btn btn-secondary btn-sm" onClick={(e) => {
             this.modifyCat()
             this.props.getCategories()
        }}> Guardar </button>
-        <button onClick={(e) => {
+        <button class="btn btn-secondary btn-sm" onClick={(e) => {
               this.deleteCat()
               this.props.getCategories() }
         }> Borrar </button>
          <Link to="/new_category_form">
-         <button>Crear Nueva Categoria</button>
+         <button class="btn btn-secondary btn-sm">Crear Nueva Categoria</button>
          </Link>
          <Link to="/form_product">
-         <button>Volver a Producto</button>
+         <button class="btn btn-secondary btn-sm">Volver a Producto</button>
          </Link>
          <Link to="/products/">
-         <button>Volver a Tienda</button>
+         <button class="btn btn-secondary btn-sm">Volver a Tienda</button>
          </Link>
       </form>
     )

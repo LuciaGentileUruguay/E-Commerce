@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
+import style from "./stilo.module.css"
 
 export default class Me extends React.Component {
   constructor(props){
@@ -31,8 +32,8 @@ export default class Me extends React.Component {
 
   render() {
     return (
-      <div>
-      <div className="divroot">
+      <div className={style.form}>
+      <div className="form">
         <h2 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h2>
         <ul className="list-group lista">
           <li className="list-group-item item">Nombre: {this.state.nombre}</li>

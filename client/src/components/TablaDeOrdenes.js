@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import {getOrders, getProductsFromOrder, completeOrder} from '../actions/index';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import style from "./user/stilo.module.css"
 
 export class TablaDeOrdenes extends Component {
 
@@ -12,7 +13,6 @@ export class TablaDeOrdenes extends Component {
     this.props.getOrders(condition);
     this.props.getProductsFromOrder();
   }
-
 
 
   filterByCondition(e){
@@ -53,27 +53,28 @@ export class TablaDeOrdenes extends Component {
 
   render() {
     return (
-    <div>
-           <div>
+      <div className={style.form}>
+      <div className="form">
             <Link to="/form_product">
-              <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
+              <button  type="button" class="btn btn-secondary btn-sm" >Nuevo producto</button>
             </Link>
             <Link to="/new_category_form">
-              <button  type="button" class="btn btn-secondary" name="Categoria" >Nueva categoría</button>
+              <button  type="button" class="btn btn-secondary btn-sm" name="Categoria" >Nueva categoría</button>
             </Link>
             <Link to="/login/userlist">  
-              <button  type="button" class="btn btn-secondary" name="Lista" >Lista Usuarios</button>
+              <button  type="button" class="btn btn-secondary btn-sm" name="Lista" >Lista Usuarios</button>
             </Link>
         </div>
+        <br></br>
       <div className="divroot">
         <h5 className="texto-tierra shadowsIntoLight"> Órdenes </h5>
         <div>
         <p>Filtrar Ordenes por Estado:</p>
-        <button value="procesando" onClick={(e)=>this.filterByCondition(e)}>Procesando</button>
-        <button value="enviada" onClick={(e)=>this.filterByCondition(e)}>Enviada</button>
-        <button value="cancelada" onClick={(e)=>this.filterByCondition(e)}>Cancelada</button>
-        <button value="completada" onClick={(e)=>this.filterByCondition(e)} >Completada</button>
-        <button value="todas" onClick={(e)=>this.filterByCondition(e)}>Todas</button>
+        <button class="btn btn-secondary btn-sm" value="procesando" onClick={(e)=>this.filterByCondition(e)}>Procesando</button>
+        <button class="btn btn-secondary btn-sm" value="enviada" onClick={(e)=>this.filterByCondition(e)}>Enviada</button>
+        <button class="btn btn-secondary btn-sm" value="cancelada" onClick={(e)=>this.filterByCondition(e)}>Cancelada</button>
+        <button class="btn btn-secondary btn-sm" value="completada" onClick={(e)=>this.filterByCondition(e)} >Completada</button>
+        <button class="btn btn-secondary btn-sm" value="todas" onClick={(e)=>this.filterByCondition(e)}>Todas</button>
       </div>
       <div>
         <p>Filtrar por número de Orden:</p>
@@ -88,8 +89,8 @@ export class TablaDeOrdenes extends Component {
         {this.props.ordenes.length===0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
          
           {this.props.ordenes && this.props.ordenes.filter(el => this.props.user.isAdmin || this.props.user.id === el.userId).map((el,i) => 
-            <div class="card col-2">
-              <div class="card-body">
+            <div className={style.form}>
+            <div className="form">
                 <h5 className="texto-tierra shadowsIntoLight">Número de órden: {el.id}</h5>
                 <h5 className = "text">Usuario: {el.user.nombre} {el.user.apellido}</h5>
                 <h5 className = "text">Estado: {el.estado}</h5>
