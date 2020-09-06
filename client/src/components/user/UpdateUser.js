@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import {saveNewUser, setRedirectOff} from "../../actions/index"
 import swal from 'sweetalert';
-
+import style from "./stilo.module.css"
 //COMPONENTE PARA TERMINAR DE CREAR EL USUARIO
 export  class UpdateUser extends React.Component {
   constructor(props) {
@@ -66,7 +66,7 @@ saveData(e){
   render () {
     return (
       <div >
-        <form className="form3">
+        <form className={style.form}>
           <label for="exampleInputEmail1">Nombre</label>
           <input class="form-control" type="text" name="nombre" placeholder="Ingrese nombre" onChange={(e) => this.handleInputChange(e)}></input>
           <label for="exampleInputEmail1">Apellido</label>

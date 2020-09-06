@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import "./stilo.css"
+import style from "./stilo.module.css"
 import axios from 'axios'
 import { connect } from 'react-redux';
 import {setUserState} from "../../actions/index"
@@ -64,24 +64,28 @@ export class Login extends React.Component {
   render () {
     return (
       <div>
-        <form className="form">
+        <form className={`${style.form}`}>
           <div className= "form-group">
             <label for="exampleInputEmail1" >Correo electrónico</label>
             <input type="email"   class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name ="username" onChange={(e) => this.handleInputChange(e)} placeholder="Enter email"></input>
-            <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu email con alguien más.</small>
+            <small id="emailHelp" class={`form-text text-muted ${style.color}`}>Nunca compartiremos tu email con alguien más.</small>
           </div>
           <div className="form-group">
             <label for="exampleInputPassword1">Contraseña</label>
             <input type="password"  class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" onChange={(e) => this.handleInputChange(e)}></input>
           </div>
-          <button className="btn btn-outline-secondary" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button>
+          <button class="btn btn-primary btn-sm" onClick={(e)=>this.validateForm(e)} type="submit">Entrar</button>
         </form>
-        <div className="divDeAbajo">
+        <div className={`${style.form} ${style.flex}`}>
+          <div>
           {/* RUTA PARA CREAR USUARIO!! */}
           <p>¿Usuario nuevo?</p>
+          </div>
+          <div>
           <Link to="/login/newuser">
-            <button className="btn btn-outline-secondary">Regístrese</button>
+            <button class="btn btn-primary btn-sm">Regístrese</button>
           </Link>
+          </div>
         </div>
       </div>
     );

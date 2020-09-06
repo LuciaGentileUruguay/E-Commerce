@@ -4,6 +4,7 @@ import {cleanProductDetail } from '../actions/index';
 import Userlist from './user/userList';
 import FormProduct from './FormProduct';
 import NewCategoryForm from './NewCategoryForm';
+import style from './user/stilo.module.css'
 
 //COMPONENTE PARA EL ADMIN
 export class Admin extends Component {
@@ -38,7 +39,7 @@ export class Admin extends Component {
     //RENDERIZADO CONDICIONAL VACIO-->
     if (this.state.irA === ""){
       return (
-        <div class="btn-group" role="group" aria-label="Basic example">
+        <div class={`btn-group ${style.margen}`} role="group" aria-label="Basic example">
         <button  type="button" class="btn btn-secondary" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
         <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoría</button>
         <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
@@ -49,7 +50,7 @@ export class Admin extends Component {
     //RENDERIZADO CONDICIONAL NUEVO PRODUCTO-->
     if (this.state.irA === "Producto"){
       return(
-        <div>
+        <div class={style.margen}>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button  type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva categoría</button>
             <button  type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
@@ -63,7 +64,7 @@ export class Admin extends Component {
       //RENDERIZADO CONDICIONAL NUEVA CATEGORIA-->
     if (this.state.irA === "Categoria"){
       return(
-        <div>
+        <div class={style.margen}>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
             <button type="button" class="btn btn-secondary" name="Lista" onClick={(e)=>this.userList(e)}>Lista Usuarios</button>
@@ -76,7 +77,7 @@ export class Admin extends Component {
     //RENDERIZADO CONDICIONAL LISTA DE USUARIOS-->
     if (this.state.irA === "Lista"){
       return(
-        <div>
+        <div class={style.margen}>
           <div class="btn-group" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-secondary" name="Producto" onClick={(e)=>this.newProduct(e)}>Nuevo producto</button>
             <button type="button" class="btn btn-secondary" name="Categoria" onClick={(e)=>this.newCategory(e)}>Nueva Categoría</button>

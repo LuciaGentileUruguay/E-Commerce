@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addUser, setRedirect } from '../../actions/index';
 import UserData from './UpdateUser'
-import "./stilo.css"
+import style from "./stilo.module.css"
 import Axios from 'axios';
 
 export  class NewUser extends React.Component {
@@ -74,7 +74,7 @@ export  class NewUser extends React.Component {
     if(!this.props.redirect){
     return(
       <div>
-        <form className="form2">
+        <form className={style.form}>
           <div class="form-group">
             <label for="exampleInputEmail1">Correo Electronico</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -93,7 +93,7 @@ export  class NewUser extends React.Component {
             value={this.state.newPassword}  name="newPassword" placeholder="Confirmar Contraseña" onChange={(e) => this.handleInputChange(e)}></input>
           </div>
           {/* <Link to='/login/userdata'> */}
-            <button class="btn btn-outline-success" onClick={(e) => this.validateNew(e)} type="submit">Continuar</button>   
+            <button class="btn btn-primary btn-sm" onClick={(e) => this.validateNew(e)} type="submit">Continuar</button>   
           {/* </Link> */}
           {/* {this.props.redirect ? <UserData /> : null} */}
         </form>                         

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getCategories} from '../actions/index';
 import {Link} from "react-router-dom";
+import style from "../components/user/stilo.module.css";
 
 export class FormCategories extends React.Component {
 
@@ -64,7 +65,7 @@ export class FormCategories extends React.Component {
     
    render () {
     return (
-      <form>
+      <form class={style.form}>
 
         <div className = "divForm">
         <select
