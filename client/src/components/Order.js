@@ -7,6 +7,12 @@ import axios from 'axios';
 
 //COMPONENTE ORDER
 export class Order extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      products:[]
+    }
+  }
 
   //SWEET ALERT PARA CONFIRMAR SI UN PRODUCTO SE QUIERE O NO SACAR DEL CARRITO
   mostrarAlerta(indice) {
@@ -90,34 +96,42 @@ export class Order extends Component {
 
           <div className="catalogCarrito row">
 
-          {/* MAPEA LOS PRODUCTOS DEL CARRITO */}
-          {this.props.order.products[0] && this.props.order.products.map((el,i) => (
-          <div class="card col-2">
-          <div class="card-body">
-          <img className= "card-img-top foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
-          
-          {/* DETALLE DEL PRODUCTO */}
-          <Link to = {'/products/' + el.productId }><h4 class="card-title title">{el.name}</h4></Link>
+            {/* MAPEA LOS PRODUCTOS DEL CARRITO */}
+            {this.props.order.products[0] && this.props.order.products.map((el,i) => (
+            <div class="card col-2">
+              <div class="card-body">
+                <img className= "card-img-top foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+                
+                {/* DETALLE DEL PRODUCTO */}
+                <Link to = {'/products/' + el.productId }><h4 class="card-title title">{el.name}</h4></Link>
 
+              </div>
+              {/* PRECIO UNITARIO */}
+              <h5 class="card-text text texto-tierra">Precio $ {el.price}</h5>
+
+              {/* CANTIDAD DEL PRODUCTO */}
+              <h5 class="card-text text texto-tierra"> Cantidad {el.cantidad}</h5>
+
+              {/* BOTONES DECREMENTAR E INCREMENTAR */}
+              <button class="btn btn-light" onClick={() => this.props.decrement(this.props.user.id, el.id)}>-</button>
+              <button class="btn btn-light" onClick={() => this.props.increment(this.props.user.id, el.id)}>+</button>
+
+              {/*TOTAL DEL COSTO DE UN PRODUCTO */}
+              <h5 class="card-text text texto-tierra"> Total $ {el.cantidad*Number(el.price)}</h5>
+              
+              {/* BORRA EL PRODUCTO SELECCIONADO */}
+              <button class="btn btn-light" onClick={() => this.mostrarAlerta(i)}> <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+              </svg> </button>
+
+              
+            </div>
+            ))} 
           </div>
-          {/* PRECIO UNITARIO */}
-           <h5 class="card-text text texto-tierra">Precio $ {el.price}</h5>
+        </div>
 
-          {/* CANTIDAD DEL PRODUCTO */}
-          <h5 class="card-text text texto-tierra"> Cantidad {el.cantidad}</h5>
-
-           {/* BORRA EL PRODUCTO SELECCIONADO */}
-          <button class="btn btn-light" onClick={() => this.mostrarAlerta(i)}> <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-          </svg> </button>
-
-          
-          </div>
-          ))} </div>
-          </div>
-
-        )
+      )
 
 
     } else {

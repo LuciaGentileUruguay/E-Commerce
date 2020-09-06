@@ -189,18 +189,26 @@ export function setRedirectOff(){
 
 export const increment = (id, prodId) => (
   function(dispatch){
+    if (id === 0){
+      dispatch({ type: INCREMENT, payload:prodId});
+    } else {
     instance.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "INC"})
     .then(json => {
-        dispatch({ type: "INCREMENT", payload:prodId});
+        dispatch({ type: INCREMENT, payload:prodId});
       });
+    }
 });
 
 export const decrement = (id, prodId) => (
   function(dispatch){
+    if (id === 0){
+      dispatch({ type: DECREMENT, payload:prodId});
+    } else {
     instance.put("http://localhost:3001/users/" + id +"/cart/" + prodId, {accion: "DEC"})
         .then(json => {
         dispatch({ type: "DECREMENT", payload:prodId});
       });
+    }
 });
 
 export function getOrders(condition) { //lista todas las órdenes que no son carrito, de todos los usuarios
