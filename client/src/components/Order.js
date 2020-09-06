@@ -7,6 +7,12 @@ import axios from 'axios';
 
 //COMPONENTE ORDER
 export class Order extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      products:[]
+    }
+  }
 
   //SWEET ALERT PARA CONFIRMAR SI UN PRODUCTO SE QUIERE O NO SACAR DEL CARRITO
   mostrarAlerta(indice) {
@@ -99,13 +105,18 @@ export class Order extends Component {
           {/* DETALLE DEL PRODUCTO */}
           <Link to = {'/products/' + el.productId }><h4 class="card-title title">{el.name}</h4></Link>
 
-          </div>
           {/* PRECIO UNITARIO */}
-           <h5 class="card-text text texto-tierra">Precio $ {el.price}</h5>
+          <h5 class="card-text text texto-tierra">Precio $ {el.price}</h5>
 
           {/* CANTIDAD DEL PRODUCTO */}
           <h5 class="card-text text texto-tierra"> Cantidad {el.cantidad}</h5>
 
+          {/* BOTONES DECREMENTAR E INCREMENTAR */}
+          <button class="btn btn-light" onClick={() => this.props.decrement(this.props.user.id, el.id)}>-</button>
+          <button class="btn btn-light" onClick={() => this.props.increment(this.props.user.id, el.id)}>+</button>
+
+          {/*TOTAL DEL COSTO DE UN PRODUCTO */}
+          <h5 class="card-text text texto-tierra"> Total $ {el.cantidad*Number(el.price)}</h5>
            {/* BORRA EL PRODUCTO SELECCIONADO */}
           <button class="btn btn-light" onClick={() => this.mostrarAlerta(i)}> <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>

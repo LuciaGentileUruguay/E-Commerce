@@ -32,18 +32,26 @@ const initialState = {
 function rootReducer(state = initialState, action) {
 
   if (action.type === ADD_PRODUCT_TO_CART) { //Agregamos un producto al carrito
-    console.log(action.payload);
-    if (state.user.id==0) { 
-       let cosco = state.order.products.map((item, index) => {
-        state.order.products.filter((item2, index2) => {
-          return (item.id === item2.id) 
+ 
+    if (state.user.id==0) { //SI EL USUARIO ES GUEST...
+      var aux = state.order.products.concat([action.payload]) //SE GUARDA EL ESTADO ACTUAL DE LA ORDEN Y SE AGREGA EL ULTIMO PRODUCTO
+      var array = aux.filter( (el, i, self) => i === self.findIndex( (t) => (t.productId === el.productId) ) ) // FILTRA LOS PRODUCTOS REPETIDOS
 
-         }
-        )})
+      var res = array.map(el => {   //CALCULA Y GUARDA LAS CANTIDADES DE CADA PRODUCTO
+        if(el.cantidad){
+          cantidad = el.cantidad
+        }else {var cantidad = 0}
+        array.map(item => {
+          if (el.price === item.price){
+            cantidad++
+          }
+        })
+        return {...el,cantidad}
+      })
       
       return {
         ...state, //traigo todo el estado, tal cual
-        order: {...state.order, products: state.order.products.concat([action.payload])} 
+        order: {...state.order, products: res} 
       }
     } else {
       return{
@@ -192,45 +200,68 @@ function rootReducer(state = initialState, action) {
     }
   }
 
-  switch (action.type) {
-      case 'INCREMENT':
-            return {
-              ...state,
-              order:{...state.order,
-                      products:state.order.products.map(product =>  {
-                        if (product.id === action.payload){
-                          return {
-                            ...product,
-                            order_line:{
-                              ...product.order_line,
-                              cantidad:product.order_line.cantidad+1
-                            }
-                          }
-                      } else return product
-                    })
-                    }
-                  };
-      case 'DECREMENT':
-            return {
-              ...state,
-              order:{...state.order,
-                      products:state.order.products.map(product =>  {
-                        if (product.id === action.payload){
-                          let canti = product.order_line.cantidad
-                          if (canti > 1){
-                            return {
-                              ...product,
-                              order_line:{
-                                ...product.order_line,
-                                cantidad:canti-1
-                              }
-                            }
-                          }  else return product
-                      } else return product
-                    })
-                    }
-                  };
-            };
+    switch (action.type) {
+    case 'INCREMENT':
+    return {
+      ...state,
+      order:{...state.order,
+        products:state.order.products.map(product =>  {
+          if (product.id === action.payload){
+            if (state.user.id === 0){
+              return {
+                ...product,
+                cantidad:product.cantidad+1
+              }
+            } else {
+              return {
+                ...product,
+                order_line:{
+                  ...product.order_line,
+                  cantidad:product.order_line.cantidad+1
+                }
+              }
+            }
+          } else return product
+        })
+      }
+    };
+
+  case 'DECREMENT':
+    return {
+      ...state,
+      order:{
+        ...state.order,
+        products:state.order.products.map(product =>  {
+          if (product.id === action.payload){
+            let canti
+            if (state.user.id === 0){
+              canti = product.cantidad
+            } else {
+              canti = product.order_line.cantidad
+            }  
+            if (canti > 1){
+              if (state.user.id === 0 ){
+                return {
+                  ...product,
+                  cantidad:product.cantidad-1
+                }
+              }else{
+                return {
+                  ...product,
+                  order_line:{
+                    ...product.order_line,
+                    cantidad:canti-1
+                  }
+                }
+              }
+
+            }  else return product
+          } else return product
+        })
+        }
+      };
+    };
+
   if (action.type === SET_USER_STATE){
     return{
       ...state,
