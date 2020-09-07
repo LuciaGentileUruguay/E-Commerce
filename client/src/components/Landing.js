@@ -14,10 +14,10 @@ export default function Landing () {
         </ol>
       <div class="carousel-inner">
       <div class={`carousel-item active ${style.imgNormal}`}>
-        <img src="https://estaticos.qdq.com/swdata/home_photos/399/399647927/51e2525523da4c24af93ebe32e312cc5.jpg"/>
+        <img src="https://www.ecestaticos.com/image/clipping/5e6a18e117f62958562d2e8354a18af0/las-verduras-de-hoja-verde-que-mejor-sientan-a-tu-cuerpo.jpg"/>
       </div>
     <div class={`carousel-item ${style.imgNormal}`}>
-      <img src="https://www.ecestaticos.com/image/clipping/5e6a18e117f62958562d2e8354a18af0/las-verduras-de-hoja-verde-que-mejor-sientan-a-tu-cuerpo.jpg" alt="..." />
+      <img src="http://localhost:3001/fondo.jpg" alt="..." />
     </div>
     <div class={`carousel-item ${style.imgNormal}`}>
       <img src="https://hidroponia.mx/wp-content/uploads/2014/10/forraje-verde-hidropc3b3nico.jpg" class="d-block w-100"/>

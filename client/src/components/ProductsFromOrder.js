@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getProductsFromOrder } from '../actions/index';
 import {Link,Route} from "react-router-dom";
+import style from "./user/stilo.module.css"
 
 
 class ProductsFromOrder extends React.Component {
@@ -17,7 +18,7 @@ class ProductsFromOrder extends React.Component {
   render() {
     return (
       <div>
-        <div className="divroot">
+        <div className={style.form}>
           <h2 className = "text"> Detalle </h2>
             <div className="container">
               <img className="foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
@@ -32,7 +33,7 @@ class ProductsFromOrder extends React.Component {
                   <h5>Cantidad {el.order_line.cantidad}</h5>
                   <h5>Total $ {el.order_line.price * el.order_line.cantidad}</h5>
                   <Link to={`/products/${el.id}`}>
-                  <span class="btn btn-outline-success">Detalle del producto</span>
+                  <span>Detalle del producto</span>
                   </Link>
                 </div>
               ))

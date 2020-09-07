@@ -69,8 +69,10 @@ export class NewCategoryForm extends React.Component {
         <button type="button" class="btn btn-success" onClick={(e) => {
         e.preventDefault()
         this.saveCat() }}> Guardar </button>
+       <br></br>
+       <br></br>
           <Link to={"/products/"+this.props.productDetail.id}>
-          <button type="button" class="btn btn-success">Volver a Producto</button>
+              <span> Volver al producto </span>
           </Link>
       </form>
     </div>   
