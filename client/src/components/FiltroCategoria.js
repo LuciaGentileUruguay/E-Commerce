@@ -18,12 +18,12 @@ class FiltroCategoria extends React.Component{
         return(
             <div class="catalog row">
                 {this.props.products && this.props.products.map(item => <Product
+                 image={item.image}
                  id={item.id}
                  name={item.name}
                  description={item.description}
                  price={item.price}
                  stock={item.stock}
-                 image={item.image}
                  />)}
             </div>
         )
