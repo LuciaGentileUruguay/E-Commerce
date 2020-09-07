@@ -91,7 +91,7 @@ export class FormCategories extends React.Component {
 	                  )})}
 	        </select>
           </div>
-
+            <br></br>
           <div>
             <label>Nuevo Nombre:</label>
 	        <input name="name" type="text" value={this.state.name}
@@ -106,22 +106,29 @@ export class FormCategories extends React.Component {
 			     </input>
 
         </div>
+        <br></br>
         <button class="btn btn-secondary btn-sm" onClick={(e) => {
             this.modifyCat()
             this.props.getCategories()
        }}> Guardar </button>
+          &nbsp;
         <button class="btn btn-secondary btn-sm" onClick={(e) => {
               this.deleteCat()
               this.props.getCategories() }
         }> Borrar </button>
+          &nbsp;
          <Link to="/new_category_form">
          <button class="btn btn-secondary btn-sm">Crear Nueva Categoria</button>
          </Link>
+         <br></br>
+         <br></br>
          <Link to="/form_product">
-         <button class="btn btn-secondary btn-sm">Volver a Producto</button>
+         <span>Volver a Producto</span>
          </Link>
+           &nbsp;
+           &nbsp;
          <Link to="/products/">
-         <button class="btn btn-secondary btn-sm">Volver a Tienda</button>
+         <span>Volver a Tienda</span>
          </Link>
       </form>
     )
