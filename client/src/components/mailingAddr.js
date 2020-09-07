@@ -80,7 +80,8 @@ async saveData(e){
           <label for="exampleInputEmail1">Provincia</label>
           <input class="form-control" type="text" name="provincia"
           placeholder={this.props.user.provincia} onChange={(e) => this.handleInputChange(e)}></input> 
-          <button onClick={(e)=>this.saveData(e)}>Confirmar Compra</button>
+          <br></br>
+          <button class="btn btn-success" onClick={(e)=>this.saveData(e)}>Confirmar Compra</button>
         </form>
       </div>
     );

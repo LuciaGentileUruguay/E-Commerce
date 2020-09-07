@@ -39,12 +39,15 @@ function rootReducer(state = initialState, action) {
       i === self.findIndex((t) => (t.productId == el.productId))
       )
       var res = noDuplicados.map(el => {
-        let cantidad = 0
+        if (!el.cantidad){
+          var cantidad = 0
+        }else {cantidad = el.cantidad-1}    //Por algun motivo, aumenta la cantidad en 2 del producto comprado y en 1 a los demas, restandole 1 se resuelve
         aux.map(item => {
           if (el.productId == item.productId){
             cantidad++
           }
         })
+        console.log(cantidad)
         return {...el,cantidad}
       })
       
