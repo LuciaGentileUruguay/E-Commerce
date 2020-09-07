@@ -61,14 +61,11 @@ export class Order extends Component {
       return totalDeOrden;
     } else {
       products.map( e =>{
-        totalDeOrden = totalDeOrden + e.price;
+        totalDeOrden = totalDeOrden + (Number(e.price) * Number(e.cantidad));
       })
       return totalDeOrden;
     }
-
-
   }
-
 
   vaciarCarrito(order){
     swal({
