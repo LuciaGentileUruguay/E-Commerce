@@ -142,12 +142,12 @@ class ProductDetail extends React.Component {
               </Link>:null}
 
               {/* AGREGA EL PRODUCTO AL CARRITO COMO INVITADO*/}
-              {(!this.props.user.id && this.props.productDetail.stock > 0 ) && <p><button class={`btn btn-outline-success ${style.botonDetalle1}`} onClick={() =>
+              {(!this.props.user.id && this.props.productDetail.stock > 0 ) && <Link to="/products"><button class={`btn btn-outline-success ${style.botonDetalle1}`} onClick={() =>
                 this.props.addProductToCart(this.props.user.id, this.props.match.params.id,
                   {price: this.props.productDetail && this.props.productDetail.price,
                   productId: this.props.match.params.id,
                   name: this.props.productDetail && this.props.productDetail.name})}>
-                  Agregar producto como invitado</button></p>}
+                  Agregar producto como invitado</button></Link>}
 
               {/*PROMEDIO DE LAS REVIEWS */}
     {/*--------------------------------------------------------------------------*/}
