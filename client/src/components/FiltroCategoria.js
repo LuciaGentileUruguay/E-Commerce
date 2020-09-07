@@ -23,6 +23,7 @@ class FiltroCategoria extends React.Component{
                  description={item.description}
                  price={item.price}
                  stock={item.stock}
+                 image={item.image}
                  />)}
             </div>
         )
