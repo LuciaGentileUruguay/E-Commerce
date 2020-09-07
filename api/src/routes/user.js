@@ -108,7 +108,6 @@ server.put('/:id',async(req,res,next)=>{
       email,
       password} = req.body;
       password = await hash(password,10);
-      console.log(req.body)
       user.nombre = nombre;
       user.apellido = apellido;
       user.calle = calle;
@@ -145,6 +144,7 @@ server.delete('/:id',(req,res,next)=>{
 
 server.post('/:id/cart',(req,res,next) =>{
   var orderID;
+
   const productId = req.body.productId;
   const price = req.body.price;
   const userId = req.params.id;
@@ -155,6 +155,7 @@ server.post('/:id/cart',(req,res,next) =>{
     }
   }) //findOrCreate devuelve un array
    .then(order => {
+
      orderID = order[0].id;
      Order_line.findOne({
        where: {
@@ -171,9 +172,9 @@ server.post('/:id/cart',(req,res,next) =>{
        else { //si no existe, creo una nueva fila en la tabla
          Order_line.create({
          cantidad: 1,
-         productId: productId,
+         productId: Number(productId),
          orderId: orderID,
-         price: price
+         price: Number(price)
        })
       }
      })
@@ -276,7 +277,9 @@ server.put('/:id/cart/:prodId',(req,res,next) =>{ //Modificamos la cantidad de u
       }
       res.status(201).send("Se modificó la cantidad: "+req.body.accion)
     })
+    .catch(err => res.status(400).send(err))
   })
+  .catch(err => res.status(400).send(err))
 })
 
 server.get("/:id/orders",(req,res,next) =>{

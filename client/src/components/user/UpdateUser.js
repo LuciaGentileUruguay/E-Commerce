@@ -29,6 +29,25 @@ export  class UpdateUser extends React.Component {
   handleInputChange(e){
     this.setState({[e.target.name]:e.target.value})
 }
+ async agregarProductoGuest (id,product){
+   await axios.post("http://localhost:3001/users/" + id +"/cart/", product,{withCredentials: true})
+
+  return;
+}
+
+aumentarProductoGuest (id,productId, cantidad){
+  let cuantity = []
+  for (let i =1; i < cantidad;i++ ){
+    cuantity.push(i)
+  }
+  for (let i of cuantity ){
+    axios.put('http://localhost:3001/users/'+id+'/cart/'+productId,{accion: "INC"},{withCredentials: true})
+    .then(resp => console.log("hola"))
+    .catch(err => console.log("algo ha pasado"))
+    
+  }
+  return;
+}
 
 //FUNCION QUE GUARDA LOS DATOS DEL USUARIO
 saveData(e){
@@ -50,16 +69,29 @@ saveData(e){
   //GUARDA LOS DATOS EN LA BASE DE DATOS
   axios.post(`http://localhost:3001/users`, data)
   .then(res => {
+
     //CREADO!!
     if(res.status === 201){
+      
       swal ({
         title: "Usuario creado!",
-        icon: "success"})
-        return;
+        icon: "success"
+      })
+
+
+      if(!this.props.user.id){
+        this.props.order.products.map(product=>{
+          this.agregarProductoGuest(res.data.id,product)
+          this.aumentarProductoGuest(res.data.id,product.productId,product.cantidad)
+        })
+      }
+      return;
     }  
+
   })
   //MANEJO DE ERRORES
   .catch(err => {return "error"})
+
   this.props.setRedirectOff();
 
 }
@@ -79,9 +111,9 @@ saveData(e){
           <label for="exampleInputEmail1">Departamento</label>
           <input class="form-control" type="text" name="departamento" placeholder="Departamento" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Localidad</label>
-          <input class="form-control" type="text" placeholder="Localidad" onChange={(e) => this.handleInputChange(e)}></input> 
+          <input class="form-control" type="text" name="localidad" placeholder="Localidad" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Provincia</label>
-          <input class="form-control" type="text" placeholder="Provincia" onChange={(e) => this.handleInputChange(e)}></input> 
+          <input class="form-control" type="text" name="provincia" placeholder="Provincia" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Telefonos Celular/Whatsapp</label>
           <input class="form-control" name="telefono1" placeholder="" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Otro telefono</label>
@@ -102,6 +134,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     newUser: state.newUser,
+    user:state.user,
+    order:state.order
   }
 }
  
