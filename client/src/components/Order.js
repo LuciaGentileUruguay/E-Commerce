@@ -138,8 +138,14 @@ export class Order extends Component {
               </svg> </button>
 
 
+
             </div>
             ))}
+            {/* BOTON PARA QUE EL USUARIO FINALICE LA COMPRA.. LLAMA A UNA FUNCION PARA MODIFICAR LA ORDEN! */}
+            {this.props.order.products && this.props.order.products.length > 0 ?  <Link to="/login">
+            <span type="button" className={`btn btn-success ${style.llenarCarrito}`} onClick={()=>this.orderToProcess()}>Finalizar compra</span>
+            </Link>:null}
+            
           </div>
 
         </div>
