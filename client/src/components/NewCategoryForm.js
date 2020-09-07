@@ -35,16 +35,19 @@ export class NewCategoryForm extends React.Component {
      <div>
         <div class={`btn-group ${style.margen}`} role="group" aria-label="Basic example">
             <Link to="/form_product">
-              <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
+              <button  type="button" class="btn btn-secondary btn-sm" >Nuevo producto</button>
             </Link>
+              &nbsp;
             <Link to="/new_category_form">
-              <button  type="button" class="btn btn-secondary" name="Categoria" >Nueva categoría</button>
+              <button  type="button" class="btn btn-secondary btn-sm" name="Categoria" >Nueva categoría</button>
             </Link>
+             &nbsp;
             <Link to="/login/userlist">  
-              <button  type="button" class="btn btn-secondary" name="Lista" >Lista Usuarios</button>
+              <button  type="button" class="btn btn-secondary btn-sm" name="Lista" >Lista Usuarios</button>
             </Link>
+              &nbsp;
             <Link to="/orders">  
-              <button  type="button" class="btn btn-secondary" name="Ordenes" >Lista Ordenes</button>
+              <button  type="button" class="btn btn-secondary btn-sm" name="Ordenes" >Lista Ordenes</button>
             </Link>
         </div>
 
