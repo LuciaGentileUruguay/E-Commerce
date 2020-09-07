@@ -18,6 +18,8 @@ a:link, a:visited, a:active {
 }
 
 .foto{
+    max-height: 300px;
+    align-content: space-between;
     border-radius: 15px;
     padding: 5px;
     display: flex;
