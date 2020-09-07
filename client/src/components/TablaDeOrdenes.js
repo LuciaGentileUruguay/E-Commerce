@@ -58,9 +58,11 @@ export class TablaDeOrdenes extends Component {
             <Link to="/form_product">
               <button  type="button" class="btn btn-secondary btn-sm" >Nuevo producto</button>
             </Link>
+              &nbsp;  
             <Link to="/new_category_form">
               <button  type="button" class="btn btn-secondary btn-sm" name="Categoria" >Nueva categoría</button>
             </Link>
+             &nbsp;  
             <Link to="/login/userlist">
               <button  type="button" class="btn btn-secondary btn-sm" name="Lista" >Lista Usuarios</button>
             </Link>
@@ -71,19 +73,23 @@ export class TablaDeOrdenes extends Component {
         <div>
         <p>Filtrar Ordenes por Estado:</p>
         <button class="btn btn-secondary btn-sm" value="procesando" onClick={(e)=>this.filterByCondition(e)}>Procesando</button>
+         &nbsp;  
         <button class="btn btn-secondary btn-sm" value="enviada" onClick={(e)=>this.filterByCondition(e)}>Enviada</button>
+          &nbsp;  
         <button class="btn btn-secondary btn-sm" value="cancelada" onClick={(e)=>this.filterByCondition(e)}>Cancelada</button>
+          &nbsp;  
         <button class="btn btn-secondary btn-sm" value="completada" onClick={(e)=>this.filterByCondition(e)} >Completada</button>
+          &nbsp;  
         <button class="btn btn-secondary btn-sm" value="todas" onClick={(e)=>this.filterByCondition(e)}>Todas</button>
       </div>
-      <div>
+     {/* <div>
         <p>Filtrar por número de Orden:</p>
         <div>
         <p>Orden Nº:</p>
         <input type="number" />
         <button>Buscar</button>
         </div>
-      </div>
+      </div> */}
         <div className="catalogCarrito row">
 
         {this.props.ordenes.length===0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
@@ -105,13 +111,13 @@ export class TablaDeOrdenes extends Component {
                 <br></br>
                 {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
                 {this.props.user.isAdmin && <Link to={`/orders/${el.id}/products`}>
-                <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
+                <span onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </span>
                 <br></br>
                 </Link>}
 
                 {/*Si es el usuario logueado muestra todos los productos de su orden*/}
                 {!this.props.user.isAdmin  && <Link to={`/me/orders/products`}>
-                <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
+                <span onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </span>
                 </Link>}
 
               </div>
