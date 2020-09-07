@@ -142,7 +142,8 @@ export class Order extends Component {
             </div>
             ))} 
           </div>
-
+          {/* BOTON PARA QUE EL USUARIO FINALICE LA COMPRA.. LLAMA A UNA FUNCION PARA MODIFICAR LA ORDEN! */}
+          {this.props.order.products.length ? <button onClick={()=>this.orderToProcess()}>Finalizar compra</button>:null}
         </div>
 
       )

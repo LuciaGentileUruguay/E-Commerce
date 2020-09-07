@@ -145,6 +145,7 @@ server.delete('/:id',(req,res,next)=>{
 
 server.post('/:id/cart',(req,res,next) =>{
   var orderID;
+
   const productId = req.body.productId;
   const price = req.body.price;
   const userId = req.params.id;
@@ -155,6 +156,7 @@ server.post('/:id/cart',(req,res,next) =>{
     }
   }) //findOrCreate devuelve un array
    .then(order => {
+
      orderID = order[0].id;
      Order_line.findOne({
        where: {
@@ -163,6 +165,7 @@ server.post('/:id/cart',(req,res,next) =>{
        }
      })
      .then(resp => {
+      console.log(resp)
        if(resp !== null){ //si existe el producto entonces aumento en uno la cantidad
          resp.update({
            cantidad: resp.cantidad + 1
@@ -171,9 +174,9 @@ server.post('/:id/cart',(req,res,next) =>{
        else { //si no existe, creo una nueva fila en la tabla
          Order_line.create({
          cantidad: 1,
-         productId: productId,
+         productId: Number(productId),
          orderId: orderID,
-         price: price
+         price: Number(price)
        })
       }
      })

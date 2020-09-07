@@ -29,6 +29,17 @@ export  class UpdateUser extends React.Component {
   handleInputChange(e){
     this.setState({[e.target.name]:e.target.value})
 }
+async agregarProductoGuest (id,product){
+  await axios.post("http://localhost:3001/users/" + id +"/cart/", product,{withCredentials: true})
+
+  return;
+}
+
+async aumentarProductoGuest (id,productId){
+  await axios.put('http://localhost:3001/users/'+id+'/cart/'+productId,{accion: "INC"},{withCredentials: true})
+
+  return;
+}
 
 //FUNCION QUE GUARDA LOS DATOS DEL USUARIO
 saveData(e){
@@ -46,12 +57,39 @@ saveData(e){
     telefono1:this.state.telefono1,
     telefono2:this.state.telefono2
   }
-
+  // if(res.status === 201){
+  //   if(!this.props.user.id){
+  //     this.props.order.products.map(product=>{
+  //       for(let i =0; i < product.cantidad;i++ ){
+  //         setTimeout(this.agregarProductoGuest(res.data.id,product),300)
+         
+  //       }
+  //     })
+  //   }
   //GUARDA LOS DATOS EN LA BASE DE DATOS
   axios.post(`http://localhost:3001/users`, data)
   .then(res => {
+    // console.log(res.data)
+
     //CREADO!!
     if(res.status === 201){
+      if(!this.props.user.id){
+        this.props.order.products.map(product=>{
+          this.agregarProductoGuest(res.data.id,product)
+          for (let i =0; i < product.cantidad;i++ ){
+            this.aumentarProductoGuest(res.data.id,product.productId)
+         
+        }
+      })
+      // if(!this.props.user.id){
+      //   this.props.order.products.map(product=>{
+      //     this.agregarProductoGuest(res.data.id,product)
+      //     for(let i =0; i < product.cantidad-1;i++ ){
+      //       axios.put('http://localhost:3001/users/'+res.data.id+'/cart/'+product.productId,{accion: "INC"})
+           
+      //     }
+      //   })
+      }
       swal ({
         title: "Usuario creado!",
         icon: "success"})
@@ -60,6 +98,7 @@ saveData(e){
   })
   //MANEJO DE ERRORES
   .catch(err => {return "error"})
+
   this.props.setRedirectOff();
 
 }
@@ -79,9 +118,9 @@ saveData(e){
           <label for="exampleInputEmail1">Departamento</label>
           <input class="form-control" type="text" name="departamento" placeholder="Departamento" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Localidad</label>
-          <input class="form-control" type="text" placeholder="Localidad" onChange={(e) => this.handleInputChange(e)}></input> 
+          <input class="form-control" type="text" name="localidad" placeholder="Localidad" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Provincia</label>
-          <input class="form-control" type="text" placeholder="Provincia" onChange={(e) => this.handleInputChange(e)}></input> 
+          <input class="form-control" type="text" name="provincia" placeholder="Provincia" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Telefonos Celular/Whatsapp</label>
           <input class="form-control" name="telefono1" placeholder="" onChange={(e) => this.handleInputChange(e)}></input> 
           <label for="exampleInputEmail1">Otro telefono</label>
@@ -102,6 +141,8 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     newUser: state.newUser,
+    user:state.user,
+    order:state.order
   }
 }
  
