@@ -33,7 +33,10 @@ export default class Me extends React.Component {
   render() {
     return (
       <div className={style.form}>
-        <h4 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h4>
+      <div className="card-body">
+        <h4> Detalle del Usuario </h4>
+        <Link to={`/me/orders`}> <span> Mis órdenes </span></Link>
+      </div>
         <ul className="list-group lista">
           <li className="list-group-item item">Nombre: {this.state.nombre}</li>
           <li className="list-group-item item">Apellido: {this.state.apellido}</li>
@@ -46,9 +49,7 @@ export default class Me extends React.Component {
           <li className="list-group-item item">Teléfono Celular: {this.state.telefono1}</li>
           <li className="list-group-item item">Teléfono Hogar/Trabajo: {this.state.telefono2}</li>
         </ul>
-          <Link to={`/me/orders`}>
-              <span> Mis órdenes </span>
-          </Link>
+
         </div>
     )
   }
