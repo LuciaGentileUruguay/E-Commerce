@@ -82,14 +82,14 @@ export class TablaDeOrdenes extends Component {
           &nbsp;  
         <button class="btn btn-secondary btn-sm" value="todas" onClick={(e)=>this.filterByCondition(e)}>Todas</button>
       </div>
-      <div>
+     {/* <div>
         <p>Filtrar por número de Orden:</p>
         <div>
         <p>Orden Nº:</p>
         <input type="number" />
         <button>Buscar</button>
         </div>
-      </div>
+      </div> */}
         <div className="catalogCarrito row">
 
         {this.props.ordenes.length===0 ? <h5>No existen ordenes para el estado seleccionado</h5>:null}
