@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import axios from 'axios';
 import MailingAddress from './mailingAddr'
+import style from "../components/user/stilo.module.css";
 
 //COMPONENTE ORDER
 export class Order extends Component {
@@ -100,10 +101,10 @@ export class Order extends Component {
   render() {
     if (this.props.user.id ===0){
       return(
-        <div>
-          <div>
+        <div class="col-4">
+          <div className="item">
             {/* MUESTRA EL TOTAL! del guest */}
-            <h5 className="texto-tierra shadowsIntoLight"> Total a pagar $ {this.props.order.products[0] && this.calculoTotal(this.props.order.products)}</h5>
+            <h5> Total a pagar $ {this.props.order.products[0] && this.calculoTotal(this.props.order.products)}</h5>
           </div>
 
           <div className="catalogCarrito row">
@@ -175,7 +176,7 @@ export class Order extends Component {
 
         {/* MAPEA LOS PRODUCTOS DEL CARRITO */}
         {this.props.order.products && this.props.order.products.map((el,i) => (
-          <div class="card col-2">
+          <div class={style.form}>
             <div class="card-body">
 
               <img className= "card-img-top foto" src="https://images.pexels.com/photos/1059905/pexels-photo-1059905.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />

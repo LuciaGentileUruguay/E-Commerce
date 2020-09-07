@@ -29,7 +29,7 @@ componentDidMount(){
   render() {
     return (
       <div className={style.form}>
-        <div className="form" class="btn-group" role="group" aria-label="Basic example">
+        <div className="btn-group" role="group" aria-label="Basic example">
           <Link to="/form_product">
             <button  type="button" class="btn btn-secondary" >Nuevo producto</button>
           </Link>
@@ -41,7 +41,6 @@ componentDidMount(){
           </Link>
         </div>
         <div className={style.form}>
-        <div className="form catalog row">
             {this.state.userlist && this.state.userlist.map(item =>
               { console.log(item)
             return < UserCard
@@ -60,8 +59,6 @@ componentDidMount(){
               }
         </div>
       </div>
-    </div>  
- 
     );
   }
 }

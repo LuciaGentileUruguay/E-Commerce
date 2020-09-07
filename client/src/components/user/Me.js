@@ -33,7 +33,6 @@ export default class Me extends React.Component {
   render() {
     return (
       <div className={style.form}>
-      <div className="form">
         <h4 className = "texto-tierra shadowsIntoLight"> Detalle del Usuario </h4>
         <ul className="list-group lista">
           <li className="list-group-item item">Nombre: {this.state.nombre}</li>
@@ -51,7 +50,6 @@ export default class Me extends React.Component {
               <span> Mis órdenes </span>
           </Link>
         </div>
-      </div>
     )
   }
 }

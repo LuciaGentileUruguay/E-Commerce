@@ -97,14 +97,16 @@ export class TablaDeOrdenes extends Component {
                 <h5 className = "text">Estado: {el.estado}</h5>
                 <h5 className = "text">Fecha: {el.createdAt}</h5>
                 <h5 className = "text">Total a pagar $ {el.products && this.calculoTotalOrden(el.products)}</h5>
-                {this.props.user.isAdmin && el.estado === "procesando" ||el.estado==="enviada" ? <button onClick={(e)=>this.changeStatus(el.id,"cancelada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Cancelar</button>:null}
-                {this.props.user.isAdmin && el.estado === "procesando" ? <button onClick={()=>this.changeStatus(el.id,"enviada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Despachar</button>:null}
-                {this.props.user.isAdmin && el.estado === "enviada" ? <button onClick={()=>this.changeStatus(el.id,"completada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Completar</button>:null}
-                {this.props.user.isAdmin && el.estado === "enviada" ? <button onClick={()=>this.changeStatus(el.id,"procesando",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Re-Procesar</button>:null}
-
+                {this.props.user.isAdmin && el.estado === "procesando" ||el.estado==="enviada" ? <button type="button" class="btn btn-danger btn-sm" onClick={(e)=>this.changeStatus(el.id,"cancelada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Cancelar</button>:null}
+                  &nbsp; {/*AGREGA UN ESPACIO EN UNA MISMA LINEA HORIZONRA*/}
+                {this.props.user.isAdmin && el.estado === "procesando" ? <button type="button" class="btn btn-success btn-sm" onClick={()=>this.changeStatus(el.id,"enviada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Despachar</button>:null}
+                {this.props.user.isAdmin && el.estado === "enviada" ? <button type="button" class="btn btn-success" onClick={()=>this.changeStatus(el.id,"completada",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Completar</button>:null}
+                {this.props.user.isAdmin && el.estado === "enviada" ? <button type="button" class="btn btn-success btn-sm" onClick={()=>this.changeStatus(el.id,"procesando",el.direccion,el.user.nombre,el.user.apellido,el.user.email)}>Re-Procesar</button>:null}
+                <br></br>
                 {/*Si es admin muestra todos los productos de una orden de cualquier usuario*/}
                 {this.props.user.isAdmin && <Link to={`/orders/${el.id}/products`}>
                 <button class="btn btn-outline-success botonDetalle1" onClick={() => this.props.getProductsFromOrder(el.id)}> Productos </button>
+                <br></br>
                 </Link>}
 
                 {/*Si es el usuario logueado muestra todos los productos de su orden*/}

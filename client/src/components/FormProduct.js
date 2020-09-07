@@ -168,7 +168,7 @@ class FormProduct extends React.Component {
              
           </div>
           <Link to="/form_categories">
-          <button ttype="button" class="btn btn-secondary">Editar Categorias</button>
+          <button ttype="button" class="btn btn-success btn-sm">Editar Categorias</button>
           </Link>
           <div className = "divForm">
             <label>Descripción:</label>
@@ -184,10 +184,12 @@ class FormProduct extends React.Component {
           </div>
           {/* --------------------------------------Image Uploader--------------------------- */}
             <div>
-              <input type="file" onChange={(e)=>this.fileSelected(e)}/>
-              <br></br>
+              <input type="file" class="btn-sm" onChange={(e)=>this.fileSelected(e)}/>
+               &nbsp;
               <button type="button" class="btn btn-success btn-sm" onClick={(e)=>this.uploadHandler(e)}>Cargar Imagen</button>
             </div>
+              <br></br>
+                    
         
           {/* {this.state.data.path !=="0" ?<div><img src={"http://localhost:3001"+this.state.data.path} /></div>:null} */}
               
@@ -197,15 +199,17 @@ class FormProduct extends React.Component {
           e.preventDefault();
           this.cleanStore()
           this.delete() }}/>
-          <input id= "botonGuardar" type='submit' type="button" class="btn btn-success btn-sm" value="Guardar" onClick={(e) => {
+          &nbsp;  {/* ESPACIO HORIZONTAL */}
+          <input id= "botonGuardar" type="button" class="btn btn-success btn-sm" value="Guardar" onClick={(e) => {
           e.preventDefault();
           if (this.props.productDetail.id){
             this.modify()
             return;
           }
           this.save() }}/>
+          &nbsp;
           <Link to={"/products/"+this.props.productDetail.id}>		
-          <button type="button" class="btn btn-success btn-sm">Volver a Producto</button>		
+          <span>Volver a Producto</span>		
 	        </Link>		
         </form>
       </div>  
