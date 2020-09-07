@@ -29,15 +29,23 @@ export  class UpdateUser extends React.Component {
   handleInputChange(e){
     this.setState({[e.target.name]:e.target.value})
 }
-async agregarProductoGuest (id,product){
-  await axios.post("http://localhost:3001/users/" + id +"/cart/", product,{withCredentials: true})
+ async agregarProductoGuest (id,product){
+   await axios.post("http://localhost:3001/users/" + id +"/cart/", product,{withCredentials: true})
 
   return;
 }
 
-async aumentarProductoGuest (id,productId){
-  await axios.put('http://localhost:3001/users/'+id+'/cart/'+productId,{accion: "INC"},{withCredentials: true})
-
+aumentarProductoGuest (id,productId, cantidad){
+  let cuantity = []
+  for (let i =1; i < cantidad;i++ ){
+    cuantity.push(i)
+  }
+  for (let i of cuantity ){
+    axios.put('http://localhost:3001/users/'+id+'/cart/'+productId,{accion: "INC"},{withCredentials: true})
+    .then(resp => console.log("hola"))
+    .catch(err => console.log("algo ha pasado"))
+    
+  }
   return;
 }
 
@@ -57,44 +65,29 @@ saveData(e){
     telefono1:this.state.telefono1,
     telefono2:this.state.telefono2
   }
-  // if(res.status === 201){
-  //   if(!this.props.user.id){
-  //     this.props.order.products.map(product=>{
-  //       for(let i =0; i < product.cantidad;i++ ){
-  //         setTimeout(this.agregarProductoGuest(res.data.id,product),300)
-         
-  //       }
-  //     })
-  //   }
+
   //GUARDA LOS DATOS EN LA BASE DE DATOS
   axios.post(`http://localhost:3001/users`, data)
   .then(res => {
-    // console.log(res.data)
 
     //CREADO!!
     if(res.status === 201){
+      
+      swal ({
+        title: "Usuario creado!",
+        icon: "success"
+      })
+
+
       if(!this.props.user.id){
         this.props.order.products.map(product=>{
           this.agregarProductoGuest(res.data.id,product)
-          for (let i =0; i < product.cantidad;i++ ){
-            this.aumentarProductoGuest(res.data.id,product.productId)
-         
-        }
-      })
-      // if(!this.props.user.id){
-      //   this.props.order.products.map(product=>{
-      //     this.agregarProductoGuest(res.data.id,product)
-      //     for(let i =0; i < product.cantidad-1;i++ ){
-      //       axios.put('http://localhost:3001/users/'+res.data.id+'/cart/'+product.productId,{accion: "INC"})
-           
-      //     }
-      //   })
+          this.aumentarProductoGuest(res.data.id,product.productId,product.cantidad)
+        })
       }
-      swal ({
-        title: "Usuario creado!",
-        icon: "success"})
-        return;
+      return;
     }  
+
   })
   //MANEJO DE ERRORES
   .catch(err => {return "error"})

@@ -108,7 +108,6 @@ server.put('/:id',async(req,res,next)=>{
       email,
       password} = req.body;
       password = await hash(password,10);
-      console.log(req.body)
       user.nombre = nombre;
       user.apellido = apellido;
       user.calle = calle;
@@ -165,7 +164,6 @@ server.post('/:id/cart',(req,res,next) =>{
        }
      })
      .then(resp => {
-      console.log(resp)
        if(resp !== null){ //si existe el producto entonces aumento en uno la cantidad
          resp.update({
            cantidad: resp.cantidad + 1
@@ -279,7 +277,9 @@ server.put('/:id/cart/:prodId',(req,res,next) =>{ //Modificamos la cantidad de u
       }
       res.status(201).send("Se modificó la cantidad: "+req.body.accion)
     })
+    .catch(err => res.status(400).send(err))
   })
+  .catch(err => res.status(400).send(err))
 })
 
 server.get("/:id/orders",(req,res,next) =>{
