@@ -21,8 +21,30 @@ export class Login extends React.Component {
   handleInputChange(e){
     this.setState({[e.target.name]: e.target.value})
   }
+/*-----------------------------------------------------------------------------*/
+  async agregarProductoGuest (id,product){
+    await axios.post("http://localhost:3001/users/" + id +"/cart/", product,{withCredentials: true})
+ 
+   return;
+ }
+ 
+ aumentarProductoGuest (id,productId, cantidad){
+   let cuantity = []
+   for (let i =1; i < cantidad;i++ ){
+     cuantity.push(i)
+   }
+   for (let i of cuantity ){
+     axios.put('http://localhost:3001/users/'+id+'/cart/'+productId,{accion: "INC"},{withCredentials: true})
+     .then(resp => console.log("hola"))
+     .catch(err => console.log("algo ha pasado"))
+     
+   }
+   return;
+ }
+/*-----------------------------------------------------------------------------*/
 
-  //VALIDACION PARA INICIAR SESION--> PASSPORT USA LA COOKIE TODAVIA NO SE SABE QUE HACER CON ESO
+
+ //VALIDACION PARA INICIAR SESION--> PASSPORT USA LA COOKIE TODAVIA NO SE SABE QUE HACER CON ESO
   validateForm(e){
     e.preventDefault();
     //CONDICION DEL LOGIN!
@@ -31,7 +53,7 @@ export class Login extends React.Component {
       axios.post('http://localhost:3001/login',this.state,{withCredentials:true})
       .then(res => {  swal("Bienvenido/a " + res.data.user.nombre + "!")
         console.log(res);
-       
+
         //EN RES ESTA TODA LA INFO DEL USER LOGUEADO Y LA COOKIEE!!
         //Se agrego el pwdResete(passwordReset) a los datos guardados de un usuario
         let UserData={
@@ -47,9 +69,13 @@ export class Login extends React.Component {
           isAdmin:res.data.user.isAdmin,
           pwdReset:res.data.user.pwdReset
         }
-
+      
       //CON ESTA FUNCION GUARDAMOS EL ESTADO DE REDUX LOS DATOS DEL USARIO PARA SABER SI ES ADMIN Y MANTTENER EL CARRITO
-      //LA SESION QUEDA INICIADA HASTA QUE SE REFRESQUE LA PAGINA--->LA COOKIEE PERSISTE EN EL BROWSER!!  
+      //LA SESION QUEDA INICIADA HASTA QUE SE REFRESQUE LA PAGINA--->LA COOKIEE PERSISTE EN EL BROWSER!!
+      this.props.order.products.map(product=>{
+        this.agregarProductoGuest(res.data.user.id,product)
+        this.aumentarProductoGuest(res.data.user.id,product.productId,product.cantidad)
+      }) 
       this.props.setUserState(UserData)
 
       })
@@ -106,6 +132,7 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     user: state.user,
+    order: state.order
   }
 }
  
