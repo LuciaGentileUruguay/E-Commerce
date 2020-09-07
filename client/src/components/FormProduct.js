@@ -168,7 +168,7 @@ class FormProduct extends React.Component {
              
           </div>
           <Link to="/form_categories">
-          <button ttype="button" class="btn btn-secondary">Editar Categorias</button>
+          <button ttype="button" class="btn btn-success btn-sm">Editar Categorias</button>
           </Link>
           <div className = "divForm">
             <label>Descripción:</label>
@@ -185,7 +185,7 @@ class FormProduct extends React.Component {
           {/* --------------------------------------Image Uploader--------------------------- */}
             <div>
               <input type="file" class="btn-sm" onChange={(e)=>this.fileSelected(e)}/>
-              <br></br>
+               &nbsp;
               <button type="button" class="btn btn-success btn-sm" onClick={(e)=>this.uploadHandler(e)}>Cargar Imagen</button>
             </div>
               <br></br>
